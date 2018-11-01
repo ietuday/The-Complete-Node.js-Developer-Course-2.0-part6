@@ -1,0 +1,408 @@
+﻿1
+00:00:00,540 --> 00:00:03,420
+This video is the solution video for the challenge.
+
+2
+00:00:03,420 --> 00:00:09,360
+I set up in the end of the last one if you missed that go back in re watch it make sure to complete
+
+3
+00:00:09,360 --> 00:00:09,950
+the challenge.
+
+4
+00:00:09,960 --> 00:00:13,820
+Then you can watch this one where I show you how to get it done.
+
+5
+00:00:13,920 --> 00:00:18,810
+Now in that challenge I told you I wanted you to create two events a new message event emitted by the
+
+6
+00:00:18,810 --> 00:00:24,750
+server and listened to on the client and a create message of that emitted by the client and listened
+
+7
+00:00:24,750 --> 00:00:26,230
+to by the server.
+
+8
+00:00:26,280 --> 00:00:33,420
+We're going to get started inside of server dot J.S. by listening for that create message event.
+
+9
+00:00:33,420 --> 00:00:35,400
+And this is going to happen down below.
+
+10
+00:00:35,400 --> 00:00:41,460
+Now we have an old event listener from create email you can remove that and we can call socket dot on
+
+11
+00:00:41,480 --> 00:00:48,870
+it to listen to our brand new event create message to create message that is going to require a function
+
+12
+00:00:48,870 --> 00:00:51,710
+to call when the event actually happens.
+
+13
+00:00:51,750 --> 00:00:55,410
+We're going to want to do something with the message data for the moment.
+
+14
+00:00:55,410 --> 00:01:00,000
+All you needed to do was use council dot like to print it to the terminal so we can verify that everything
+
+15
+00:01:00,000 --> 00:01:01,370
+worked as expected.
+
+16
+00:01:01,410 --> 00:01:03,450
+We're going to get our message data.
+
+17
+00:01:03,450 --> 00:01:08,940
+This is going to include a from property and a Text property and we're going to print it to the screen.
+
+18
+00:01:08,940 --> 00:01:11,820
+You don't have to specify the exact message I used.
+
+19
+00:01:11,820 --> 00:01:14,170
+I'm just going to say create message.
+
+20
+00:01:14,490 --> 00:01:19,600
+And the second argument will be the data that was passed from the client to the server.
+
+21
+00:01:19,620 --> 00:01:24,960
+Now that we have our listener in place we can go ahead and emit this over inside of the client in index
+
+22
+00:01:24,960 --> 00:01:25,350
+dot J.
+
+23
+00:01:25,360 --> 00:01:26,020
+Yes.
+
+24
+00:01:26,040 --> 00:01:28,360
+Now currently we have an emit call right here.
+
+25
+00:01:28,380 --> 00:01:32,230
+I'm going to go ahead and remove this emit call.
+
+26
+00:01:32,400 --> 00:01:38,600
+We're going to call socket dot emit and we're going to go ahead and emit create message.
+
+27
+00:01:38,610 --> 00:01:41,590
+We're going to emit create message with the necessary data.
+
+28
+00:01:41,640 --> 00:01:46,230
+Remember when you're emitting a custom event the first argument is the event name and the second is
+
+29
+00:01:46,230 --> 00:01:46,930
+the data.
+
+30
+00:01:47,010 --> 00:01:50,810
+We're going to provide an object with two properties from who is it from.
+
+31
+00:01:50,820 --> 00:01:57,670
+This one's from Andrew and of the actual text of the message that could be anything like yup that works
+
+32
+00:01:57,670 --> 00:02:00,460
+for me.
+
+33
+00:02:00,500 --> 00:02:02,220
+This is going to be the event we admit.
+
+34
+00:02:02,240 --> 00:02:07,490
+I'm going to save index dot J as head over to the browser and we should be able to refresh the app and
+
+35
+00:02:07,490 --> 00:02:08,950
+see the data right here.
+
+36
+00:02:09,110 --> 00:02:14,810
+And inside of the terminal we have create message with the from property we specified and the text Yep
+
+37
+00:02:15,080 --> 00:02:16,510
+that works for me.
+
+38
+00:02:16,520 --> 00:02:22,970
+Now we can also emit events right here from the developer tools to play around with socket IO socket
+
+39
+00:02:23,020 --> 00:02:27,820
+doddy and we can emit any event we like passing in some data.
+
+40
+00:02:27,950 --> 00:02:36,010
+The event we're going to emit is create message and the data is a from attribute this one one's from
+
+41
+00:02:36,010 --> 00:02:38,620
+Jen and a text attribute.
+
+42
+00:02:39,130 --> 00:02:40,800
+Nope.
+
+43
+00:02:40,910 --> 00:02:45,120
+When I send this off instantly in real time the message shows up on the server.
+
+44
+00:02:45,200 --> 00:02:46,760
+Right here you can see it's from Jan..
+
+45
+00:02:46,820 --> 00:02:50,360
+The text is nope everything is working as expected.
+
+46
+00:02:50,360 --> 00:02:51,370
+Now that's the first event.
+
+47
+00:02:51,380 --> 00:02:56,300
+The other one is the new message event which is going to get emitted by the server and listened to by
+
+48
+00:02:56,300 --> 00:03:01,660
+the client to get started with this one we'll add our event listener inside an index.
+
+49
+00:03:01,740 --> 00:03:04,840
+J.S. we have the old event listener for new email.
+
+50
+00:03:04,850 --> 00:03:10,310
+I'm going to go ahead and remove that and we'll call socket on it to listen to the new event.
+
+51
+00:03:10,310 --> 00:03:15,610
+New Message new message is going to require a callback to the moment.
+
+52
+00:03:15,620 --> 00:03:20,990
+We'll be using council that log to print the message to the console but later we'll be taking this message
+
+53
+00:03:20,990 --> 00:03:22,730
+and we'll be adding it to the browser.
+
+54
+00:03:22,820 --> 00:03:25,600
+So a user can actually see it in the screen.
+
+55
+00:03:25,820 --> 00:03:26,960
+Now we are going to get some data.
+
+56
+00:03:26,960 --> 00:03:28,910
+We're going to get the message data.
+
+57
+00:03:29,030 --> 00:03:34,790
+I'll create an argument called message for the moment and we can go ahead and simply log it to the screen
+
+58
+00:03:35,050 --> 00:03:39,320
+using a console lag printing the name of the event.
+
+59
+00:03:39,320 --> 00:03:45,680
+So it's easy to track in the terminal and the actual data that was passed from server to client.
+
+60
+00:03:45,680 --> 00:03:50,600
+Now the last thing we need to do to complete this challenge was simply a new message from the server
+
+61
+00:03:50,840 --> 00:03:58,050
+making sure it shows up in the client over inside of server dot Jay ass instead of emitting new e-mail.
+
+62
+00:03:58,070 --> 00:04:05,710
+We will call socket dot emit emitting our custom event new message now we are going to need some data.
+
+63
+00:04:05,710 --> 00:04:07,620
+We're going to need that message data.
+
+64
+00:04:07,720 --> 00:04:10,070
+We're going to provide that as the second argument.
+
+65
+00:04:10,090 --> 00:04:13,690
+It will be an object with a from property from.
+
+66
+00:04:13,990 --> 00:04:15,380
+It could be from whoever you like.
+
+67
+00:04:15,400 --> 00:04:17,840
+I'm going to go with John.
+
+68
+00:04:17,840 --> 00:04:21,150
+Next up we're going to go ahead and provide the text property.
+
+69
+00:04:21,170 --> 00:04:22,790
+This can be anything as well.
+
+70
+00:04:22,790 --> 00:04:25,080
+See you then.
+
+71
+00:04:25,090 --> 00:04:29,440
+And finally we're going to provide that created at property.
+
+72
+00:04:29,440 --> 00:04:34,480
+This is going to be generated by the server later so a user can't spoof the time a message was created
+
+73
+00:04:34,480 --> 00:04:34,890
+at.
+
+74
+00:04:35,050 --> 00:04:40,340
+But for now we'll just use some sort of random number like 1 2 3 1 2 3.
+
+75
+00:04:40,360 --> 00:04:44,710
+Now as soon as a user connects to the server we're going to be emitting that event over inside of the
+
+76
+00:04:44,710 --> 00:04:45,430
+browser.
+
+77
+00:04:45,430 --> 00:04:47,650
+I can go ahead and refresh things.
+
+78
+00:04:48,100 --> 00:04:53,440
+And what do we see we have our new message of that showing up and the data is exactly as we specified
+
+79
+00:04:53,440 --> 00:04:54,750
+it in our server.
+
+80
+00:04:54,790 --> 00:04:55,870
+JS file.
+
+81
+00:04:55,900 --> 00:05:01,930
+We have our created out time stamp our from property and our text property in the future will be literally
+
+82
+00:05:01,930 --> 00:05:07,690
+taking this data and rendering it into the browser so it shows up and someone can read it and respond
+
+83
+00:05:07,720 --> 00:05:08,150
+to it.
+
+84
+00:05:08,230 --> 00:05:09,930
+But for now we are done.
+
+85
+00:05:09,970 --> 00:05:13,540
+We have our event listener on the server for create message.
+
+86
+00:05:13,560 --> 00:05:17,710
+And our event listener on the client for new message.
+
+87
+00:05:17,920 --> 00:05:22,390
+That is it for this one since we are done we will be making a quick commit.
+
+88
+00:05:22,480 --> 00:05:25,690
+I'm going to shut down the server and run get status.
+
+89
+00:05:25,690 --> 00:05:27,210
+We have quite a few changes here.
+
+90
+00:05:27,220 --> 00:05:33,460
+We have our new J.S. file and the public JS folder and we've also changed server dot J.S. and index
+
+91
+00:05:33,730 --> 00:05:34,730
+HVM out.
+
+92
+00:05:34,960 --> 00:05:41,350
+I'm going to run it get add dot to add all of that to the next commit then I'll create a commit using
+
+93
+00:05:41,380 --> 00:05:51,730
+get commit with the M flag and a good message for this one is ad new message and create message events.
+
+94
+00:05:51,780 --> 00:05:52,690
+Excellent.
+
+95
+00:05:52,710 --> 00:05:55,620
+With this in place we can now push our code up to get hub.
+
+96
+00:05:55,710 --> 00:06:00,180
+There is no need to do anything with Heroku since we don't have anything visual just yet.
+
+97
+00:06:00,180 --> 00:06:02,730
+We'll hold off on that for a bit later.
+
+98
+00:06:02,800 --> 00:06:06,660
+And that's it for this one in the next video we're going to wire up messages.
+
+99
+00:06:06,720 --> 00:06:11,080
+So when tab one emits a message it's visible by tab 2.
+
+100
+00:06:11,100 --> 00:06:16,950
+This is going to bring us one step closer to actually communicating in real time between different browser
+
+101
+00:06:17,010 --> 00:06:17,820
+tabs.
+
+102
+00:06:17,820 --> 00:06:19,600
+Stay tuned I will see you then
+

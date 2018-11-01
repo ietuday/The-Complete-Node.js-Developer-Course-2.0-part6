@@ -1,0 +1,440 @@
+﻿1
+00:00:01,140 --> 00:00:06,360
+In the last video we set up a event listener on the server listening for that joint event.
+
+2
+00:00:06,360 --> 00:00:11,550
+And we did some validation this at least make sure we have the name and the room name both of which
+
+3
+00:00:11,580 --> 00:00:13,070
+are going to be required.
+
+4
+00:00:13,110 --> 00:00:18,900
+The real next step is to actually use the socket IO library to join rooms and this is not going to let
+
+5
+00:00:18,900 --> 00:00:22,890
+us just join remans but it's also going to give us a different set of methods.
+
+6
+00:00:22,890 --> 00:00:28,560
+We can choose to emit to everybody connected to the server or just to people in specific rooms.
+
+7
+00:00:28,560 --> 00:00:30,770
+And that's exactly what we're going to be doing.
+
+8
+00:00:30,780 --> 00:00:35,340
+We want to emit Chiat messages just to other people who are also in the room.
+
+9
+00:00:35,550 --> 00:00:42,510
+Now in order to join what you do is you call socket dot joyn socket dot join takes a string the name
+
+10
+00:00:42,510 --> 00:00:43,770
+and we have that name.
+
+11
+00:00:43,800 --> 00:00:49,130
+It's available under harams dot room just like we used right here.
+
+12
+00:00:49,170 --> 00:00:50,530
+And that is it.
+
+13
+00:00:50,580 --> 00:00:55,490
+We now have a special place for people to talk who are in the same room.
+
+14
+00:00:55,620 --> 00:01:01,590
+Now this is a string so it would be something like The Office fans or anything else and you have to
+
+15
+00:01:01,590 --> 00:01:04,010
+join by the string value.
+
+16
+00:01:04,170 --> 00:01:07,180
+Right here though Paramjit room will get the job done.
+
+17
+00:01:07,380 --> 00:01:14,130
+Now you can also choose to leave a room using socket leave socket don't leave leaving a room by its
+
+18
+00:01:14,130 --> 00:01:19,020
+name and the office fans for example this is going to kick you out of that group and you're not going
+
+19
+00:01:19,020 --> 00:01:23,340
+to get those private messages the messages sent specifically to the group.
+
+20
+00:01:23,340 --> 00:01:27,130
+Now the next step in the process is to figure out how to actually take advantage of this.
+
+21
+00:01:27,240 --> 00:01:32,070
+Adding the user to the room is great but if we can't target them specifically and others in that room
+
+22
+00:01:32,070 --> 00:01:33,410
+it's not very useful.
+
+23
+00:01:33,480 --> 00:01:38,730
+Well it turns out we have a couple ways to do just that in order to illustrate how we're going to target
+
+24
+00:01:38,730 --> 00:01:40,100
+specific users.
+
+25
+00:01:40,120 --> 00:01:43,050
+Let's look at all the ways we've admitted events on the server.
+
+26
+00:01:43,110 --> 00:01:48,810
+We've used IO and emit this admits it to every single connected user and that's currently what we're
+
+27
+00:01:48,810 --> 00:01:52,620
+doing for things like create message a new message comes in.
+
+28
+00:01:52,740 --> 00:01:55,580
+And we admitted to everyone connected.
+
+29
+00:01:55,590 --> 00:02:04,080
+Next up we have used socket dot broadcasts dot emet we use that right here and as we know this sends
+
+30
+00:02:04,080 --> 00:02:10,370
+the message to everyone connected to the socket server except for the current user.
+
+31
+00:02:10,560 --> 00:02:14,510
+The last one we used inside of server dot J S is socket.
+
+32
+00:02:14,670 --> 00:02:15,780
+We used it right here.
+
+33
+00:02:15,870 --> 00:02:19,830
+This emits an event specifically to one user.
+
+34
+00:02:19,830 --> 00:02:24,990
+Now we can take these events so we can convert them over to their room counterpart in order to send
+
+35
+00:02:24,990 --> 00:02:26,290
+it to a specific room.
+
+36
+00:02:26,310 --> 00:02:29,210
+We're going to be changing on the two method.
+
+37
+00:02:29,280 --> 00:02:31,270
+This is going to look a little something like this.
+
+38
+00:02:31,410 --> 00:02:37,170
+Let's say we want to emit an event to every single person connected to a room and let's just call this
+
+39
+00:02:37,170 --> 00:02:40,170
+room the office fans for the moment to do that.
+
+40
+00:02:40,200 --> 00:02:47,340
+We're going to call I know dot to dot to is a method and it takes the room name exactly as it was provided
+
+41
+00:02:47,340 --> 00:02:48,720
+in the call to join.
+
+42
+00:02:48,720 --> 00:02:54,050
+In our case that is going to be the office fans just like this.
+
+43
+00:02:54,060 --> 00:02:59,550
+And then we would chain on a call to a Met and this is going to send an event to everybody connected
+
+44
+00:02:59,550 --> 00:03:02,380
+to a room the office fans.
+
+45
+00:03:02,430 --> 00:03:07,530
+Now we can also do the same thing with broadcast meaning that we want to send an event to everybody
+
+46
+00:03:07,530 --> 00:03:11,070
+in a room except for the current user in order to do that.
+
+47
+00:03:11,130 --> 00:03:18,380
+We would use the following socket datt broadcast adapt to.
+
+48
+00:03:18,590 --> 00:03:25,490
+And this works just like the two method defined above the office fans would get passed in and on here
+
+49
+00:03:25,490 --> 00:03:26,650
+we would call it met.
+
+50
+00:03:26,690 --> 00:03:32,030
+This is going to send an event to everybody in the office fans room except for the current user or the
+
+51
+00:03:32,030 --> 00:03:35,780
+one who's actually calling Sacket dot broadcast.
+
+52
+00:03:35,780 --> 00:03:40,130
+Now the last way we've used a Mehta's socket Amet we're still going to use that when we want to send
+
+53
+00:03:40,130 --> 00:03:41,970
+something to a specific user.
+
+54
+00:03:41,990 --> 00:03:45,890
+There is no reason to target them by room since we just want to target them.
+
+55
+00:03:45,890 --> 00:03:51,710
+This is the two ways we're going to emit two specific rooms in order to actually start wiring some of
+
+56
+00:03:51,710 --> 00:03:56,320
+that up and we can do is take these two calls up above and we can move them down inside of join.
+
+57
+00:03:56,390 --> 00:04:00,950
+Meaning that we're not going to tell someone that someone joined a run until it actually joined to the
+
+58
+00:04:00,950 --> 00:04:02,460
+room by calling join.
+
+59
+00:04:02,600 --> 00:04:07,870
+We're also not going to tell a user that they have joined around until the call has actually gone through.
+
+60
+00:04:07,940 --> 00:04:12,640
+It might not go through if the data like the name or the room name are invalid.
+
+61
+00:04:12,860 --> 00:04:17,480
+Let's take both of these calls and cut them out and we're just going to take them as they are and we're
+
+62
+00:04:17,480 --> 00:04:22,070
+going to move them down into join for the moment we can move them down below our comments.
+
+63
+00:04:22,070 --> 00:04:27,380
+I'm going to leave the comments in place so you have these as a reference down the line now right here
+
+64
+00:04:27,380 --> 00:04:30,710
+we call socket Umit and we emit a new message.
+
+65
+00:04:30,770 --> 00:04:35,660
+Welcome to the chat app and this line it is actually going to stay the same.
+
+66
+00:04:35,660 --> 00:04:39,390
+We still just want to target the specific user or the next one is going to change though.
+
+67
+00:04:39,590 --> 00:04:45,020
+Instead of broadcasting to every connected user We're going to broadcast to just users inside of the
+
+68
+00:04:45,020 --> 00:04:45,510
+room.
+
+69
+00:04:45,530 --> 00:04:53,960
+We just joined right here using socket broadcast dot to passing in harams dot room.
+
+70
+00:04:54,020 --> 00:04:58,430
+We're going to emit a new message and this is going to let everyone know that a new user has joined
+
+71
+00:04:58,790 --> 00:05:04,730
+instead of new user we can actually specify the name we have access to that right here is a template
+
+72
+00:05:04,730 --> 00:05:15,450
+string injecting the name first programs name followed by has joined perfect now that we have this in
+
+73
+00:05:15,450 --> 00:05:17,630
+place we can actually test things out.
+
+74
+00:05:17,700 --> 00:05:21,540
+Well we're going to do is join a realm then we're going to have a second user join.
+
+75
+00:05:21,540 --> 00:05:23,870
+And we should see the message right here.
+
+76
+00:05:23,880 --> 00:05:25,540
+Their name has joined.
+
+77
+00:05:25,830 --> 00:05:29,790
+We're also going to add a third user into the mix to make sure it's actually sending the message to
+
+78
+00:05:29,790 --> 00:05:32,700
+just one room over inside of the browser.
+
+79
+00:05:32,700 --> 00:05:36,570
+Let's get started by creating a user called User 1.
+
+80
+00:05:36,750 --> 00:05:41,340
+This user is going to join a room called uppercase A.
+
+81
+00:05:41,360 --> 00:05:46,110
+Now we're going to go ahead and create a second user by going to localhost 3000.
+
+82
+00:05:46,130 --> 00:05:51,180
+This one can be called user 2 and we're going to join them be just like this.
+
+83
+00:05:51,230 --> 00:05:56,480
+And if I go between room and room B you can see that no join message printed because we haven't joined
+
+84
+00:05:56,480 --> 00:05:57,380
+the same room.
+
+85
+00:05:57,470 --> 00:06:01,370
+We're on completely separate rooms so we should not be getting those messages.
+
+86
+00:06:01,370 --> 00:06:03,300
+Next up we're going to add a third user.
+
+87
+00:06:03,410 --> 00:06:08,670
+This user is also going to join a room a user 3 room name room.
+
+88
+00:06:08,930 --> 00:06:13,760
+And we are going to hit join them when we hit join we can go through the tabs and see what data we get
+
+89
+00:06:13,760 --> 00:06:14,390
+back.
+
+90
+00:06:14,390 --> 00:06:15,950
+Here we get Welcome to the chat app.
+
+91
+00:06:15,950 --> 00:06:20,670
+As expected this is only happening because we've successfully joined the room.
+
+92
+00:06:20,870 --> 00:06:23,900
+Then in the second tab we get Welcome to the chat app too.
+
+93
+00:06:23,900 --> 00:06:28,130
+There is no message greeting that other user because the other user joined room.
+
+94
+00:06:28,340 --> 00:06:33,790
+And the first tab has our user three has joined message and this is fantastic.
+
+95
+00:06:33,800 --> 00:06:35,920
+Both users are in the room.
+
+96
+00:06:36,050 --> 00:06:41,240
+So this user should get a message when a new user joins and we've injected the name right here.
+
+97
+00:06:41,240 --> 00:06:48,210
+As expected things were relatively easy for our joint event listener because we had access to both the
+
+98
+00:06:48,210 --> 00:06:50,510
+name variable and the room variable.
+
+99
+00:06:50,520 --> 00:06:52,500
+They were actually passed in as arguments.
+
+100
+00:06:52,500 --> 00:06:57,090
+It's going to be a lot more difficult for create message and create location message.
+
+101
+00:06:57,090 --> 00:07:02,010
+We're going to need to figure out a way to get the room back for the given socket so we can commit to
+
+102
+00:07:02,010 --> 00:07:03,450
+just that room.
+
+103
+00:07:03,450 --> 00:07:06,690
+We also need to set up that people list on the left hand side bar.
+
+104
+00:07:06,720 --> 00:07:11,640
+We're going to need to figure out how to use that i o object to get a list of all the people by room
+
+105
+00:07:11,730 --> 00:07:12,450
+name.
+
+106
+00:07:12,570 --> 00:07:18,150
+All of that is going to be super important because currently the messages we emit some in message are
+
+107
+00:07:18,150 --> 00:07:22,620
+for example they're going to show up to all users regardless of what room they're in.
+
+108
+00:07:22,800 --> 00:07:28,620
+To get this working to get those private runs in place will be persisting that data it's coming up next
+
+109
+00:07:28,680 --> 00:07:29,860
+so stay tuned.
+
+110
+00:07:29,860 --> 00:07:31,290
+I will see you then
+

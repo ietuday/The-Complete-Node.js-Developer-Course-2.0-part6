@@ -1,0 +1,484 @@
+﻿1
+00:00:00,530 --> 00:00:03,700
+In this video you're going to learn how to use event acknowledgements.
+
+2
+00:00:03,710 --> 00:00:06,780
+They are a fantastic feature inside of socket.
+
+3
+00:00:06,800 --> 00:00:11,510
+I know in order to illustrate exactly what they are and why you'd ever want to use them we're going
+
+4
+00:00:11,510 --> 00:00:14,070
+to quickly run through the slides for the chat app.
+
+5
+00:00:14,090 --> 00:00:18,680
+These are the two events that we actually have in our application if you remember the first one is the
+
+6
+00:00:18,680 --> 00:00:19,810
+new message event.
+
+7
+00:00:19,880 --> 00:00:25,640
+It gets emitted by the server and it gets listened to by the client it sends across the from text and
+
+8
+00:00:25,640 --> 00:00:30,640
+created out properties all of which are required to render the message to the screen.
+
+9
+00:00:30,650 --> 00:00:34,370
+Now the event that we're going to be updating is the create message event.
+
+10
+00:00:34,370 --> 00:00:38,690
+This one gets emitted by the client and listened to by the server.
+
+11
+00:00:38,690 --> 00:00:42,310
+Once again we are sending some data across from and text.
+
+12
+00:00:42,320 --> 00:00:46,290
+Now the problem with our create message event is that the data flows in one direction.
+
+13
+00:00:46,340 --> 00:00:48,780
+The data comes from a form inside of the browser.
+
+14
+00:00:48,860 --> 00:00:52,320
+It then gets sent over to the server and the server is kind of stuck.
+
+15
+00:00:52,340 --> 00:00:57,830
+Sure the data might be valid the From and text fields might be correctly set up and that case we can
+
+16
+00:00:57,830 --> 00:01:01,870
+emit a new message event rendering it to every browser who's connected to the server.
+
+17
+00:01:01,910 --> 00:01:07,670
+But if the server receives invalid data it has no way to let the client know that something went wrong.
+
+18
+00:01:07,790 --> 00:01:13,220
+What we need is a way to acknowledge we got a request and have the option to send some data back.
+
+19
+00:01:13,340 --> 00:01:19,160
+In this case we're going to added acknowledgment for create message if the client emits a valid request
+
+20
+00:01:19,160 --> 00:01:21,170
+with valid from and text properties.
+
+21
+00:01:21,170 --> 00:01:26,900
+We're going to acknowledge that sending back no error message if the data sent from client to server
+
+22
+00:01:26,900 --> 00:01:27,610
+is invalid.
+
+23
+00:01:27,610 --> 00:01:32,000
+We're going to acknowledge it's sending back the errors so the client knows exactly what it needs to
+
+24
+00:01:32,000 --> 00:01:34,640
+do to send a valid request.
+
+25
+00:01:34,640 --> 00:01:36,990
+Now the result is going to look a little bit like this.
+
+26
+00:01:37,100 --> 00:01:41,160
+And the data flow from server to client is going to be done via a callback.
+
+27
+00:01:41,270 --> 00:01:43,410
+Your knowledge could be anything you like.
+
+28
+00:01:43,460 --> 00:01:46,340
+In our case it could be was the message data valid.
+
+29
+00:01:46,400 --> 00:01:51,650
+If you're creating an email application you might only send the acknowledgment back to the client when
+
+30
+00:01:51,650 --> 00:01:53,890
+the email was successfully sent.
+
+31
+00:01:53,900 --> 00:01:58,130
+You don't need to send data which is what we're going to do when valid data is sent across the pipeline
+
+32
+00:01:58,130 --> 00:02:00,040
+we're simply going to say hey we got that message.
+
+33
+00:02:00,050 --> 00:02:04,530
+Everything's got to go and the client can respond to that.
+
+34
+00:02:04,580 --> 00:02:10,670
+Now that we've gone through this let's go ahead and implemented into our application setting up acknowledgements
+
+35
+00:02:10,670 --> 00:02:14,080
+really isn't that bad if you already have a listener in place.
+
+36
+00:02:14,090 --> 00:02:19,040
+All you have to do is make a quick change to the listener and a quick change to the emitter and everything
+
+37
+00:02:19,040 --> 00:02:20,480
+will work as expected.
+
+38
+00:02:20,480 --> 00:02:24,890
+Now in this case the listener happens to be on the server and the emitter is going to be on the client
+
+39
+00:02:25,070 --> 00:02:27,590
+but acknowledgements also work in the other direction.
+
+40
+00:02:27,650 --> 00:02:33,190
+I can emit and event from the server and I can acknowledge it from the client in order to set this up
+
+41
+00:02:33,200 --> 00:02:36,960
+we are going to emit a create message event over inside of index.
+
+42
+00:02:37,070 --> 00:02:37,730
+Yes.
+
+43
+00:02:38,000 --> 00:02:39,520
+Using socket dowdy.
+
+44
+00:02:39,980 --> 00:02:42,770
+And we're going to pass in the same arguments we would otherwise.
+
+45
+00:02:42,770 --> 00:02:44,300
+The first one is the event name.
+
+46
+00:02:44,300 --> 00:02:49,610
+Create message and we're going to pass in some valid data in object with those two properties.
+
+47
+00:02:49,700 --> 00:02:55,520
+We can set from equal to something like Frank and we can set a text property equal to something like
+
+48
+00:02:55,660 --> 00:02:56,480
+high.
+
+49
+00:02:56,480 --> 00:03:02,320
+Now with this in place we have a standard event emitter and a standard event listener.
+
+50
+00:03:02,480 --> 00:03:07,620
+I can go ahead and start up the app using gnomon and we can make sure everything's working as expected.
+
+51
+00:03:07,710 --> 00:03:09,310
+Gnomon server server.
+
+52
+00:03:09,430 --> 00:03:10,320
+Yes.
+
+53
+00:03:10,550 --> 00:03:13,860
+Once the server is up we can visit it in the browser.
+
+54
+00:03:14,030 --> 00:03:16,230
+I'm going to open up the developer tools as well.
+
+55
+00:03:18,590 --> 00:03:21,190
+Then we're going to go to localhost three thousand
+
+56
+00:03:25,050 --> 00:03:28,740
+and you can see over inside of the terminal we have create message showing up.
+
+57
+00:03:28,830 --> 00:03:31,170
+And we also have new message showing up here.
+
+58
+00:03:31,260 --> 00:03:34,350
+We have the new message for our little Welcome to the chat app greeting.
+
+59
+00:03:34,350 --> 00:03:39,690
+And we have the new message from Frank which we admitted now the goal here is to send an acknowledgement
+
+60
+00:03:39,690 --> 00:03:44,430
+from the server back to the client that we got the data in order to get this done and we have to make
+
+61
+00:03:44,430 --> 00:03:47,330
+a change to both the listener and the emitter.
+
+62
+00:03:47,370 --> 00:03:51,570
+If you only make a change to one it is not going to work as expected.
+
+63
+00:03:51,720 --> 00:03:54,380
+We're going to start with the event emitter.
+
+64
+00:03:54,510 --> 00:03:59,820
+We want a way to run some code when the acknowledgement has been sent from the server back to the client
+
+65
+00:04:00,090 --> 00:04:01,280
+in order to get that done.
+
+66
+00:04:01,290 --> 00:04:05,050
+We're going to add a third argument which is going to be a callback function.
+
+67
+00:04:05,070 --> 00:04:09,540
+This function is going to fire when the acknowledgment arrives at the client and we can do anything
+
+68
+00:04:09,540 --> 00:04:10,090
+we like.
+
+69
+00:04:10,140 --> 00:04:13,130
+For now we'll just print using console that log.
+
+70
+00:04:13,140 --> 00:04:13,790
+Got it.
+
+71
+00:04:15,460 --> 00:04:16,950
+Now this is all we need to do.
+
+72
+00:04:16,960 --> 00:04:23,170
+Bare bones style to add an acknowledgment to the client on the server it's also pretty simple.
+
+73
+00:04:23,200 --> 00:04:28,120
+We're going to add a second argument to our callback argument list the first one is still going to be
+
+74
+00:04:28,120 --> 00:04:29,410
+the data that was emitted.
+
+75
+00:04:29,440 --> 00:04:33,970
+The second one though is going to be a function that we're going to refer to as callback and we can
+
+76
+00:04:33,970 --> 00:04:39,850
+call it anywhere down below to acknowledge that we got that request when we call this function like
+
+77
+00:04:39,850 --> 00:04:45,040
+we're going to call it right here it is in turn going to send an event back to the front end.
+
+78
+00:04:45,130 --> 00:04:48,770
+And it is going to call the function as we have it here.
+
+79
+00:04:48,790 --> 00:04:53,560
+This means that if I save both files we can play around with acknowledgements over in the browser.
+
+80
+00:04:53,560 --> 00:04:56,130
+I'm going to refresh the app.
+
+81
+00:04:56,350 --> 00:04:57,760
+And what do we get we get.
+
+82
+00:04:57,760 --> 00:04:58,450
+Got it.
+
+83
+00:04:58,450 --> 00:05:01,110
+That means our data successfully went to the server.
+
+84
+00:05:01,120 --> 00:05:04,210
+We can prove that by seeing the console log statement here.
+
+85
+00:05:04,210 --> 00:05:07,230
+The server acknowledged it got the data by calling callback.
+
+86
+00:05:07,360 --> 00:05:08,200
+And right here.
+
+87
+00:05:08,230 --> 00:05:09,740
+Got it prints.
+
+88
+00:05:09,850 --> 00:05:15,250
+Now acknowledgements are pretty useful but they're even more useful when you send data back if the data
+
+89
+00:05:15,250 --> 00:05:16,390
+for the message is invalid.
+
+90
+00:05:16,390 --> 00:05:20,380
+For example we're probably going to want to send some errors back something we will be doing a little
+
+91
+00:05:20,380 --> 00:05:21,030
+later.
+
+92
+00:05:21,040 --> 00:05:25,790
+For now though we can play around with an acknowledgment by sending anything we want back.
+
+93
+00:05:25,990 --> 00:05:29,680
+We send data back by providing one argument to callback.
+
+94
+00:05:29,710 --> 00:05:32,980
+If you want to add multiple things simply specify an object.
+
+95
+00:05:32,980 --> 00:05:34,860
+Adding as many properties as you like.
+
+96
+00:05:34,960 --> 00:05:39,840
+In our case though we can send as the only argument to call back a string.
+
+97
+00:05:39,940 --> 00:05:41,170
+I'm going to set my string too.
+
+98
+00:05:41,170 --> 00:05:44,820
+This is from the server.
+
+99
+00:05:44,860 --> 00:05:49,990
+This string is going to be passed into the callback and it's going to end up inside of our callback
+
+100
+00:05:50,110 --> 00:05:55,780
+right here which means I can create a variable for that value we can call it data or anything else you
+
+101
+00:05:55,780 --> 00:05:59,440
+like and we can print it to the screen or do something with it.
+
+102
+00:05:59,440 --> 00:06:02,230
+For now we're just going to print it to the screen.
+
+103
+00:06:02,230 --> 00:06:04,740
+If I save index dot J.S. we can test that.
+
+104
+00:06:04,750 --> 00:06:06,790
+Everything is working as expected.
+
+105
+00:06:06,790 --> 00:06:10,150
+I'm going to go ahead and give the app a refresh and what do we see we see.
+
+106
+00:06:10,150 --> 00:06:10,740
+Got it.
+
+107
+00:06:10,780 --> 00:06:16,360
+Meaning we got the acknowledgement and we see the data the data that was sent from the server to the
+
+108
+00:06:16,360 --> 00:06:20,620
+client acknowledgements play an important role in realtime applications.
+
+109
+00:06:20,620 --> 00:06:26,230
+Let's go back to that e-mail app example for a second imagine I type in some values like a to value
+
+110
+00:06:26,230 --> 00:06:28,460
+and a text value when I send the e-mail.
+
+111
+00:06:28,540 --> 00:06:34,540
+I want to get an acknowledgment back that either A the email sent successfully or B the e-mail did not
+
+112
+00:06:34,600 --> 00:06:37,050
+send successfully in which case I want to know why.
+
+113
+00:06:37,210 --> 00:06:43,120
+Maybe it was a form error where I can show some error messages to the user or maybe the server was down
+
+114
+00:06:43,120 --> 00:06:45,040
+for maintenance or something like that.
+
+115
+00:06:45,100 --> 00:06:52,230
+Either way acknowledgements allow the request listener to send something back to the request emitter.
+
+116
+00:06:52,270 --> 00:06:56,470
+Now that we know how to use acknowledgements we're going to integrate them into our application that
+
+117
+00:06:56,470 --> 00:07:02,180
+is coming up in the next video as we add an actual form field to our index.
+
+118
+00:07:02,240 --> 00:07:06,540
+H file where users can submit new messages and view them.
+
+119
+00:07:06,580 --> 00:07:07,840
+It's all coming up next.
+
+120
+00:07:07,840 --> 00:07:08,700
+Stay tuned.
+
+121
+00:07:08,740 --> 00:07:10,580
+I will see you then.
+

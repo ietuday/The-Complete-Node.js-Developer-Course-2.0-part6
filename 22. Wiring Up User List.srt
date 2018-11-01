@@ -1,0 +1,908 @@
+﻿1
+00:00:00,550 --> 00:00:05,710
+In this video we're going to start wiring up that user's class we created and to kick things off.
+
+2
+00:00:05,770 --> 00:00:10,690
+We're going to wire up the people list which means that we need to do something when a user joins right
+
+3
+00:00:10,690 --> 00:00:11,200
+here.
+
+4
+00:00:11,200 --> 00:00:14,590
+And when a user leaves we want to keep that list up today.
+
+5
+00:00:14,590 --> 00:00:19,690
+And every time we update it we want to give a fresh copy of the list to the client which means that
+
+6
+00:00:19,690 --> 00:00:24,760
+the server is going to need to emit an event to the client the client is then going to listen for that
+
+7
+00:00:24,760 --> 00:00:25,100
+in the end.
+
+8
+00:00:25,110 --> 00:00:27,750
+And it's going to update the markup.
+
+9
+00:00:28,000 --> 00:00:32,620
+Now we can view exactly where this is going to happen by starting up the server with node Mohn server
+
+10
+00:00:32,890 --> 00:00:34,310
+forward slash server.
+
+11
+00:00:34,360 --> 00:00:41,740
+J.S. that is going to head over to localhost 3000 and open up a chat page display name Andrew room name
+
+12
+00:00:41,890 --> 00:00:43,950
+Lord Of The Rings.
+
+13
+00:00:44,000 --> 00:00:45,640
+Now once we're in here we have our People list.
+
+14
+00:00:45,650 --> 00:00:48,460
+Currently it should show us since we are in the room.
+
+15
+00:00:48,650 --> 00:00:52,150
+And when a new user joins it should automatically show that user.
+
+16
+00:00:52,220 --> 00:00:57,260
+Right now none of this is happening but with our new event in place it's all going to happen.
+
+17
+00:00:57,320 --> 00:01:02,090
+Now the first thing we're going to do is figure out exactly what this event is going to look like over
+
+18
+00:01:02,090 --> 00:01:02,990
+inside of.
+
+19
+00:01:03,060 --> 00:01:07,700
+Chat dot J.S. we can add a listener figuring out what works for us.
+
+20
+00:01:07,700 --> 00:01:10,040
+What does the client really need to get this done.
+
+21
+00:01:10,070 --> 00:01:14,960
+And then we can go ahead and wire up the server to fulfill those needs.
+
+22
+00:01:14,960 --> 00:01:20,930
+Right here inside of chat dot J.S. somewhere down below just below disconnect.
+
+23
+00:01:20,930 --> 00:01:23,590
+We're going to add a new listener socket.
+
+24
+00:01:23,720 --> 00:01:26,830
+On and we're going to listen for a brand new event.
+
+25
+00:01:26,870 --> 00:01:31,330
+This one is going to be called update user list.
+
+26
+00:01:31,460 --> 00:01:34,490
+Now update user list is going to need to get past some information.
+
+27
+00:01:34,550 --> 00:01:40,010
+We're going to need the list of users to show instead of the currently displayed ones which means we're
+
+28
+00:01:40,010 --> 00:01:45,740
+going to expect one argument a user's array and this user's array is going to just be an array of names
+
+29
+00:01:45,740 --> 00:01:52,480
+exactly like what we return from a get user list over inside of the user's class back inside of chat.
+
+30
+00:01:52,590 --> 00:01:52,880
+Yes.
+
+31
+00:01:52,910 --> 00:01:56,910
+For the moment all we're gonna do is log the list to the screen when it comes through.
+
+32
+00:01:56,910 --> 00:01:59,670
+Can Soldat log users list.
+
+33
+00:01:59,720 --> 00:02:03,090
+And the second argument will be the actual users array.
+
+34
+00:02:03,230 --> 00:02:04,040
+Awesome.
+
+35
+00:02:04,040 --> 00:02:08,030
+Once we had this wired up all we need to do is add some Jey query to update the DOM.
+
+36
+00:02:08,060 --> 00:02:12,350
+The harder part is going to be getting a updated and up to date list.
+
+37
+00:02:12,350 --> 00:02:13,800
+Back to the client.
+
+38
+00:02:14,180 --> 00:02:15,660
+Over inside of server yes.
+
+39
+00:02:15,680 --> 00:02:21,370
+Step 1 to that process is going to be to inport declasse that we've been working so hard to create.
+
+40
+00:02:21,380 --> 00:02:24,000
+Currently we do not use it up above.
+
+41
+00:02:24,230 --> 00:02:26,310
+I'm going to go ahead and get this done.
+
+42
+00:02:26,630 --> 00:02:29,000
+Just below where we load an Israel string.
+
+43
+00:02:29,000 --> 00:02:34,280
+We can make it constant and I'm going to go ahead and pull off the user's property which is the one
+
+44
+00:02:34,280 --> 00:02:36,770
+we export at the bottom of users.
+
+45
+00:02:36,920 --> 00:02:40,720
+J.S. and we can import that using require.
+
+46
+00:02:41,290 --> 00:02:44,180
+I'm going to require the local file daat forward slash.
+
+47
+00:02:44,180 --> 00:02:49,990
+It's in the hills directory and this one is called users perfect.
+
+48
+00:02:50,060 --> 00:02:53,560
+Now that we have users in place we can make a new instance of it.
+
+49
+00:02:53,570 --> 00:02:59,020
+This is going to be the user's instance we use down below we need a way to run these methods.
+
+50
+00:02:59,030 --> 00:03:07,130
+So right here below our IO variable we can make a new variable called users sending equal to new users
+
+51
+00:03:07,220 --> 00:03:08,420
+just like this.
+
+52
+00:03:08,420 --> 00:03:14,570
+Now we're going to be able to call all of our user methods to add remove fetch and otherwise manipulate
+
+53
+00:03:14,660 --> 00:03:16,390
+that data.
+
+54
+00:03:16,430 --> 00:03:21,980
+The first step in the process is going to be to add a user to the list when they join a chat room.
+
+55
+00:03:21,980 --> 00:03:25,800
+We can do that right after our call to socket dot join.
+
+56
+00:03:25,940 --> 00:03:30,580
+I'm going to remove the old comments although you can choose to keep yours around if you find there
+
+57
+00:03:30,580 --> 00:03:33,640
+are a good reference just below socket join.
+
+58
+00:03:33,680 --> 00:03:39,740
+We're going to call users dot add user adding our brand new user and we need to pass in those three
+
+59
+00:03:39,740 --> 00:03:41,090
+pieces of information.
+
+60
+00:03:41,210 --> 00:03:48,880
+The socket ID socket ID is where that's stored the name that's on Paramo dot name.
+
+61
+00:03:48,890 --> 00:03:55,250
+And finally we're going to go ahead and pass in the room name harams dot room.
+
+62
+00:03:55,280 --> 00:03:56,170
+Awesome.
+
+63
+00:03:56,180 --> 00:04:01,340
+Now as you notice this code is not supposed to run if there is a validation error meaning that the name
+
+64
+00:04:01,460 --> 00:04:03,250
+or the room name is not provided.
+
+65
+00:04:03,260 --> 00:04:04,840
+But currently that's not the case.
+
+66
+00:04:04,940 --> 00:04:07,700
+Right here we don't actually stop the function execution.
+
+67
+00:04:07,730 --> 00:04:14,260
+I'm going to use a return to make sure none of the code down below ever fires if the data is not valid.
+
+68
+00:04:14,300 --> 00:04:15,310
+Perfect.
+
+69
+00:04:15,350 --> 00:04:20,760
+The next step in the process is going to be to make sure that there is already no user with this ID.
+
+70
+00:04:20,930 --> 00:04:26,310
+I'm going to call users dot remove user to get that done.
+
+71
+00:04:26,410 --> 00:04:30,920
+Passing in the only argument it requires the socket Id just like this.
+
+72
+00:04:30,970 --> 00:04:32,740
+That means that user joins the room.
+
+73
+00:04:32,750 --> 00:04:35,430
+Then we remove them from any potential previous rooms.
+
+74
+00:04:35,440 --> 00:04:41,560
+And finally we add them to the new one now that we have this in place we can actually go ahead and admit
+
+75
+00:04:41,710 --> 00:04:47,970
+that event we're going to emit the event in the client expects update user list with the user's array.
+
+76
+00:04:47,980 --> 00:04:52,020
+If we don't admit the event the clients is never going to get the new list and we just updated the list.
+
+77
+00:04:52,030 --> 00:04:55,340
+So we definitely want them to get a fresh copy.
+
+78
+00:04:55,360 --> 00:05:00,850
+This means we want to emit an event to everyone in the chat room just as we had in our comments earlier
+
+79
+00:05:00,940 --> 00:05:04,330
+that gets done via IO dot too.
+
+80
+00:05:04,510 --> 00:05:09,560
+We're going to pass in the room name and then we're going to call emit emitting the event.
+
+81
+00:05:09,610 --> 00:05:11,170
+Now we can go ahead and fill out too.
+
+82
+00:05:11,170 --> 00:05:14,890
+First we want to pass in the room name harams room.
+
+83
+00:05:14,890 --> 00:05:16,200
+Has that information.
+
+84
+00:05:16,210 --> 00:05:22,360
+And next up we want to emit the event the event name as we just defined over and chat dot J S as Update
+
+85
+00:05:22,450 --> 00:05:23,550
+user list.
+
+86
+00:05:25,940 --> 00:05:29,030
+And the last thing we need to do is get the user list.
+
+87
+00:05:29,030 --> 00:05:36,190
+We already have that users that dot get user list passing in the name of the room.
+
+88
+00:05:36,200 --> 00:05:42,320
+We want to get the list for once again harams dark room that's going to be the only argument we pass
+
+89
+00:05:42,380 --> 00:05:48,880
+in with this call in place we should be able to actually view this over inside of the terminal.
+
+90
+00:05:48,920 --> 00:05:53,660
+I'm going to save this file which is going to restart the server and over inside of the browser I can
+
+91
+00:05:53,660 --> 00:05:59,360
+open up the developer tools to view the console log statements and I'm going to give the app a refresh
+
+92
+00:05:59,720 --> 00:06:04,970
+if I do refreshed the application what do we see we see a user's list right here and we have Andrew
+
+93
+00:06:04,970 --> 00:06:06,380
+printing twice.
+
+94
+00:06:06,380 --> 00:06:11,510
+We'll talk about why in just a second if I refresh the page for a second time what do we have.
+
+95
+00:06:11,510 --> 00:06:16,430
+We have Andrew printing three times as you can see this is happening because we're not removing users
+
+96
+00:06:16,430 --> 00:06:19,550
+from the list when they leave the chat application.
+
+97
+00:06:19,550 --> 00:06:21,830
+That's the second goal in this video.
+
+98
+00:06:21,830 --> 00:06:23,330
+We currently have a user list.
+
+99
+00:06:23,390 --> 00:06:26,540
+All we need to do is update it when a user leaves as well.
+
+100
+00:06:26,540 --> 00:06:31,920
+That's going to happen inside of atom and down near the bottom in the disconnect Lessner right here
+
+101
+00:06:31,940 --> 00:06:36,390
+we want to remove the user and then we want to update the list once again.
+
+102
+00:06:36,800 --> 00:06:39,200
+I'm going to do that by doing a few separate things.
+
+103
+00:06:39,200 --> 00:06:45,590
+First up we're going to make a variable called user storing any potentially removed users remember the
+
+104
+00:06:45,620 --> 00:06:49,220
+remove user method does return the user removed.
+
+105
+00:06:49,220 --> 00:06:54,680
+Users don't remove user passing in the ID socket dot ID.
+
+106
+00:06:54,680 --> 00:06:59,600
+Now we only want to do something if we actually remove the user if the person had it and joined around
+
+107
+00:06:59,610 --> 00:07:02,160
+there's no reason to actually do anything.
+
+108
+00:07:02,390 --> 00:07:08,840
+If a user was removed we are going to emit two events and we're going to emit them to every single person
+
+109
+00:07:08,840 --> 00:07:15,980
+connected to the chat room which means that we're going to be using IO dot to emit just like we did
+
+110
+00:07:15,980 --> 00:07:16,640
+up above.
+
+111
+00:07:17,760 --> 00:07:22,530
+We're going to do this two times so I'm going to copy this line and paste it down below the first one
+
+112
+00:07:22,530 --> 00:07:27,600
+is going to update the user list and the second one is going to print a little message like Andrew has
+
+113
+00:07:27,600 --> 00:07:29,090
+left the room.
+
+114
+00:07:29,220 --> 00:07:35,520
+The first one is going to take the user room property as the only argument user room stores the room
+
+115
+00:07:35,520 --> 00:07:36,890
+string.
+
+116
+00:07:36,920 --> 00:07:38,700
+We're going to provide that for both.
+
+117
+00:07:38,700 --> 00:07:40,490
+And now we can start emitting our events.
+
+118
+00:07:40,500 --> 00:07:48,890
+I'm going to emit the update user list event first right here inside of quotes update user list.
+
+119
+00:07:49,020 --> 00:07:52,650
+And we're going to go ahead and call the exact same method we did right up above.
+
+120
+00:07:52,650 --> 00:07:57,080
+Users not get user list passing in the room.
+
+121
+00:07:57,150 --> 00:07:59,160
+User datt room.
+
+122
+00:07:59,250 --> 00:08:02,430
+Now when someone leaves the room they're going to be removed from that list.
+
+123
+00:08:02,430 --> 00:08:07,030
+And we're not going to see those duplicates that we had over inside of the Web Developer Council.
+
+124
+00:08:07,080 --> 00:08:10,140
+The next thing that we want to do is emit a message.
+
+125
+00:08:10,140 --> 00:08:14,760
+We're going to emit a message from the admin to everybody kind of like we did up above.
+
+126
+00:08:14,760 --> 00:08:19,320
+We greeted the user and we told other users that someone joined right here.
+
+127
+00:08:19,320 --> 00:08:25,680
+We're going to emit a new message and we're going to call generate message like we've done in the past.
+
+128
+00:08:28,340 --> 00:08:31,800
+We're going to pass in those two arguments the first one is admen.
+
+129
+00:08:31,850 --> 00:08:33,960
+This is going to be an admin message.
+
+130
+00:08:34,070 --> 00:08:36,420
+And the second one can be a template string.
+
+131
+00:08:36,500 --> 00:08:43,940
+We're going to inject the users name user name and then we're going to say that user has left.
+
+132
+00:08:43,940 --> 00:08:44,900
+Perfect.
+
+133
+00:08:44,900 --> 00:08:48,410
+Now that we have this in place everything should be working as expected.
+
+134
+00:08:48,470 --> 00:08:52,210
+Hopefully over inside of chrome we no longer get those duplicates.
+
+135
+00:08:52,250 --> 00:08:53,840
+I'm going to give the page or refresh.
+
+136
+00:08:53,840 --> 00:08:54,860
+And what do we see.
+
+137
+00:08:54,860 --> 00:08:57,580
+We see we have a users list with just one user.
+
+138
+00:08:57,590 --> 00:09:03,500
+Andrew if I refresh the page we no longer get the duplicates because when I leave I get removed and
+
+139
+00:09:03,500 --> 00:09:08,000
+when I come back when the page finally finishes refreshing I get at it.
+
+140
+00:09:08,180 --> 00:09:11,500
+Now the same thing is going to be true if I add a new user for the moment.
+
+141
+00:09:11,510 --> 00:09:15,500
+I'm going to switch the browser to just take up half the width on my screen.
+
+142
+00:09:15,530 --> 00:09:18,070
+I know it's a little cramped will only be here for a second.
+
+143
+00:09:18,200 --> 00:09:21,340
+I'm going to open up a second tab and drag that to the other half.
+
+144
+00:09:21,470 --> 00:09:23,950
+So he can view both of these side by side.
+
+145
+00:09:23,960 --> 00:09:28,700
+I'm also going to open up the developer tools for this second tab and we're going to join the exact
+
+146
+00:09:28,700 --> 00:09:29,770
+same room.
+
+147
+00:09:29,780 --> 00:09:31,790
+Let's go to localhost three thousand.
+
+148
+00:09:31,790 --> 00:09:37,040
+I'm going to join as Mike and the room name is going to be the same l o t r.
+
+149
+00:09:37,040 --> 00:09:41,660
+Now as soon as I click Join I should see an updated list in both councils.
+
+150
+00:09:41,780 --> 00:09:42,860
+I'm going to click join.
+
+151
+00:09:42,860 --> 00:09:48,540
+Right here we get Andrew Mike and right here we also have Andrew Mike which is fantastic.
+
+152
+00:09:48,560 --> 00:09:50,930
+I also get a little message saying Mike has joined.
+
+153
+00:09:50,930 --> 00:09:52,430
+That was in place earlier.
+
+154
+00:09:52,460 --> 00:09:55,330
+The real test is what happens when a user leaves.
+
+155
+00:09:55,490 --> 00:10:00,230
+I'm going to kick Andrew out of the chat room and over here inside of our other chat window.
+
+156
+00:10:00,230 --> 00:10:06,450
+We have Andrew has left printing into the screen and we have our new user list with just one user.
+
+157
+00:10:06,500 --> 00:10:08,830
+Mike this is fantastic.
+
+158
+00:10:08,840 --> 00:10:13,490
+We're now keeping track of users as they come and go which lets us do really cool things like printing
+
+159
+00:10:13,490 --> 00:10:18,030
+custom messages and updating the people list.
+
+160
+00:10:18,060 --> 00:10:22,440
+The last thing to get done is to actually render the names to the screen instead of just printing them
+
+161
+00:10:22,440 --> 00:10:23,100
+in the council.
+
+162
+00:10:23,100 --> 00:10:27,180
+We want to go ahead and take these names and add them to the list.
+
+163
+00:10:27,180 --> 00:10:29,830
+That's going to happen over inside of our event listener.
+
+164
+00:10:29,850 --> 00:10:33,630
+We're going to use a query like we have in the past right here.
+
+165
+00:10:33,630 --> 00:10:36,740
+We're going to do something with those users.
+
+166
+00:10:37,380 --> 00:10:38,100
+First up.
+
+167
+00:10:38,100 --> 00:10:40,750
+Let's go ahead and make a new Jay Querrey element.
+
+168
+00:10:40,770 --> 00:10:43,160
+We're going to make a variable called ul.
+
+169
+00:10:43,200 --> 00:10:47,020
+This is going to store a new element using Jay Querrey.
+
+170
+00:10:47,070 --> 00:10:49,080
+We're going to create an unordered list.
+
+171
+00:10:49,080 --> 00:10:52,940
+We can actually create an ordered list since this is an ordered list of users.
+
+172
+00:10:53,010 --> 00:10:55,520
+That's n o l as opposed to a UL.
+
+173
+00:10:55,620 --> 00:11:00,590
+Right here we'll create that odel tag awesome.
+
+174
+00:11:00,590 --> 00:11:04,830
+Now we need to iterate over every user doing something with that user.
+
+175
+00:11:04,830 --> 00:11:08,570
+Users dot for each is going to let us get that done right here.
+
+176
+00:11:08,570 --> 00:11:14,970
+We're going to pass in our function and inside of that function we can add the individual user and the
+
+177
+00:11:15,020 --> 00:11:17,030
+argument for the function is the name.
+
+178
+00:11:17,030 --> 00:11:23,130
+This is the user string and all we're gonna do is append something to our ordered list up above.
+
+179
+00:11:23,240 --> 00:11:26,240
+That's going to be a o l dot append.
+
+180
+00:11:26,450 --> 00:11:31,190
+Now what exactly do we want to append what we want to append and list item the list item is going to
+
+181
+00:11:31,190 --> 00:11:35,670
+have a Text property equal to the name and that's going to get everything rendering just right.
+
+182
+00:11:35,780 --> 00:11:41,790
+Right here we can use J query to create a new list item by opening and closing our list item tag.
+
+183
+00:11:41,790 --> 00:11:48,020
+Then right after the closing parentheses for Jay Querrey we are going to call text so we can safely
+
+184
+00:11:48,020 --> 00:11:51,800
+set the text property equal to the user's name.
+
+185
+00:11:51,800 --> 00:11:56,180
+Now we have an updated list but it's not actually getting rendered to the screen.
+
+186
+00:11:56,180 --> 00:11:59,380
+The last step is to render it by adding it to the DOM.
+
+187
+00:11:59,390 --> 00:12:00,770
+Now over inside of chat.
+
+188
+00:12:00,800 --> 00:12:02,860
+HVM L we do have a place for that.
+
+189
+00:12:02,870 --> 00:12:08,030
+It's this div right here with an idea of users which means that we can select it.
+
+190
+00:12:08,180 --> 00:12:13,840
+Jay Querrey the selector is going to start with the hash sign since we're selecting by id and we're
+
+191
+00:12:13,850 --> 00:12:18,050
+selecting users then and we can go ahead and actually add the list.
+
+192
+00:12:18,200 --> 00:12:24,410
+I'm going to set the HTL male property equal to our ordered list up above as opposed to using it pand
+
+193
+00:12:24,410 --> 00:12:25,670
+we don't want to update a list.
+
+194
+00:12:25,670 --> 00:12:29,710
+We want to completely wipe the list replacing it with the new version.
+
+195
+00:12:29,720 --> 00:12:34,180
+Now we can save chat dot JSA and test things out over inside of the browser.
+
+196
+00:12:34,190 --> 00:12:37,370
+I'm going to go ahead and close the console refresh the page.
+
+197
+00:12:37,370 --> 00:12:38,310
+And what do we see.
+
+198
+00:12:38,420 --> 00:12:41,300
+We see the number one followed by Mike.
+
+199
+00:12:41,360 --> 00:12:46,190
+Now number one is coming from the fact that we're using an ordered list if I add a second user We're
+
+200
+00:12:46,190 --> 00:12:48,010
+going to see that second user.
+
+201
+00:12:48,320 --> 00:12:49,810
+Let's create a second user.
+
+202
+00:12:49,880 --> 00:12:54,480
+We're going to give it a display name of gen then we'll go to the same room.
+
+203
+00:12:54,550 --> 00:13:00,230
+EHLO t r and when we join what do we get we get a little message and we get our two users and the same
+
+204
+00:13:00,230 --> 00:13:02,300
+thing is showing up over here.
+
+205
+00:13:02,300 --> 00:13:07,340
+Now I'm going to go to the second tab and I'm going to close the first when I do that the list automatically
+
+206
+00:13:07,340 --> 00:13:07,850
+updates.
+
+207
+00:13:07,840 --> 00:13:13,580
+And we also get our message saying that Mike has left and this is fantastic.
+
+208
+00:13:13,610 --> 00:13:17,550
+With this in place we are one step closer to being complete.
+
+209
+00:13:17,570 --> 00:13:20,070
+The messages are still going to everybody.
+
+210
+00:13:20,070 --> 00:13:24,740
+They're not specific to the room but that is something we're going to take care of in the next video.
+
+211
+00:13:24,740 --> 00:13:26,480
+For now we are done.
+
+212
+00:13:26,720 --> 00:13:27,830
+I am going to make a commit.
+
+213
+00:13:27,830 --> 00:13:30,790
+It has been a little while and we do have a completed feature.
+
+214
+00:13:30,950 --> 00:13:32,570
+So let's go ahead and do that.
+
+215
+00:13:32,660 --> 00:13:38,120
+First up we'll run get status we have some new files as well as some existing ones.
+
+216
+00:13:38,420 --> 00:13:42,530
+I'll be using add to add all of those to the next commit.
+
+217
+00:13:42,740 --> 00:13:46,180
+Finally we can use get commit to actually make the commit.
+
+218
+00:13:46,250 --> 00:13:53,840
+I'm going to use the M flag to add our message and right inside of quotes add users class and update
+
+219
+00:13:54,320 --> 00:13:57,600
+user list event perfect.
+
+220
+00:13:57,740 --> 00:14:03,290
+We can go ahead and make this commit and push it up to get hub feel free to push to Heroku if you want
+
+221
+00:14:03,350 --> 00:14:05,010
+I'm going to hold off a little bit longer.
+
+222
+00:14:05,030 --> 00:14:10,340
+Everything should be working there as well as locally in the next video we're going to be making sure
+
+223
+00:14:10,340 --> 00:14:16,460
+those messages whether it's a text message or a location message only gets sent to the people in the
+
+224
+00:14:16,460 --> 00:14:17,210
+room.
+
+225
+00:14:17,240 --> 00:14:18,070
+That's coming up next.
+
+226
+00:14:18,080 --> 00:14:19,170
+So stay tuned.
+
+227
+00:14:19,180 --> 00:14:21,070
+I will see you then.
+

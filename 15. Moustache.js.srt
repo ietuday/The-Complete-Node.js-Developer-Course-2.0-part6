@@ -1,0 +1,940 @@
+﻿1
+00:00:00,480 --> 00:00:05,250
+Now that we have our time stamps rendering correctly to the screen we're going to go ahead and talk
+
+2
+00:00:05,250 --> 00:00:07,860
+about a templating engine called Moustache Scott.
+
+3
+00:00:07,960 --> 00:00:08,510
+Yes.
+
+4
+00:00:08,730 --> 00:00:13,500
+This is going to make it much easier to define some markup and render it multiple times.
+
+5
+00:00:13,560 --> 00:00:18,420
+In our case our messages are going to have the same set of elements in order to render it properly.
+
+6
+00:00:18,570 --> 00:00:21,330
+We're going to have a better tag for the user's name.
+
+7
+00:00:21,330 --> 00:00:23,030
+We're going to add the text into a paragraph.
+
+8
+00:00:23,030 --> 00:00:24,380
+All that sort of stuff.
+
+9
+00:00:24,420 --> 00:00:29,580
+Now instead of doing that inside an index just like we currently are we're going to create some templates
+
+10
+00:00:29,670 --> 00:00:34,710
+some markup in index dot h DML and we're going to render those here which means we're not going to need
+
+11
+00:00:34,710 --> 00:00:39,960
+to manually create and manipulate these elements which can be a huge burden.
+
+12
+00:00:39,980 --> 00:00:45,210
+Now in order to get started before we actually create any templates or render them we do need to download
+
+13
+00:00:45,250 --> 00:00:46,320
+the library.
+
+14
+00:00:46,320 --> 00:00:54,570
+We can get this by going to google chrome and Googling mustache dot Yes and we're looking for the get
+
+15
+00:00:54,570 --> 00:00:57,740
+hub repository which in this case happens to be the first link.
+
+16
+00:00:57,810 --> 00:01:00,390
+You can also go to mustache dot get help.
+
+17
+00:01:00,570 --> 00:01:04,670
+Oh and click the javascript link to get to the same location.
+
+18
+00:01:04,680 --> 00:01:08,660
+Now once you're here we do want to grab a specific version of the library.
+
+19
+00:01:08,730 --> 00:01:13,380
+We can go to the branch drop down and switch from branches to tags.
+
+20
+00:01:13,380 --> 00:01:17,460
+This is going to show us all of the versions that were released the version I'm going to be using here
+
+21
+00:01:17,460 --> 00:01:20,910
+is the most recent one to point to point one.
+
+22
+00:01:21,330 --> 00:01:22,590
+I'm going to grab that.
+
+23
+00:01:22,620 --> 00:01:28,000
+It's going to refresh the repository code down below and we're looking for a file called Moustache dot.
+
+24
+00:01:28,040 --> 00:01:33,460
+J.S. This is the library file We're going to need to download and add into index.
+
+25
+00:01:33,490 --> 00:01:39,510
+Each team out right here I can click raw to grab the raw javascript file and I can go ahead and save
+
+26
+00:01:39,510 --> 00:01:44,760
+it into the project by right clicking and clicking save it as I'm going to go into the project on the
+
+27
+00:01:44,760 --> 00:01:45,380
+desktop.
+
+28
+00:01:45,390 --> 00:01:50,550
+The public J.S. libs folder and right here we're going to add the file.
+
+29
+00:01:50,780 --> 00:01:55,890
+Now once you have the file in place we can kick things off by importing it inside of index dot HMO
+
+30
+00:01:58,500 --> 00:02:01,710
+near the bottom we currently have script tags for Jay queery and the moment.
+
+31
+00:02:01,720 --> 00:02:03,420
+This one is going to look pretty similar.
+
+32
+00:02:03,540 --> 00:02:10,670
+It's going to be a script tag then we'll add that source attribute so we can load in the new file forward
+
+33
+00:02:10,670 --> 00:02:13,160
+slash J.S. forwards slash libs.
+
+34
+00:02:13,160 --> 00:02:16,850
+Finally it's forwards slash mustache dot J.
+
+35
+00:02:16,840 --> 00:02:21,240
+S. Now with this in place we can go ahead and create a template and render it.
+
+36
+00:02:21,290 --> 00:02:24,330
+This is going to give you a pretty good idea about exactly what mustache can do.
+
+37
+00:02:24,440 --> 00:02:30,440
+And then we'll go ahead and actually wire it up with our new message and a new location message callbacks
+
+38
+00:02:31,130 --> 00:02:33,130
+to kick things off over inside an index.
+
+39
+00:02:33,380 --> 00:02:37,540
+You know we are going to make a new template by defining a script tag.
+
+40
+00:02:39,470 --> 00:02:41,690
+Now inside of the script tag we're going to add our markup.
+
+41
+00:02:41,690 --> 00:02:45,710
+But before we can do that we have to provide a couple of attributes on script.
+
+42
+00:02:45,710 --> 00:02:50,570
+First up this is going to be a reusable template and we're going to need a way to access it so we'll
+
+43
+00:02:50,570 --> 00:02:52,350
+give it an ID.
+
+44
+00:02:52,470 --> 00:02:57,930
+I'm going to call this one message template and the other property we're going to define is something
+
+45
+00:02:57,930 --> 00:02:59,180
+called the type.
+
+46
+00:02:59,250 --> 00:03:04,050
+Now the type lets your editor and the browser know what's stored inside of the script tag.
+
+47
+00:03:04,050 --> 00:03:09,880
+We're going to set the type equal to inside of quotes text forward slash template.
+
+48
+00:03:10,080 --> 00:03:14,970
+Now we can write some markup inside of here and it's going to work as expected to get things off.
+
+49
+00:03:14,970 --> 00:03:18,060
+Let's just go ahead and make a really simple paragraph takk.
+
+50
+00:03:18,090 --> 00:03:22,380
+We're going to make a p tag inside of the script tag and we'll add some text inside of it.
+
+51
+00:03:22,380 --> 00:03:27,400
+This is a template and you're going to go ahead and close the paragraph tag.
+
+52
+00:03:27,540 --> 00:03:28,140
+And that is it.
+
+53
+00:03:28,230 --> 00:03:29,550
+This is where we're going to start.
+
+54
+00:03:29,580 --> 00:03:35,140
+We have a message template script tag we can go ahead and now render this over inside of index dot Jap's
+
+55
+00:03:35,370 --> 00:03:39,940
+by commenting out all the code inside of the New Message listener.
+
+56
+00:03:39,980 --> 00:03:41,560
+I'm going to comment out all of that code.
+
+57
+00:03:41,560 --> 00:03:43,500
+Now we can implement the mustache.
+
+58
+00:03:43,510 --> 00:03:45,390
+J.S. rendering method.
+
+59
+00:03:45,390 --> 00:03:50,760
+First up we have to grab that template we can make a variable called template to do just this and we're
+
+60
+00:03:50,760 --> 00:04:00,280
+going to do is select it with Jay query using the ID we just provided message hyphen template.
+
+61
+00:04:00,280 --> 00:04:04,990
+Now we need to call the H TNL method which is going to return the markup inside of message template
+
+62
+00:04:05,170 --> 00:04:07,750
+which is the template code or paragraph tag.
+
+63
+00:04:07,810 --> 00:04:14,050
+In this case once we have that we can go ahead and actually call a method on moustache which was available
+
+64
+00:04:14,050 --> 00:04:17,160
+to us because we added that script tag.
+
+65
+00:04:17,590 --> 00:04:20,180
+Let's make a variable called H DML.
+
+66
+00:04:20,200 --> 00:04:24,040
+This is the thing we're eventually going to add it to the browser and we're going to set it equal to
+
+67
+00:04:24,040 --> 00:04:28,890
+a call to mustache dot render.
+
+68
+00:04:28,890 --> 00:04:32,420
+Now mustache dot render takes the template you want to render.
+
+69
+00:04:32,490 --> 00:04:34,980
+In this case we have access to that right here.
+
+70
+00:04:35,160 --> 00:04:36,240
+We're going to go ahead and render it.
+
+71
+00:04:36,240 --> 00:04:38,440
+And now we can spit it out in the browser.
+
+72
+00:04:38,550 --> 00:04:41,570
+But adding it to the messages Id just like we do.
+
+73
+00:04:41,620 --> 00:04:49,550
+So we're going to select the element with an ID of messages and we're going to call append and we're
+
+74
+00:04:49,550 --> 00:04:55,110
+going to append the template we just render which we have access to inside of H DML.
+
+75
+00:04:55,160 --> 00:04:59,390
+Now with this in place our server restarted and we can actually play around with this by refreshing
+
+76
+00:04:59,450 --> 00:05:00,230
+the browser.
+
+77
+00:05:00,500 --> 00:05:02,890
+I'm going to give the browser a refresh and what do we get.
+
+78
+00:05:02,980 --> 00:05:08,750
+We got this is a template for our welcome message and if I type anything else we also get this as a
+
+79
+00:05:08,750 --> 00:05:12,210
+template not super interesting not super useful.
+
+80
+00:05:12,320 --> 00:05:18,290
+What is cool that was that mustache lets you inject values which means we can set up places in our template
+
+81
+00:05:18,290 --> 00:05:20,690
+where we expect a value to get passed in.
+
+82
+00:05:20,720 --> 00:05:27,650
+For example we have that text property in order to reference a value you can use the double curly braces
+
+83
+00:05:27,650 --> 00:05:29,000
+syntax like this.
+
+84
+00:05:29,000 --> 00:05:31,930
+And then you can go ahead and type the name like text.
+
+85
+00:05:31,940 --> 00:05:38,180
+Now in order to actually provide this value we have to send in a second argument to the render method
+
+86
+00:05:38,630 --> 00:05:40,340
+instead of just passing in the template.
+
+87
+00:05:40,430 --> 00:05:43,790
+We're going to pass in the template and we're going to pass in an object.
+
+88
+00:05:43,790 --> 00:05:47,420
+This object is going to have all the properties that you're going to be allowed to render.
+
+89
+00:05:47,420 --> 00:05:52,550
+Now we're currently expecting this text property so we should probably go ahead and provide it right
+
+90
+00:05:52,550 --> 00:05:53,080
+here.
+
+91
+00:05:53,120 --> 00:05:59,390
+I'm going to set text equal to the value that comes back on a message dot text.
+
+92
+00:05:59,390 --> 00:06:02,120
+Now we're rendering the template in a dynamic way.
+
+93
+00:06:02,210 --> 00:06:06,740
+The template serves as the reusable structure but the data it's always going to change because it gets
+
+94
+00:06:06,740 --> 00:06:09,250
+passed in when we call Brender.
+
+95
+00:06:09,260 --> 00:06:14,690
+With this in place we can go ahead and refresh Crome and right here we see welcome to the chat app.
+
+96
+00:06:14,690 --> 00:06:21,870
+And if I go ahead and type a message that is going to show to the screen which is fantastic.
+
+97
+00:06:21,910 --> 00:06:26,080
+Now the next step in the process is going to be to get all the data showing we have a firm property
+
+98
+00:06:26,080 --> 00:06:27,910
+and a created at property 2.
+
+99
+00:06:28,090 --> 00:06:32,650
+We actually have access to that created at property the formatted time.
+
+100
+00:06:32,710 --> 00:06:35,830
+We're going to go ahead and uncomment this formatted time line.
+
+101
+00:06:35,860 --> 00:06:39,310
+This is the only one we're actually going to carry over to the new system.
+
+102
+00:06:39,360 --> 00:06:45,490
+I'm going to add it up top right here because we do still want to use form at a time when we render.
+
+103
+00:06:45,490 --> 00:06:49,720
+Now before we do anything else with the template Let's go ahead and simply pass in the values we already
+
+104
+00:06:49,720 --> 00:06:51,430
+passed the text value in.
+
+105
+00:06:51,430 --> 00:06:56,000
+Next up we can pass in from it's accessible via message from.
+
+106
+00:06:56,110 --> 00:06:58,000
+And we can also pass in a time stamp.
+
+107
+00:06:58,000 --> 00:07:00,190
+You can call that property whatever you like.
+
+108
+00:07:00,220 --> 00:07:06,970
+I'm going to continue to call it created at and I'm going to set it equal to the formatted time up above.
+
+109
+00:07:06,970 --> 00:07:11,500
+Now with this in place all the data is indeed getting passed in we just need to actually go ahead and
+
+110
+00:07:11,500 --> 00:07:13,820
+use it in index.
+
+111
+00:07:14,530 --> 00:07:15,780
+We can use all of it.
+
+112
+00:07:15,780 --> 00:07:21,180
+And we're also going to provide a custom structure just like we did when we set up the code above.
+
+113
+00:07:21,180 --> 00:07:26,430
+We're going to be using some classes I've defined inside of the template for this project.
+
+114
+00:07:26,530 --> 00:07:31,350
+We're going to start off with a list item using the tag from here.
+
+115
+00:07:31,370 --> 00:07:38,380
+We're going to go ahead and add a class and we're going to call this class message and in here we can
+
+116
+00:07:38,380 --> 00:07:44,140
+add two divs the first div is going to be the title area where we add the From and created at values.
+
+117
+00:07:44,140 --> 00:07:48,100
+And the second div is going to be the body of the message.
+
+118
+00:07:48,490 --> 00:07:54,040
+Let's add one right here and we'll add a second one just below.
+
+119
+00:07:54,080 --> 00:08:00,890
+Now for the first div we are going to provide a class the class will equal message underscore underscore
+
+120
+00:08:00,920 --> 00:08:04,310
+title this is where the message title information is going to go.
+
+121
+00:08:04,400 --> 00:08:09,230
+And we're going to kick things off in here by providing an H for tag which is going to render a nice
+
+122
+00:08:09,230 --> 00:08:15,410
+header to the screen and we're going to put inside of H for is the from data which we can do by using
+
+123
+00:08:15,410 --> 00:08:22,130
+those double curly braces and putting from right here the same exact thing holds true for span that's
+
+124
+00:08:22,130 --> 00:08:29,470
+going to happen down below we'll add span tag and inside of the span tag we're going to inject created
+
+125
+00:08:29,480 --> 00:08:34,160
+at adding our double curly braces and specifying the property name.
+
+126
+00:08:34,160 --> 00:08:38,360
+Now we can go ahead and move on to the actual message body itself.
+
+127
+00:08:38,360 --> 00:08:43,250
+That's going to happen down below inside of our second div which we will be giving a class.
+
+128
+00:08:43,250 --> 00:08:49,640
+The second is going to have a class equal to message underscore underscore body.
+
+129
+00:08:49,850 --> 00:08:56,060
+And for a basic message a non location based message all we're going to do is add a paragraph tag and
+
+130
+00:08:56,060 --> 00:09:02,540
+we're going to render our text inside it by providing it to curly braces followed by text with this
+
+131
+00:09:02,540 --> 00:09:03,190
+in place.
+
+132
+00:09:03,200 --> 00:09:09,260
+We actually have a really great system for rendering our message template the code the markup it's defined
+
+133
+00:09:09,260 --> 00:09:11,640
+over here which means that it's reusable.
+
+134
+00:09:11,720 --> 00:09:16,370
+And inside an index dot J.S. we just have a little bit of code to get everything wired up.
+
+135
+00:09:16,370 --> 00:09:18,310
+This is a much more scalable solution.
+
+136
+00:09:18,310 --> 00:09:25,140
+It's a lot easier than managing the elements like we did down below for new location message.
+
+137
+00:09:25,190 --> 00:09:26,990
+I'm going to go ahead and save index Dot.
+
+138
+00:09:27,020 --> 00:09:27,480
+Yes.
+
+139
+00:09:27,560 --> 00:09:29,840
+Move into the browser and give things a refresh.
+
+140
+00:09:29,840 --> 00:09:34,390
+When we do we can see we now have a nice set of styles for the message.
+
+141
+00:09:34,430 --> 00:09:41,510
+This is some the message I'm going to send that off we get the name the time stamp and the text all
+
+142
+00:09:41,540 --> 00:09:42,240
+printing.
+
+143
+00:09:42,240 --> 00:09:45,160
+It looks a heck of a lot better than it did earlier.
+
+144
+00:09:45,170 --> 00:09:48,250
+Now our send location message is still going to look like trash.
+
+145
+00:09:48,350 --> 00:09:52,030
+If I click send a location it's going to take a few seconds to get the job done.
+
+146
+00:09:52,040 --> 00:09:53,090
+And here it is.
+
+147
+00:09:53,090 --> 00:09:56,150
+It's an styled because it is not using a template.
+
+148
+00:09:56,270 --> 00:09:59,830
+Well we're going to do is add a template for the new location message.
+
+149
+00:09:59,900 --> 00:10:03,700
+We'll do some of that together and some of it is going to be a challenge for you.
+
+150
+00:10:04,520 --> 00:10:07,300
+Together we're going to set up the markup for the template.
+
+151
+00:10:07,310 --> 00:10:13,350
+Your job will be to render it and pass in the necessary values over inside of index.
+
+152
+00:10:13,520 --> 00:10:17,240
+HTL we can get started doing this by creating a second template.
+
+153
+00:10:17,450 --> 00:10:20,400
+Now the second template is going to be pretty similar to the first.
+
+154
+00:10:20,480 --> 00:10:25,150
+We can actually go ahead and duplicate this template by copying and pasting it down below.
+
+155
+00:10:25,250 --> 00:10:31,740
+All we need to do is change the ID from message template to location message template.
+
+156
+00:10:32,090 --> 00:10:36,800
+Now the title area is going to be the same we're going to have our Froment property as well as created
+
+157
+00:10:36,860 --> 00:10:42,590
+at it's the body that's going to change instead of rendering a paragraph with the text we're going to
+
+158
+00:10:42,590 --> 00:10:46,350
+render a paragraph that has the link using an anchor tag.
+
+159
+00:10:46,550 --> 00:10:51,570
+Now to add that anchor tag we're going to add the a tag just like this.
+
+160
+00:10:51,610 --> 00:10:55,180
+Then inside of the ATF attribute we're going to be injecting the value.
+
+161
+00:10:55,180 --> 00:10:59,390
+This is going to be the you R-AL that gets passed from server to client.
+
+162
+00:10:59,410 --> 00:11:05,250
+We're going to add our equal signs are curly braces and the value we want to add here is you are l.
+
+163
+00:11:05,470 --> 00:11:11,530
+Next up we are going to carry over that target property sending an equal to blank underscore blank which
+
+164
+00:11:11,530 --> 00:11:13,240
+will open up the link in a new tab.
+
+165
+00:11:13,240 --> 00:11:19,620
+And finally we can go ahead and close the anchor tag adding the text for the link inside.
+
+166
+00:11:19,870 --> 00:11:22,460
+Good text for this link would be my current location.
+
+167
+00:11:22,510 --> 00:11:27,970
+Just like we have right now and this is all we need to do for the template you're part of the challenge
+
+168
+00:11:27,970 --> 00:11:35,110
+is going to be to wire up all of this inside of index dot J.S. which means down here inside of new location
+
+169
+00:11:35,110 --> 00:11:38,170
+message you want to do something pretty similar to what we have above.
+
+170
+00:11:38,380 --> 00:11:42,940
+Instead of rendering everything with J queries you're going to render the template passing in the necessary
+
+171
+00:11:42,940 --> 00:11:47,490
+data text you R-AL and the formatted time stamp.
+
+172
+00:11:47,710 --> 00:11:49,730
+Take a moment to knock this out.
+
+173
+00:11:49,840 --> 00:11:54,010
+When you're done I want you to go ahead and move into the browser send some location messages and make
+
+174
+00:11:54,010 --> 00:11:58,450
+sure it looks like it should styled where the name is in bold.
+
+175
+00:11:58,450 --> 00:12:02,900
+The time stamp is in a light gray and the link shows up down below.
+
+176
+00:12:02,920 --> 00:12:09,930
+Once you're done and everything is working you can go ahead and click play.
+
+177
+00:12:09,940 --> 00:12:13,560
+All right the first thing we're going to do is comment out the code.
+
+178
+00:12:13,570 --> 00:12:18,490
+We no longer need that's everything but the variable formatted time.
+
+179
+00:12:18,490 --> 00:12:24,190
+Next up we're going to go ahead and grab the template from the HD now by making a variable called template
+
+180
+00:12:24,670 --> 00:12:29,770
+and we're going to use J query to select it by ID right inside of the quotes we'll add our selector.
+
+181
+00:12:29,770 --> 00:12:36,580
+We want to select by ID so we'll add that pound sign location hyphen message hyphen template is the
+
+182
+00:12:36,580 --> 00:12:42,270
+IDB provided and now we want to go ahead and call each team to get its inner TNL back.
+
+183
+00:12:42,280 --> 00:12:45,340
+This is everything I have highlighted right here.
+
+184
+00:12:45,340 --> 00:12:50,560
+Next up we're going to go ahead and actually render the template by creating a variable called H TNL
+
+185
+00:12:50,560 --> 00:12:52,230
+to store the return value.
+
+186
+00:12:52,330 --> 00:12:55,590
+And we're going to call mustache dot render.
+
+187
+00:12:55,780 --> 00:12:57,100
+This takes those two arguments.
+
+188
+00:12:57,100 --> 00:13:00,980
+The template you want to render and the data you want to render into that template.
+
+189
+00:13:01,030 --> 00:13:04,530
+Now the data is optional but we do indeed need to pass some data through.
+
+190
+00:13:04,600 --> 00:13:08,310
+So we will be providing that as well template is our first argument.
+
+191
+00:13:08,440 --> 00:13:10,790
+And the second one is going to be an object.
+
+192
+00:13:10,930 --> 00:13:16,720
+I'm going to start by setting from equal to message from and we can do the same thing with the u r l
+
+193
+00:13:16,930 --> 00:13:21,150
+u r l equals a message dot A u r l for created at.
+
+194
+00:13:21,160 --> 00:13:27,730
+We're going to use the form at a time variable instead created at get set equal to formatted time which
+
+195
+00:13:27,730 --> 00:13:29,530
+is defined just above.
+
+196
+00:13:29,560 --> 00:13:35,050
+Now that we have access to the HVM we need to render we can use a J query selector to select the element
+
+197
+00:13:35,230 --> 00:13:40,690
+with an idea of messages and we're going to call it pend to add a new message the new message we want
+
+198
+00:13:40,690 --> 00:13:44,250
+to add is available via the T.M. variable.
+
+199
+00:13:44,320 --> 00:13:49,670
+Now that we have our function completely converted over we can remove the old commented out code.
+
+200
+00:13:49,750 --> 00:13:53,530
+Save the file and test things out over inside of chrome.
+
+201
+00:13:53,530 --> 00:13:56,440
+I'm going to give the page to refresh to load that latest code.
+
+202
+00:13:56,440 --> 00:13:58,790
+I'll send a text message to make sure that still works.
+
+203
+00:13:58,810 --> 00:14:02,230
+Now we can go ahead and send a location message.
+
+204
+00:14:02,290 --> 00:14:07,090
+We should see in just a second the new data rendering and it is indeed working as expected.
+
+205
+00:14:07,090 --> 00:14:09,610
+We have the name the time stamp and the link.
+
+206
+00:14:09,610 --> 00:14:12,740
+I can go ahead and click the link to make sure it is still working.
+
+207
+00:14:12,820 --> 00:14:16,030
+And it is the little marker shows up right here.
+
+208
+00:14:16,030 --> 00:14:21,760
+With this in place we now have a much better set up for creating these front end templates instead of
+
+209
+00:14:21,760 --> 00:14:24,550
+having to do the heavy lifting inside of index.
+
+210
+00:14:24,640 --> 00:14:27,730
+Yes we can do the template inside of index.
+
+211
+00:14:27,750 --> 00:14:28,620
+H t m l.
+
+212
+00:14:28,660 --> 00:14:30,130
+Simply passing the data in.
+
+213
+00:14:30,210 --> 00:14:32,750
+It's a much more scalable solution.
+
+214
+00:14:32,950 --> 00:14:36,580
+Now that we have this in place we are done and we can go ahead and commit our changes by shutting down
+
+215
+00:14:36,580 --> 00:14:38,910
+the server and running get status.
+
+216
+00:14:38,920 --> 00:14:44,110
+Here we have a new file as well as a couple of modified ones get add dot is going to take care of all
+
+217
+00:14:44,110 --> 00:14:49,790
+of that for us and we can make our commit get commit with the a flag.
+
+218
+00:14:49,870 --> 00:14:59,680
+Actually we already added it so we can just use the M flag and mustache J us for message templates.
+
+219
+00:14:59,690 --> 00:15:00,590
+Excellent.
+
+220
+00:15:00,620 --> 00:15:05,650
+I'm going to push this up to get hub and we can go ahead and take a quick moment to deploy to Heroku
+
+221
+00:15:05,680 --> 00:15:09,110
+to use and get push Heroku master.
+
+222
+00:15:09,440 --> 00:15:13,910
+I'm going to push this up just to make sure all the templates are rendering properly on Heroku just
+
+223
+00:15:13,970 --> 00:15:15,400
+like they are locally.
+
+224
+00:15:15,560 --> 00:15:18,610
+It should take just a second to deploy once it's up.
+
+225
+00:15:18,620 --> 00:15:24,260
+We can open it up by either running Heroku open or grabbing that u r l as we've done before here it's
+
+226
+00:15:24,260 --> 00:15:27,230
+launching the app it looks like everything and did go as expected.
+
+227
+00:15:27,350 --> 00:15:28,240
+I'm going to grab the app.
+
+228
+00:15:28,250 --> 00:15:30,940
+You are all move into chrome and open it up.
+
+229
+00:15:31,520 --> 00:15:34,630
+And now we're doing the application live inside of Heroku.
+
+230
+00:15:34,640 --> 00:15:37,940
+And the message data is showing up as expected.
+
+231
+00:15:37,940 --> 00:15:43,250
+The same thing should hold true for sending the location the send location message should use the new
+
+232
+00:15:43,250 --> 00:15:43,880
+setup.
+
+233
+00:15:43,880 --> 00:15:49,180
+It is indeed working as expected which is fan tactic.
+
+234
+00:15:49,190 --> 00:15:50,170
+That's it for this one.
+
+235
+00:15:50,180 --> 00:15:51,620
+I will see you next time
+

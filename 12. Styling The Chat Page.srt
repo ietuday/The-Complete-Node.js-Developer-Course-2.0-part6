@@ -1,0 +1,1056 @@
+﻿1
+00:00:00,180 --> 00:00:03,090
+In this video you're finally going to get some styles in place.
+
+2
+00:00:03,090 --> 00:00:09,140
+So our app looks a little less like an ANS tiled h DML page and a little more like a real web app.
+
+3
+00:00:09,180 --> 00:00:13,770
+Now on the left we have this people panel we're not going to be wiring that up yet although we are giving
+
+4
+00:00:13,770 --> 00:00:15,700
+it a place inside of our page.
+
+5
+00:00:15,720 --> 00:00:20,520
+Eventually this is going to store a list of all the people connected to the individual chat room that's
+
+6
+00:00:20,520 --> 00:00:24,810
+going to come a bit later over here the main area is going to be the messages panel.
+
+7
+00:00:24,810 --> 00:00:27,290
+Now the individual messages are still on styled.
+
+8
+00:00:27,300 --> 00:00:28,580
+That's going to come later.
+
+9
+00:00:28,650 --> 00:00:34,290
+But we do have a place to put all of that stuff Dambulla we have our footer This includes our form for
+
+10
+00:00:34,290 --> 00:00:36,920
+sending a message the text box and the button.
+
+11
+00:00:36,990 --> 00:00:41,120
+And that also includes our send location button sitting right here.
+
+12
+00:00:41,250 --> 00:00:46,490
+Now to get all of this done we're going to add a CSSA template that I've created for this project.
+
+13
+00:00:46,530 --> 00:00:49,580
+We're also going to be adding some classes to our HDMI.
+
+14
+00:00:49,590 --> 00:00:52,260
+All this is going to let us apply the various styles.
+
+15
+00:00:52,260 --> 00:00:58,050
+And finally we'll be making a few small tweaks to our javascript to improve the user experience.
+
+16
+00:00:58,050 --> 00:01:04,650
+Let's go ahead and Diven the first thing we're going to do is make a new folder and a new file to store
+
+17
+00:01:04,650 --> 00:01:05,550
+our styles.
+
+18
+00:01:05,550 --> 00:01:08,800
+This is going to be the template styles will be grabbing in just a moment.
+
+19
+00:01:08,910 --> 00:01:11,840
+Then we're going to go ahead and load it into index dot HD.
+
+20
+00:01:11,940 --> 00:01:14,810
+So those styles are used when we render the chat app.
+
+21
+00:01:15,060 --> 00:01:19,140
+Now the first thing we're going to do is create a new folder inside of public and we're going to call
+
+22
+00:01:19,140 --> 00:01:23,370
+this folder CSSA and we're going to add just one file to it.
+
+23
+00:01:23,550 --> 00:01:27,410
+A new file called styles dot C Ss.
+
+24
+00:01:27,450 --> 00:01:33,480
+Now before we go off and grab any styles Let's go ahead and import this file into our application.
+
+25
+00:01:33,630 --> 00:01:38,520
+And in order to test and make sure that's working what we're going to do is write a very simple selector.
+
+26
+00:01:38,730 --> 00:01:44,670
+We're going to select everything using the star than inside of curly braces we're going to add a style
+
+27
+00:01:45,600 --> 00:01:48,600
+setting the color for everything equal to red.
+
+28
+00:01:48,600 --> 00:01:51,000
+Go ahead and make your file just like this one.
+
+29
+00:01:51,000 --> 00:01:55,600
+We're going to save that and then we'll import it over inside of index dot each time M.
+
+30
+00:01:55,830 --> 00:02:01,840
+Right here at the bottom of the head tag below are met a tag we're going to add a link tag.
+
+31
+00:02:01,860 --> 00:02:07,470
+This is going to let us link a style sheet we have to provide two attributes to get that done.
+
+32
+00:02:07,470 --> 00:02:14,070
+First off we have to tell HVM exactly what we're linking to by specifying the RTL or relation attribute.
+
+33
+00:02:14,130 --> 00:02:17,400
+In this case we're trying to link a stylesheet.
+
+34
+00:02:17,500 --> 00:02:20,250
+So we're going to provide that as the value.
+
+35
+00:02:20,260 --> 00:02:23,560
+Now the next thing we need to do is provide the ref attribute.
+
+36
+00:02:23,590 --> 00:02:26,830
+This is similar to the source attribute for the script tag.
+
+37
+00:02:26,890 --> 00:02:29,690
+It's the path to the file you want to link.
+
+38
+00:02:29,830 --> 00:02:35,230
+In this case we have that at forward slash CSSA and we just created the file styles.
+
+39
+00:02:35,410 --> 00:02:38,410
+Success forward slash styles.
+
+40
+00:02:38,470 --> 00:02:45,010
+Dot C-s that's with this in place we can save index dot h TNL and give our page a refresh over inside
+
+41
+00:02:45,010 --> 00:02:47,370
+of the browser or load it up for the very first time.
+
+42
+00:02:47,410 --> 00:02:49,990
+And what we see is a hideously ugly page.
+
+43
+00:02:49,990 --> 00:02:55,630
+We've managed to make it even uglier than it was previously but this is great because it means our stylesheet
+
+44
+00:02:55,660 --> 00:03:00,480
+file is getting imported correctly now in order to grab the actual template.
+
+45
+00:03:00,490 --> 00:03:02,380
+We're going to be using for the chat app.
+
+46
+00:03:02,380 --> 00:03:10,750
+We're going to visit a u r l h t t p colon forward slash forward slash length's dot Meade dot IO my
+
+47
+00:03:10,750 --> 00:03:14,690
+site forward slash chat hyphen CSSA.
+
+48
+00:03:14,770 --> 00:03:18,630
+This is just a bit like length that's going to redirect you over to a jest.
+
+49
+00:03:18,730 --> 00:03:22,990
+And here we have two options we can grab either the minute style template or the.
+
+50
+00:03:23,030 --> 00:03:27,820
+UNIDENTIFIED one I'm gonna go ahead and grab this minute one by either highlighting it or clicking this
+
+51
+00:03:27,820 --> 00:03:30,680
+raw link which brings us to the file.
+
+52
+00:03:30,880 --> 00:03:33,220
+We're going to grab the entire contents we see here.
+
+53
+00:03:33,370 --> 00:03:37,740
+Head over into Adam and paste it inside of our CSSA file.
+
+54
+00:03:37,850 --> 00:03:40,520
+Removing obviously the previous selector.
+
+55
+00:03:40,720 --> 00:03:41,580
+Perfect.
+
+56
+00:03:41,800 --> 00:03:45,610
+Now that we had this in place we can give our page a refresh although we're not really going to see
+
+57
+00:03:45,610 --> 00:03:49,090
+much improvement over inside of localhost 3000.
+
+58
+00:03:49,120 --> 00:03:53,350
+I'll give the browser a refresh and clearly things are different but it doesn't look anything like that
+
+59
+00:03:53,350 --> 00:03:56,070
+screen shot we had in the beginning of this video.
+
+60
+00:03:56,120 --> 00:04:02,950
+That is because we need to apply some classes to our DML in order to get everything to work correctly.
+
+61
+00:04:02,950 --> 00:04:08,920
+We're also going to need to tweak the structure adding a few container elements to help with alignment
+
+62
+00:04:09,340 --> 00:04:12,750
+over inside out and we can get this done in just a few minutes.
+
+63
+00:04:13,990 --> 00:04:20,710
+This template was built around a few key classes the first one needs to get applied to the body by setting
+
+64
+00:04:20,710 --> 00:04:26,040
+the class attribute equal to inside of quotes chat.
+
+65
+00:04:26,140 --> 00:04:31,540
+This tells the style sheet to load the styles for this chat page and we're going to go ahead and remove.
+
+66
+00:04:31,540 --> 00:04:32,860
+Welcome to the chat app.
+
+67
+00:04:32,860 --> 00:04:35,160
+This is no longer necessary.
+
+68
+00:04:35,200 --> 00:04:39,970
+Now the next thing we're going to do is create a div and this div is going to house that people list
+
+69
+00:04:40,000 --> 00:04:41,850
+we saw on the left hand side.
+
+70
+00:04:41,950 --> 00:04:44,140
+It's going to be empty for the moment but that's fine.
+
+71
+00:04:44,140 --> 00:04:47,440
+We can still go ahead and create it right here.
+
+72
+00:04:47,470 --> 00:04:48,430
+We're going to make a div
+
+73
+00:04:52,030 --> 00:04:57,790
+and we're going to give this div a class and that class is going to get set equal to the following chat
+
+74
+00:04:58,210 --> 00:05:02,390
+underscore underscore that's two underscores side bar.
+
+75
+00:05:02,680 --> 00:05:06,460
+This is a naming convention used in some style sheet templates.
+
+76
+00:05:06,460 --> 00:05:07,780
+It's really a matter of preference.
+
+77
+00:05:07,780 --> 00:05:10,640
+You could call this whatever you want when you create the style sheet.
+
+78
+00:05:10,660 --> 00:05:14,550
+I happen to call it chat underscore underscore sidebar.
+
+79
+00:05:14,590 --> 00:05:18,920
+It's a sub element inside of the greater chat app.
+
+80
+00:05:19,150 --> 00:05:25,180
+Now inside of here we're going to add a little title using the header three tag we're going to give
+
+81
+00:05:25,180 --> 00:05:29,000
+this a title of people or whatever you want to call that side bar list.
+
+82
+00:05:29,010 --> 00:05:34,420
+And we're also going to provide a div which will eventually house the individual users although as I
+
+83
+00:05:34,420 --> 00:05:37,150
+mentioned we're not going to be wiring that up yet.
+
+84
+00:05:37,180 --> 00:05:42,890
+Now we can go ahead and give this an I.D. setting it equal to users so we can target it a bit later.
+
+85
+00:05:42,970 --> 00:05:46,360
+And that's all we need for the chat sidebar at the moment.
+
+86
+00:05:46,360 --> 00:05:52,440
+Now the next thing that we're going to do is create a div and that this debt is going to house that
+
+87
+00:05:52,440 --> 00:05:57,810
+main area which means it's going to contain not only our chat messages but also the little form at the
+
+88
+00:05:57,810 --> 00:06:01,470
+bottom everything on the right hand side of the sidewalk.
+
+89
+00:06:01,740 --> 00:06:05,210
+This also is going to require a custom class for some styles.
+
+90
+00:06:05,220 --> 00:06:11,050
+This one is called Chat underscore underscore Maine and inside of here we're going to add not only are
+
+91
+00:06:11,070 --> 00:06:14,410
+unordered lists but also our form and button.
+
+92
+00:06:14,460 --> 00:06:19,930
+Let's go ahead and take all of our current markup the unordered list down to the send location button.
+
+93
+00:06:19,950 --> 00:06:23,500
+Cut it out and paste it inside of chat main.
+
+94
+00:06:23,520 --> 00:06:24,680
+Now we're not quite done yet.
+
+95
+00:06:24,690 --> 00:06:26,520
+There are a few more things to tweak.
+
+96
+00:06:26,520 --> 00:06:29,680
+First up we have to add a class to our ordered list.
+
+97
+00:06:31,670 --> 00:06:34,730
+We'll set the class equal to chat messages.
+
+98
+00:06:34,730 --> 00:06:39,770
+This is going to provide the necessary styles and the last div we need to create is going to be for
+
+99
+00:06:39,770 --> 00:06:40,550
+that FOTR.
+
+100
+00:06:40,610 --> 00:06:46,250
+This is going to be the gray bar at the bottom that contains both your form as well as the send location
+
+101
+00:06:46,310 --> 00:06:47,320
+button.
+
+102
+00:06:47,420 --> 00:06:50,820
+We're going to make a div which is going to help with alignment.
+
+103
+00:06:51,020 --> 00:06:56,870
+And we're going to add the form and the button inside of it by kind of get out and pasting it right
+
+104
+00:06:56,870 --> 00:06:58,040
+in here.
+
+105
+00:06:58,040 --> 00:07:02,480
+Now we are going to need to add a class here too as you might have guessed setting the class attribute
+
+106
+00:07:02,480 --> 00:07:03,820
+equal to the string.
+
+107
+00:07:03,920 --> 00:07:07,220
+Chat underscore underscore footer.
+
+108
+00:07:07,250 --> 00:07:11,120
+Now we have all of our classes in place and we can head over to the browser and see what we get when
+
+109
+00:07:11,120 --> 00:07:15,680
+we give the page a refresh what we get is something a little similar to what we had previously.
+
+110
+00:07:15,740 --> 00:07:17,880
+But obviously there are some notable differences.
+
+111
+00:07:17,900 --> 00:07:20,490
+The footer is not quite rendering correctly.
+
+112
+00:07:20,660 --> 00:07:27,410
+If we head back over into ADOM we can take a look at just why right here we have a div this div has
+
+113
+00:07:27,410 --> 00:07:30,650
+a class of chapt footer but class was spelt wrong.
+
+114
+00:07:30,680 --> 00:07:33,230
+All I have to do is go ahead and fix that typo.
+
+115
+00:07:33,290 --> 00:07:35,510
+Give the browser a refreshed one more time.
+
+116
+00:07:35,510 --> 00:07:38,280
+And now we're getting the complete picture.
+
+117
+00:07:38,300 --> 00:07:43,520
+We have our styled chat application and we can still do whatever we were able to do before I can send
+
+118
+00:07:43,520 --> 00:07:47,780
+off a message hey this should still work.
+
+119
+00:07:47,810 --> 00:07:48,440
+Hit enter.
+
+120
+00:07:48,530 --> 00:07:51,640
+And hey this should still work shows up to the screen.
+
+121
+00:07:51,770 --> 00:07:53,620
+The same thing is true for send location.
+
+122
+00:07:53,630 --> 00:07:57,660
+I can send off my location is going to send it to the server.
+
+123
+00:07:57,770 --> 00:08:02,150
+It's going to send it to all the clients and right here I can click the my current location link and
+
+124
+00:08:02,150 --> 00:08:05,840
+the location is going to show up inside of Google Maps.
+
+125
+00:08:05,860 --> 00:08:11,130
+We've maintained all of the old functionality well adding a nice set of styles.
+
+126
+00:08:11,330 --> 00:08:16,130
+Now for the second half of this video I want to make some user experience improvements to the form down
+
+127
+00:08:16,130 --> 00:08:21,590
+below what improvement we're going to make as wiping the text value once a message was successfully
+
+128
+00:08:21,590 --> 00:08:22,340
+sent.
+
+129
+00:08:22,340 --> 00:08:26,570
+We're also going to do something similar with send location as you might have noticed it can take up
+
+130
+00:08:26,570 --> 00:08:31,950
+to a second or two for the send location geo location called to actually complete.
+
+131
+00:08:32,030 --> 00:08:35,990
+We're going to set this button to be disabled so someone doesn't span it.
+
+132
+00:08:35,990 --> 00:08:37,380
+Wondering what's happened.
+
+133
+00:08:37,400 --> 00:08:42,620
+We're also going to update the text to say sending location so someone knows that something is happening
+
+134
+00:08:42,860 --> 00:08:43,880
+in the background.
+
+135
+00:08:43,910 --> 00:08:49,970
+Now in order to get those things done all we need to do is modify a few lines over inside of index dot.
+
+136
+00:08:49,990 --> 00:08:52,860
+J.S. near the bottom of the file we have our two.
+
+137
+00:08:52,880 --> 00:08:57,720
+Jay queery event listeners both of these are going to get changed.
+
+138
+00:08:57,740 --> 00:09:02,470
+Now the first thing we're going to change is going to be the form submit listener.
+
+139
+00:09:02,540 --> 00:09:08,150
+Right here we fetch the value from the field and that's what we pass along what we want to do down below
+
+140
+00:09:08,180 --> 00:09:13,760
+inside of the acknowledgement callback is clear the value once the request has been received by the
+
+141
+00:09:13,760 --> 00:09:15,860
+server there's no reason to keep it around.
+
+142
+00:09:15,860 --> 00:09:20,590
+So what we can do is add the same J Aquarius selector which will break out in just a moment.
+
+143
+00:09:21,430 --> 00:09:26,920
+Targeting the field worthy name attribute equals message and we're going to go ahead and clear its value
+
+144
+00:09:26,920 --> 00:09:28,970
+by calling Val once again.
+
+145
+00:09:29,020 --> 00:09:34,240
+But instead of getting a value by providing no arguments like we do here we're going to set the value
+
+146
+00:09:34,240 --> 00:09:38,690
+to an empty string by passing in an empty string as the first argument.
+
+147
+00:09:38,740 --> 00:09:43,660
+You could set the value to anything you like but in this case we just want to clear it.
+
+148
+00:09:43,660 --> 00:09:46,550
+So we're going to use the following method call.
+
+149
+00:09:46,570 --> 00:09:49,570
+Now we have the same selector twice to speed things up.
+
+150
+00:09:49,600 --> 00:09:57,370
+We're going to make a variable we'll call that variable message text box and then we can go ahead and
+
+151
+00:09:57,370 --> 00:10:02,070
+set it equal to the selector we just created down below.
+
+152
+00:10:02,160 --> 00:10:06,840
+And now we can refer to message text box any anywhere we need access to that input.
+
+153
+00:10:06,870 --> 00:10:16,930
+Right here we can reference it message text box and down below message text box.
+
+154
+00:10:16,930 --> 00:10:17,670
+Awesome.
+
+155
+00:10:18,010 --> 00:10:21,620
+Now the listener for create message which is over inside of server.
+
+156
+00:10:21,680 --> 00:10:26,070
+J.S. sits right here and we do indeed call the call back with a string.
+
+157
+00:10:26,080 --> 00:10:30,510
+For now we're going to just remove that bogus value passing zero arguments.
+
+158
+00:10:30,520 --> 00:10:34,630
+This means that the acknowledgement function will still get called over here but we don't actually need
+
+159
+00:10:34,630 --> 00:10:35,160
+any data.
+
+160
+00:10:35,170 --> 00:10:38,130
+We just need to know when the server responded.
+
+161
+00:10:38,230 --> 00:10:43,330
+Now that we have this in place we can go ahead and refresh things over inside of local host 3000 type
+
+162
+00:10:43,330 --> 00:10:45,040
+a message.
+
+163
+00:10:45,100 --> 00:10:48,250
+Here is a message and hit the enter key and what do we get.
+
+164
+00:10:48,250 --> 00:10:51,090
+We get the value cleared and was indeed sent.
+
+165
+00:10:51,190 --> 00:10:55,900
+The same thing is going to hold true if I type in a message and click the send button.
+
+166
+00:10:55,900 --> 00:11:00,880
+Now one thing we're going to do real quick is update the input tag for this text box.
+
+167
+00:11:00,880 --> 00:11:06,340
+If I refresh the page we're currently not brought right into the message feel that would be really nice
+
+168
+00:11:06,430 --> 00:11:11,440
+to do that would also be really nice to turn off auto complete as you can see auto complete isn't really
+
+169
+00:11:11,440 --> 00:11:12,420
+a useful feature.
+
+170
+00:11:12,460 --> 00:11:15,970
+It's hidden down below and the values inside of it are usually trash.
+
+171
+00:11:15,970 --> 00:11:21,700
+So what we're going to do over inside of Adam is add two attributes to customize the input.
+
+172
+00:11:21,700 --> 00:11:27,780
+The first one is going to be auto focus which doesn't require a value.
+
+173
+00:11:27,870 --> 00:11:33,790
+Autofocus is going to auto focus on this input when the template gets rendered and the second one we're
+
+174
+00:11:33,790 --> 00:11:39,300
+going to add is auto complete and we're going to set that equal to the string off.
+
+175
+00:11:39,430 --> 00:11:45,400
+With this in place we can save index dot HD and now head back over to Chrome refresh the page and test
+
+176
+00:11:45,460 --> 00:11:46,660
+things out.
+
+177
+00:11:46,660 --> 00:11:47,950
+I'm going to type in test right here.
+
+178
+00:11:47,950 --> 00:11:49,570
+I have no auto complete which is good.
+
+179
+00:11:49,570 --> 00:11:54,510
+We turned that off and if I clicked the send button I am indeed still sending the message.
+
+180
+00:11:54,610 --> 00:11:57,730
+I was also brought right into the text box when I reloaded the page.
+
+181
+00:11:57,730 --> 00:12:02,650
+I didn't need to do anything in order to start typing perfect.
+
+182
+00:12:02,740 --> 00:12:07,870
+The next thing we're going to do is customize that send location by using a bit more Jay query.
+
+183
+00:12:07,870 --> 00:12:11,050
+Now we're new to Jay Aquarians isn't really a jay queery course.
+
+184
+00:12:11,140 --> 00:12:15,610
+You can feel free to try to treat some of these as challenges though I won't be giving you many Jay
+
+185
+00:12:15,610 --> 00:12:17,330
+query related challenges.
+
+186
+00:12:17,410 --> 00:12:21,570
+We're going to stick to the challenges that require you to do some node code.
+
+187
+00:12:21,580 --> 00:12:26,430
+The goal here is to change the button text and disable it while the process is occurring.
+
+188
+00:12:26,590 --> 00:12:31,930
+When the process is complete meaning that the location was either sent or not sent we can return them
+
+189
+00:12:31,930 --> 00:12:33,620
+back into its normal state.
+
+190
+00:12:33,820 --> 00:12:36,040
+But well the geolocation call is happening.
+
+191
+00:12:36,040 --> 00:12:39,140
+We don't want someone spamming away to get that done.
+
+192
+00:12:39,140 --> 00:12:45,080
+We're gonna make some tweaks to the final on listener we have inside of index dot J s just below our
+
+193
+00:12:45,100 --> 00:12:48,700
+on submit listener We have our on click listener here.
+
+194
+00:12:48,700 --> 00:12:54,130
+We're going to need to make some changes to the button the location button variable we have defined
+
+195
+00:12:54,280 --> 00:12:55,520
+right here.
+
+196
+00:12:55,540 --> 00:13:00,320
+We're going to set an attribute that's going to disable the button to get that done.
+
+197
+00:13:00,340 --> 00:13:08,480
+We will reference the selector up above location button and we're going to call Jay Querrey method.
+
+198
+00:13:08,490 --> 00:13:12,600
+Now we're only going to disable it after we've confirmed that even have support for it.
+
+199
+00:13:12,660 --> 00:13:17,570
+If they don't have support for the feature there's no reason to go ahead and disable it right here location
+
+200
+00:13:17,620 --> 00:13:18,390
+button.
+
+201
+00:13:18,770 --> 00:13:21,880
+TR is going to let us set an attribute.
+
+202
+00:13:21,960 --> 00:13:28,890
+We're going to set the disabled attribute equal to the value disabled.
+
+203
+00:13:28,910 --> 00:13:32,390
+Now this disabled needs to be in quotes as well just like this.
+
+204
+00:13:32,480 --> 00:13:35,870
+Now that we have disabled the button we could actually test this out.
+
+205
+00:13:35,930 --> 00:13:39,250
+We never undecidable it so it's going to be broken after clicking at once.
+
+206
+00:13:39,320 --> 00:13:42,990
+But we can confirm that this line works over in the browser.
+
+207
+00:13:42,990 --> 00:13:47,540
+I'm going to give things a refresh click send location and you can see right away that the button does
+
+208
+00:13:47,540 --> 00:13:48,500
+get disabled.
+
+209
+00:13:48,500 --> 00:13:53,030
+Now it is going to send off location once but if I try to click it again the buttons disabled and it's
+
+210
+00:13:53,030 --> 00:13:56,060
+never going to refire the click event.
+
+211
+00:13:56,060 --> 00:13:57,830
+The goal here is to only disable it.
+
+212
+00:13:57,890 --> 00:14:01,550
+Well the process is actually occurring once it's sent like it is here.
+
+213
+00:14:01,640 --> 00:14:07,670
+We want to re-enable it so someone can send an updated location to get that done over inside of Adam.
+
+214
+00:14:07,670 --> 00:14:13,790
+We're going to add a line of Jay queery into both the success handler and the error handler.
+
+215
+00:14:13,970 --> 00:14:20,870
+If things go well we're going to reference location button and we're going to remove the disabled attribute
+
+216
+00:14:21,050 --> 00:14:24,290
+by using remove a TTR.
+
+217
+00:14:24,290 --> 00:14:27,160
+And this takes just one argument in the name of the attribute.
+
+218
+00:14:27,260 --> 00:14:30,560
+In this case we have that it's a string disabled.
+
+219
+00:14:30,560 --> 00:14:35,990
+This is going to remove the disabled attribute we defined above re-enabling the button and we can do
+
+220
+00:14:35,990 --> 00:14:40,410
+the exact same thing literally copying and pasting the line down below.
+
+221
+00:14:40,580 --> 00:14:46,680
+If for some reason we're not able to fetch that location maybe the user denied the request for geo location.
+
+222
+00:14:46,730 --> 00:14:50,780
+We still want to disable that button so they can try again.
+
+223
+00:14:50,780 --> 00:14:55,610
+Now that we have this set up we can test out that code by refreshing the browser and trying to send
+
+224
+00:14:55,610 --> 00:14:57,020
+off our location.
+
+225
+00:14:57,020 --> 00:15:00,440
+We should see the buttons disabled for a little bit and then it gets re-enabled.
+
+226
+00:15:00,440 --> 00:15:00,930
+There we go.
+
+227
+00:15:00,950 --> 00:15:02,080
+It's disabled.
+
+228
+00:15:02,180 --> 00:15:04,630
+It's about one to three seconds.
+
+229
+00:15:04,640 --> 00:15:05,510
+And there we go.
+
+230
+00:15:05,510 --> 00:15:07,070
+The location has been processed.
+
+231
+00:15:07,070 --> 00:15:09,890
+We can click it to prove that it is working as expected.
+
+232
+00:15:10,040 --> 00:15:15,470
+And the button was re-enabled which means we can go ahead and click it at a later time sending our location
+
+233
+00:15:15,650 --> 00:15:16,810
+once again.
+
+234
+00:15:17,150 --> 00:15:19,870
+Now the last thing we're going to do is update the button text.
+
+235
+00:15:19,940 --> 00:15:24,380
+Well the process is occurring to get that done over inside of Adam.
+
+236
+00:15:24,380 --> 00:15:28,290
+We're going to use that text method that we've used in the past right here.
+
+237
+00:15:28,340 --> 00:15:38,120
+We're going to set the text equal to my calling text sending location dot dot dot.
+
+238
+00:15:38,140 --> 00:15:41,900
+Now the real button text is send a location with a capital L..
+
+239
+00:15:41,950 --> 00:15:45,450
+I'm going to go ahead and lowercase that to keep things uniform.
+
+240
+00:15:45,520 --> 00:15:46,150
+Awesome.
+
+241
+00:15:46,480 --> 00:15:51,130
+Now that we have this set up we are updating the text while the process occurs.
+
+242
+00:15:51,130 --> 00:15:56,470
+The only thing left to do is tweak it back to its original value down below by setting text equal to
+
+243
+00:15:56,470 --> 00:16:03,190
+the string send location here and we're going to do the exact same thing down below calling text passing
+
+244
+00:16:03,190 --> 00:16:05,930
+in the string send location.
+
+245
+00:16:06,250 --> 00:16:07,120
+Excellent.
+
+246
+00:16:07,130 --> 00:16:09,820
+Now we can go ahead and test that this is working as expected.
+
+247
+00:16:09,820 --> 00:16:14,370
+Both of these lines are identical regardless of whether it succeeds or fails.
+
+248
+00:16:14,380 --> 00:16:17,650
+We're going to do the same thing over inside of chrome.
+
+249
+00:16:17,660 --> 00:16:20,020
+Going to give my page a refresh one more time.
+
+250
+00:16:20,050 --> 00:16:24,760
+We're going to click that send location button and you can see the button is disabled and the text was
+
+251
+00:16:24,760 --> 00:16:29,950
+changed sending location shows up and as soon as the process is complete and the location was actually
+
+252
+00:16:29,950 --> 00:16:33,670
+sent the button returns to its default state.
+
+253
+00:16:33,670 --> 00:16:38,920
+With this in place we now have a much nicer user experience than we had previously had only do we have
+
+254
+00:16:38,920 --> 00:16:39,880
+a nice set of styles.
+
+255
+00:16:39,880 --> 00:16:44,770
+We also have a better UI for our form and the send location button.
+
+256
+00:16:45,070 --> 00:16:47,170
+That is where we are going to stop for this one.
+
+257
+00:16:47,170 --> 00:16:53,260
+Let's go ahead and make a quick commit by shutting down the server running get status running get add
+
+258
+00:16:53,260 --> 00:16:55,810
+to add all of those files.
+
+259
+00:16:55,950 --> 00:17:03,560
+And finally we're going to go ahead and run get commit with the flag providing a message and see SS
+
+260
+00:17:03,740 --> 00:17:06,200
+for chat page.
+
+261
+00:17:06,380 --> 00:17:10,480
+We can go ahead and push this up to get how then I'm going to avoid deploying for Heroku right now although
+
+262
+00:17:10,490 --> 00:17:14,500
+you are welcome to deploy and test your application live.
+
+263
+00:17:14,560 --> 00:17:15,740
+And that is it for this one.
+
+264
+00:17:15,740 --> 00:17:17,200
+I will see you next time.
+

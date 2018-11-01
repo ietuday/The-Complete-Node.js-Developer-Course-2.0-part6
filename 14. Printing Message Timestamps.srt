@@ -1,0 +1,584 @@
+﻿1
+00:00:00,450 --> 00:00:05,130
+In this video you're going to be formatting your time stamps and you're going to be displaying them
+
+2
+00:00:05,160 --> 00:00:09,400
+to the screen along with the chat message currently we show who it's from and the text.
+
+3
+00:00:09,480 --> 00:00:12,720
+But the created that time stamp is not used anywhere.
+
+4
+00:00:12,720 --> 00:00:17,070
+Now the first thing we need to figure out is how we can take that time stamp and get a moment object
+
+5
+00:00:17,070 --> 00:00:22,860
+back because in the end of the day we want to call the format method to format it as we like in order
+
+6
+00:00:22,860 --> 00:00:23,400
+to do that.
+
+7
+00:00:23,400 --> 00:00:31,360
+All you have to do is take your time stamp will make a variable called created to represent value and
+
+8
+00:00:31,360 --> 00:00:37,630
+pass it in as the first argument to moment which means I simply passen created that just like this.
+
+9
+00:00:37,720 --> 00:00:43,210
+When I do this we're creating a moment with the same methods like format add and subtract but it's representing
+
+10
+00:00:43,210 --> 00:00:44,590
+a different point in time.
+
+11
+00:00:44,620 --> 00:00:46,810
+By default it uses the current time.
+
+12
+00:00:46,810 --> 00:00:50,180
+If you pass in a time stamp it uses that time.
+
+13
+00:00:50,380 --> 00:00:55,480
+Now this number 1234 is barely a second pass the Unix epic.
+
+14
+00:00:55,480 --> 00:01:01,960
+But if we go out and run the file we should see the correct thing printing gnomon in the playground
+
+15
+00:01:01,960 --> 00:01:09,460
+folder or on time ADOT J.S. and right here we get 7 pm which would be expected census taking into account
+
+16
+00:01:09,640 --> 00:01:11,360
+our local time zone.
+
+17
+00:01:11,680 --> 00:01:17,440
+Now that we have this in place we have everything we need to actually take those time stamps and get
+
+18
+00:01:17,440 --> 00:01:19,780
+back formatted values.
+
+19
+00:01:19,780 --> 00:01:23,070
+The other thing we can do is we can create timestamps with moment.
+
+20
+00:01:23,110 --> 00:01:31,180
+It has the exact same effect as the new date don't get time method we've used in order to do this all
+
+21
+00:01:31,180 --> 00:01:39,190
+we do is we call it moment dot value of for example we can make a variable called some time stamp setting
+
+22
+00:01:39,190 --> 00:01:41,090
+an equal to a call to moment.
+
+23
+00:01:41,170 --> 00:01:46,830
+We're going to generate a new moment and we're going to call it's value of method.
+
+24
+00:01:46,840 --> 00:01:53,140
+This is going to go ahead and return a time stamp in milliseconds since the Unix epic console dot log
+
+25
+00:01:54,340 --> 00:01:58,240
+we're going to log out these some time stamp the variable just to make sure it looks correct.
+
+26
+00:01:58,240 --> 00:02:03,660
+And here we are we have our time stamp value with this in place we are ready to go.
+
+27
+00:02:03,670 --> 00:02:06,700
+The first thing we're going to do is tweak our message.
+
+28
+00:02:06,730 --> 00:02:13,050
+J.S. file currently inside of message dot Jap's we generate timestamps using new Date Time.
+
+29
+00:02:13,090 --> 00:02:16,380
+We're going to switch over to moment not because it changes anything.
+
+30
+00:02:16,390 --> 00:02:19,970
+I just want to be consistent with using moment everywhere we use time.
+
+31
+00:02:19,990 --> 00:02:24,850
+This is going to make it a lot easier to maintain and figure out what's going on right here.
+
+32
+00:02:24,880 --> 00:02:31,520
+I'm going to make a variable called a moment sending a vehicle to require moment and we're going to
+
+33
+00:02:31,520 --> 00:02:37,940
+go ahead and replace this with calls to value of what I would like you to do is go ahead and do just
+
+34
+00:02:37,970 --> 00:02:43,730
+that calm moment to call the value of method here and here then and go ahead and run the test suite
+
+35
+00:02:43,730 --> 00:02:46,370
+and make sure both tests pass when you're done.
+
+36
+00:02:46,370 --> 00:02:50,550
+You can go ahead and click play.
+
+37
+00:02:50,560 --> 00:02:56,160
+All right the first thing we need to do is tweak the created property for generate message.
+
+38
+00:02:56,350 --> 00:02:58,170
+We're going to call a moment just like this.
+
+39
+00:02:58,330 --> 00:03:03,160
+Then we're going to call value of getting back the time stamp and we're going to do the same thing down
+
+40
+00:03:03,160 --> 00:03:04,730
+below.
+
+41
+00:03:04,730 --> 00:03:08,660
+Moment dot value of awesome.
+
+42
+00:03:09,040 --> 00:03:14,560
+Now we can go ahead and save message Aegeus head over into the terminal and run our test suite using
+
+43
+00:03:14,560 --> 00:03:16,260
+NPM test.
+
+44
+00:03:16,300 --> 00:03:17,280
+And what do we get.
+
+45
+00:03:17,320 --> 00:03:21,640
+We get two tests and they're both still passing which means the value we're getting back is indeed a
+
+46
+00:03:21,640 --> 00:03:26,520
+number as our tests assert now that we have moment integrated on the server.
+
+47
+00:03:26,590 --> 00:03:29,670
+We're going to go ahead and do the same thing on the client.
+
+48
+00:03:29,680 --> 00:03:32,380
+Now the first thing we need to do is load in moment.
+
+49
+00:03:32,380 --> 00:03:36,050
+Currently the only library we load in on the front end is Jey query.
+
+50
+00:03:36,070 --> 00:03:37,640
+We can do this a few different ways.
+
+51
+00:03:37,750 --> 00:03:41,680
+I'm going to go ahead and actually grab a file out of node modules.
+
+52
+00:03:41,770 --> 00:03:47,470
+We've installed a moment the version right here to point fifteen point one and we can actually grab
+
+53
+00:03:47,470 --> 00:03:53,330
+the file we need for the front and it's sitting inside of the node modules directory.
+
+54
+00:03:53,440 --> 00:03:55,150
+We're going to go into node modules.
+
+55
+00:03:55,150 --> 00:04:03,210
+We have a really long list of alphabetical folders I'm looking for the one called Moment h i j k l m
+
+56
+00:04:03,420 --> 00:04:04,640
+m moment.
+
+57
+00:04:04,800 --> 00:04:07,850
+We're going to go into moment and we're going to grab moment dot J.
+
+58
+00:04:07,870 --> 00:04:10,150
+S. I'm going to Right-Click to copy it.
+
+59
+00:04:11,560 --> 00:04:15,730
+Then I'm going to scroll up to the very top close node modules and I'm going to paste it right inside
+
+60
+00:04:15,760 --> 00:04:18,650
+of our J libs directory right here.
+
+61
+00:04:18,670 --> 00:04:19,850
+We now have a moment.
+
+62
+00:04:19,970 --> 00:04:20,390
+Yes.
+
+63
+00:04:20,470 --> 00:04:24,370
+And if you open it it's a really really really long library file.
+
+64
+00:04:24,410 --> 00:04:26,730
+There's no need to make any changes to that file.
+
+65
+00:04:26,720 --> 00:04:29,440
+All we have to do is loaded in index.
+
+66
+00:04:29,520 --> 00:04:32,320
+J.S. just below our J query import.
+
+67
+00:04:32,320 --> 00:04:39,160
+We're going to add a brand new script tag Well then provide that source attribute setting it equal to
+
+68
+00:04:39,580 --> 00:04:44,650
+forward slash J.S. forward slash lives forward slash moment.
+
+69
+00:04:44,750 --> 00:04:46,930
+Jap's just like this.
+
+70
+00:04:47,090 --> 00:04:53,020
+Now that we have this in place we have access to all of those moment functions only on the client side.
+
+71
+00:04:53,230 --> 00:05:00,100
+Which means that over inside an index we can properly format the time stamp that comes back inside of
+
+72
+00:05:00,100 --> 00:05:01,270
+message.
+
+73
+00:05:01,270 --> 00:05:08,860
+Now before we make any changes lets go ahead and start up our server using gnomon gnomon server board
+
+74
+00:05:08,860 --> 00:05:10,080
+slash server.
+
+75
+00:05:10,100 --> 00:05:11,650
+J.S. is going to start it up.
+
+76
+00:05:11,770 --> 00:05:17,200
+Then we can go ahead and move into the browser going to localhost 3000 and giving it a refresh.
+
+77
+00:05:17,200 --> 00:05:18,940
+And our app is working as expected.
+
+78
+00:05:19,100 --> 00:05:23,490
+I open up the developer tools inside of the console.
+
+79
+00:05:23,490 --> 00:05:25,010
+We can actually use moment.
+
+80
+00:05:25,020 --> 00:05:31,410
+We have it accessible via a moment just like we did over inside of node I can use moment like this calling
+
+81
+00:05:31,410 --> 00:05:32,530
+format.
+
+82
+00:05:32,700 --> 00:05:34,790
+And what do we get we get back our string.
+
+83
+00:05:34,830 --> 00:05:40,050
+You should be able to make this call if you've successfully imported moment if you are seeing this then
+
+84
+00:05:40,050 --> 00:05:43,700
+you are ready to move on to the actual updating of index Dom.
+
+85
+00:05:43,730 --> 00:05:44,520
+J.S..
+
+86
+00:05:44,550 --> 00:05:50,520
+Now if you remember on a message we have a created app property for both new message and new location
+
+87
+00:05:50,520 --> 00:05:51,340
+message.
+
+88
+00:05:51,360 --> 00:05:57,250
+All we need to do is get that value passed into moment and then generate our formatted string.
+
+89
+00:05:57,300 --> 00:06:02,100
+I'm going to do it for new message and then you will do it as a challenge for a new location message
+
+90
+00:06:03,000 --> 00:06:03,500
+right here.
+
+91
+00:06:03,510 --> 00:06:11,170
+We can make a new variable called format at time and we can set this equal to a call to moment passing
+
+92
+00:06:11,170 --> 00:06:17,100
+in the time stamp message dot created at.
+
+93
+00:06:17,120 --> 00:06:19,030
+Now we can go ahead and do whatever we like.
+
+94
+00:06:19,070 --> 00:06:24,120
+We could call format like this passing in the exact same string we use over in time.com.
+
+95
+00:06:24,220 --> 00:06:31,970
+Yes the hour the minutes and the AM PM lowercase h colon to lower case ambs followed by a space and
+
+96
+00:06:31,970 --> 00:06:33,530
+a lower case a.
+
+97
+00:06:33,770 --> 00:06:38,990
+With this in place we now have that formatted time and we go ahead and add it inside of here.
+
+98
+00:06:38,990 --> 00:06:42,120
+Now I know I'm using template sharings inside of our client side code.
+
+99
+00:06:42,140 --> 00:06:46,370
+We'll be removing this pretty soon so there's no need to make that tweak yet since I'm not testing an
+
+100
+00:06:46,370 --> 00:06:48,390
+Internet Explorer or any other browser.
+
+101
+00:06:48,500 --> 00:06:51,990
+Although the final version of the apple not include template strings.
+
+102
+00:06:52,160 --> 00:06:57,950
+Right after the from statement we're going to go ahead and inject another value the formatted time which
+
+103
+00:06:57,950 --> 00:07:00,260
+we just created up above.
+
+104
+00:07:00,260 --> 00:07:05,930
+So our message should read name like outman the time followed by the text.
+
+105
+00:07:05,930 --> 00:07:11,290
+I'm going to go ahead and save index dot Jap's give the browser a refresh to load that client side code.
+
+106
+00:07:11,390 --> 00:07:14,640
+And right here we see admin 2 0 6 pm.
+
+107
+00:07:14,690 --> 00:07:17,920
+Welcome to the chat app and that is the correct time.
+
+108
+00:07:18,080 --> 00:07:19,630
+I can go ahead and send a message.
+
+109
+00:07:19,640 --> 00:07:25,850
+This is from a user send it off and right here we see it's now 2 or 7 pm.
+
+110
+00:07:25,850 --> 00:07:26,790
+This is from a user.
+
+111
+00:07:26,800 --> 00:07:33,440
+Shows up everything is working great now for send a location we currently don't use moment.
+
+112
+00:07:33,500 --> 00:07:37,020
+We only updated the new message event listener.
+
+113
+00:07:37,040 --> 00:07:40,700
+This means that when we print that location message we don't have the time stamp.
+
+114
+00:07:40,730 --> 00:07:44,780
+Your challenge for this video is going to be to get that done.
+
+115
+00:07:44,800 --> 00:07:48,950
+Why are you to take a quick moment to modify new location message.
+
+116
+00:07:48,980 --> 00:07:53,480
+You can go ahead and use the same techniques we used above to get the job done.
+
+117
+00:07:53,510 --> 00:07:58,340
+Now in terms of where to actually render the formatted time you can simply put it right here just like
+
+118
+00:07:58,340 --> 00:08:00,050
+we did earlier.
+
+119
+00:08:00,050 --> 00:08:01,490
+Take a moment to pause the video.
+
+120
+00:08:01,490 --> 00:08:02,300
+Knock that out.
+
+121
+00:08:02,330 --> 00:08:05,270
+Make sure the time stamp shows up when you send a location.
+
+122
+00:08:05,270 --> 00:08:07,200
+Then you can go ahead and click play.
+
+123
+00:08:09,240 --> 00:08:09,720
+All right.
+
+124
+00:08:09,720 --> 00:08:14,300
+Step one in the process is going to be to make that variable called formatted time.
+
+125
+00:08:14,340 --> 00:08:19,630
+We can actually go ahead and copy this line directly pasting it right here.
+
+126
+00:08:19,670 --> 00:08:24,440
+We want to do the exact same thing we want to take that created out field we want to get a moment object
+
+127
+00:08:24,440 --> 00:08:26,710
+and we want to call format.
+
+128
+00:08:26,720 --> 00:08:29,330
+Next up we do have to modify what gets displayed.
+
+129
+00:08:29,330 --> 00:08:36,710
+We want to show this formatted time variable and we're going to put it right here formatted time.
+
+130
+00:08:36,960 --> 00:08:37,680
+Excellent.
+
+131
+00:08:37,830 --> 00:08:39,810
+Now we can go ahead and refresh the app.
+
+132
+00:08:39,930 --> 00:08:42,530
+And we should see our time stamp for regular messages.
+
+133
+00:08:42,630 --> 00:08:48,000
+We can send off a regular message and everything still works then we can send off a location message
+
+134
+00:08:48,000 --> 00:08:53,430
+which we just changed it to take just a second to get going and here we are we have our current location
+
+135
+00:08:53,430 --> 00:08:54,000
+link.
+
+136
+00:08:54,000 --> 00:08:59,310
+We have our name and we have the time stamp which is fantastic.
+
+137
+00:08:59,430 --> 00:09:04,110
+That is it for this one let's go ahead and actually make a commit to save our changes even though we're
+
+138
+00:09:04,110 --> 00:09:09,330
+not quite done with the message area we have all the data correctly showing up it's just showing up
+
+139
+00:09:09,330 --> 00:09:11,720
+in a way that's not really pleasing to the eye.
+
+140
+00:09:11,850 --> 00:09:16,500
+For now though we will head into the terminal shut down the server and get status.
+
+141
+00:09:16,500 --> 00:09:22,860
+Here we have new files as well as some modified files get ad is going to take care of all of that.
+
+142
+00:09:22,920 --> 00:09:31,950
+Then we can make our commit get commit with the M flag and a good message for this one is format with
+
+143
+00:09:31,950 --> 00:09:37,400
+an uppercase s timestamps using moment.
+
+144
+00:09:37,550 --> 00:09:41,170
+Yes I am going to go ahead and push this up to get help.
+
+145
+00:09:41,180 --> 00:09:42,660
+And we are done.
+
+146
+00:09:42,860 --> 00:09:45,120
+And that's it for this one I will see you next time.
+

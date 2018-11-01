@@ -1,0 +1,624 @@
+﻿1
+00:00:01,250 --> 00:00:06,940
+As I mentioned in the end of the last video starting from here on out the goal is to add a joined page
+
+2
+00:00:06,950 --> 00:00:12,690
+like the one you see here where you provide a name and you provide the room name you want to join.
+
+3
+00:00:12,710 --> 00:00:17,660
+You'll then be able to join a given room talk to anybody else in that room and you won't be able to
+
+4
+00:00:17,660 --> 00:00:21,050
+communicate with other people in other rooms.
+
+5
+00:00:21,050 --> 00:00:25,220
+This means that when you click this form you're going to click join and we're going to have some custom
+
+6
+00:00:25,220 --> 00:00:30,060
+information passed into the you R-AL into the chat application as we know it.
+
+7
+00:00:30,080 --> 00:00:32,170
+The one that looks like this.
+
+8
+00:00:32,300 --> 00:00:37,610
+Now in order to get that done the first thing we're going to do is tweak the current age template file
+
+9
+00:00:37,820 --> 00:00:39,310
+right now indexed.
+
+10
+00:00:39,410 --> 00:00:41,260
+Tim L. is going to load first.
+
+11
+00:00:41,330 --> 00:00:45,210
+We actually don't want that to be the case when we go to local 3000.
+
+12
+00:00:45,290 --> 00:00:47,230
+We want to show our new joined page.
+
+13
+00:00:47,300 --> 00:00:54,440
+So what I'm going to do instead is move this by renaming it we're going to rename index ADOT h DML to
+
+14
+00:00:54,440 --> 00:01:01,590
+chat dot h DML and I'm going to do the exact same thing with index dot J.S. renaming it to chat.
+
+15
+00:01:01,640 --> 00:01:02,260
+J.S..
+
+16
+00:01:02,570 --> 00:01:05,090
+And last but not least I'm going to update the reference.
+
+17
+00:01:05,090 --> 00:01:09,700
+Down below where we load an index datcha Yes Instead we'll load and chat.
+
+18
+00:01:09,860 --> 00:01:10,670
+Yes.
+
+19
+00:01:10,730 --> 00:01:15,380
+Now that we have this in place we no longer have an HTL page that's going to load when you visit the
+
+20
+00:01:15,380 --> 00:01:15,960
+site.
+
+21
+00:01:16,050 --> 00:01:21,130
+If I try to go to localhost 3000 we're going to get an error saying we cannot get that route.
+
+22
+00:01:21,170 --> 00:01:24,230
+Nothing's coming back from the server to fix this.
+
+23
+00:01:24,230 --> 00:01:28,350
+We're going to create our brand new page as index dot h DML.
+
+24
+00:01:28,370 --> 00:01:32,420
+This is going to be the one that loads when a user visits the app.
+
+25
+00:01:32,750 --> 00:01:37,820
+Now we'll start off with the very basic template specifying things we've done before like a dock type
+
+26
+00:01:38,110 --> 00:01:45,650
+setting equal to H.T. in L5 and then we're going to go ahead and at our age Tamal tag inside of here
+
+27
+00:01:45,680 --> 00:01:53,450
+we can then add our head and body tags and I had my head tag first then I can go ahead and add my body
+
+28
+00:01:53,450 --> 00:02:01,340
+tag and we'll kick things off by adding a few tags into the head like Mehta So we can set our char set
+
+29
+00:02:02,380 --> 00:02:03,080
+right here.
+
+30
+00:02:03,920 --> 00:02:11,950
+Charsadda is going to equal UTF 8 and we're also going to see a few other properties.
+
+31
+00:02:11,990 --> 00:02:13,660
+I'm going to set a title tag.
+
+32
+00:02:13,760 --> 00:02:17,570
+This is going to show up inside of the tab as the tabs title.
+
+33
+00:02:17,690 --> 00:02:24,950
+We can set ours to join then we can add a space a vertical line by using shift backslash and the name
+
+34
+00:02:24,950 --> 00:02:27,310
+of our app something like chat app.
+
+35
+00:02:27,320 --> 00:02:32,300
+This will show up in the tab a title and then we can go ahead and link in our stylesheet just like we
+
+36
+00:02:32,300 --> 00:02:33,730
+did for chat.
+
+37
+00:02:33,850 --> 00:02:35,460
+HTL right here.
+
+38
+00:02:35,480 --> 00:02:37,250
+I'm going to get that style sheet reference.
+
+39
+00:02:37,250 --> 00:02:44,000
+Copy it into the head and I'm going to add that title tag to chat h out right here in Schacht out aged
+
+40
+00:02:44,010 --> 00:02:49,130
+TNL know we can specify a title just like we did over inside of index dot h DML.
+
+41
+00:02:49,160 --> 00:02:55,080
+We can give this one a page of chat with a bar surrounded by spaces.
+
+42
+00:02:55,220 --> 00:02:59,310
+And we're also going to give it the same app name chat app.
+
+43
+00:02:59,360 --> 00:03:00,350
+Awesome.
+
+44
+00:03:00,590 --> 00:03:04,790
+Now that we have this in place there is one more thing I want to do before we start updating the body.
+
+45
+00:03:04,790 --> 00:03:06,670
+This is set a viewport.
+
+46
+00:03:06,660 --> 00:03:11,840
+Tag viewport tags let you specify certain things about how your site should be rendered.
+
+47
+00:03:11,990 --> 00:03:17,720
+The viewport tag I'm about to add is going to make our website display much better armed mobile instead
+
+48
+00:03:17,720 --> 00:03:19,240
+of being really zoomed out.
+
+49
+00:03:19,250 --> 00:03:24,020
+It's going to fit to the width of your phone tablet or any other device.
+
+50
+00:03:24,020 --> 00:03:27,310
+We're going to copy this tag from index that TNL to chat.
+
+51
+00:03:27,340 --> 00:03:27,650
+H.
+
+52
+00:03:27,650 --> 00:03:28,780
+Female when we're done.
+
+53
+00:03:28,820 --> 00:03:33,650
+But for now we'll kick things off by adding a metal tag this time around instead of specifying char
+
+54
+00:03:33,650 --> 00:03:35,330
+set like we've done in the past.
+
+55
+00:03:35,360 --> 00:03:38,210
+We're going to give it a name equal to view part.
+
+56
+00:03:38,330 --> 00:03:43,730
+And now we can go ahead and add a few options about what we want to do to that viewport.
+
+57
+00:03:43,730 --> 00:03:45,860
+All this is going to happen inside of content.
+
+58
+00:03:45,890 --> 00:03:51,890
+This is going to be a comma separated list of key value pairs one for example is with we're going to
+
+59
+00:03:51,890 --> 00:03:55,170
+set that equal to device hyphen with.
+
+60
+00:03:55,280 --> 00:04:01,610
+And this tells your browser to use the devices with as the web pages with then we can add a comma space
+
+61
+00:04:01,610 --> 00:04:04,060
+and specify our next key value pair.
+
+62
+00:04:04,280 --> 00:04:08,140
+I'm going to use initials scale.
+
+63
+00:04:08,210 --> 00:04:10,010
+We're going to set that equal to 1.
+
+64
+00:04:10,010 --> 00:04:13,680
+This is going to scale the website appropriately so it doesn't look all zoomed out.
+
+65
+00:04:13,790 --> 00:04:18,250
+And finally user high and scalable will set that equal to.
+
+66
+00:04:18,260 --> 00:04:23,540
+No we have styles in place to make the text bigger and to make sure that user can always see everything.
+
+67
+00:04:23,540 --> 00:04:27,080
+So there's no reason to give users the ability to scale.
+
+68
+00:04:27,080 --> 00:04:31,500
+Now as mentioned we're going to take this matter a tag copy it to the clipboard and add it for chapter
+
+69
+00:04:31,580 --> 00:04:33,640
+HVM Tamal as well.
+
+70
+00:04:33,650 --> 00:04:34,250
+Awesome.
+
+71
+00:04:34,450 --> 00:04:41,790
+And now that we have our head tags set up for index HGL we can move on to the body we're going to be
+
+72
+00:04:41,790 --> 00:04:47,880
+using a similar set of classes designed to work with this page to get things off on the body.
+
+73
+00:04:47,880 --> 00:04:53,180
+We're going to add a class of centered hyphen form.
+
+74
+00:04:53,180 --> 00:04:59,030
+This is going to center that form in the screen and give the entire website that blue background with
+
+75
+00:04:59,030 --> 00:05:00,040
+the gradient.
+
+76
+00:05:00,050 --> 00:05:02,720
+Next up we can go ahead and provide the little box.
+
+77
+00:05:02,720 --> 00:05:06,380
+This is going to be the centered white box that has our form in it.
+
+78
+00:05:06,380 --> 00:05:13,440
+That's going to be via a div and we're going to give this div a class we're going to set that class
+
+79
+00:05:13,470 --> 00:05:18,180
+equal to inside of quotes centered high and form.
+
+80
+00:05:18,190 --> 00:05:20,490
+Underscore underscore form.
+
+81
+00:05:20,650 --> 00:05:21,480
+Awesome.
+
+82
+00:05:21,490 --> 00:05:26,740
+Now that we have these two classes in place we are ready to move on actually adding some of the fields
+
+83
+00:05:26,740 --> 00:05:29,130
+that are going to go in that white box starting with that title.
+
+84
+00:05:29,140 --> 00:05:30,710
+Chat to do this.
+
+85
+00:05:30,760 --> 00:05:35,200
+We're going to create a few divs they're all going to look identical so we'll make them once and duplicate
+
+86
+00:05:35,260 --> 00:05:35,760
+them.
+
+87
+00:05:35,890 --> 00:05:41,560
+And we're going to add a class equal to form high thin field.
+
+88
+00:05:41,560 --> 00:05:45,460
+Now we're going to use this four times once for the title once for the name.
+
+89
+00:05:45,490 --> 00:05:51,160
+Once for the room name and once for the button in order to get that done what we're going to do is simply
+
+90
+00:05:51,160 --> 00:05:54,700
+copy the line and paste it four times right here.
+
+91
+00:05:54,700 --> 00:06:00,010
+Now all of this needs to go inside of a form tag the whole goal of this page is to take that data and
+
+92
+00:06:00,010 --> 00:06:05,050
+submit it redirecting the user to the chat page where we can then bring them into a specific chat room
+
+93
+00:06:05,260 --> 00:06:06,950
+using the name they provided.
+
+94
+00:06:06,970 --> 00:06:12,910
+That means we want to wrap these form fields inside of a form tag by opening here and closing it down
+
+95
+00:06:12,940 --> 00:06:13,670
+below.
+
+96
+00:06:15,800 --> 00:06:21,710
+Now previously we saw the default behavior for a form tag is to reload the current page posting the
+
+97
+00:06:21,710 --> 00:06:23,580
+data as a query string.
+
+98
+00:06:23,600 --> 00:06:29,120
+Well we're going to do instead is specify an action attribute which lets us customize which page to
+
+99
+00:06:29,120 --> 00:06:30,020
+go to.
+
+100
+00:06:30,080 --> 00:06:32,990
+In this case we're going to go to a forward slash chat.
+
+101
+00:06:33,020 --> 00:06:37,100
+H TNL the page that we set up just now.
+
+102
+00:06:37,100 --> 00:06:40,490
+This means that when someone's done filling out the form field they're going to get redirected to the
+
+103
+00:06:40,490 --> 00:06:44,630
+chat page and the data down below will get passed along to.
+
+104
+00:06:44,720 --> 00:06:49,610
+Now the title div is easy or we're going to do is at an H three with whatever title you want.
+
+105
+00:06:49,700 --> 00:06:52,100
+You could say chat or join the chat.
+
+106
+00:06:52,520 --> 00:06:57,770
+That looks pretty good then I can go ahead and close my H-3 and move on to the next to form field which
+
+107
+00:06:57,770 --> 00:06:59,770
+is going to be the display name.
+
+108
+00:06:59,870 --> 00:07:04,280
+I am going to use a label a label is going to describe a field.
+
+109
+00:07:04,430 --> 00:07:10,310
+This one will be display name so will open and close the label tag like this and next up we can add
+
+110
+00:07:10,310 --> 00:07:12,080
+an input right here.
+
+111
+00:07:12,140 --> 00:07:16,690
+We're going to add an input just like we did for the input on our message form.
+
+112
+00:07:16,760 --> 00:07:19,370
+We're going to specify type equal to text.
+
+113
+00:07:19,400 --> 00:07:25,790
+We want the user to be able to enter some text and we're also going to give it a name equal to name.
+
+114
+00:07:25,790 --> 00:07:27,260
+We are going to use auto focus.
+
+115
+00:07:27,260 --> 00:07:32,600
+Once again this is going to make sure that when a user first visits the app their cursor is placed inside
+
+116
+00:07:32,600 --> 00:07:34,490
+of the name field.
+
+117
+00:07:34,490 --> 00:07:39,270
+Next up is the field for the room name which is going to look pretty similar to the one above.
+
+118
+00:07:39,410 --> 00:07:45,740
+We are going to start with a label once again this label is going to be a string something like room
+
+119
+00:07:47,000 --> 00:07:49,790
+name and we're also going to add an input right here.
+
+120
+00:07:49,790 --> 00:07:58,930
+So the user can specify the room name type equals text and the name will equal a room.
+
+121
+00:07:58,970 --> 00:08:05,900
+There is no need for autofocus on this one since we already have an auto focused input up above.
+
+122
+00:08:05,940 --> 00:08:10,520
+Now that we have this in place we can go ahead and the final form field which is going to be the submit
+
+123
+00:08:10,520 --> 00:08:17,880
+button for our form by simply creating a button just like this and giving it a text value.
+
+124
+00:08:17,880 --> 00:08:22,210
+We can have ours set to join with this in place our index.
+
+125
+00:08:22,230 --> 00:08:24,280
+Each time a file is actually done.
+
+126
+00:08:24,390 --> 00:08:26,190
+We can load it over inside of the browser.
+
+127
+00:08:26,250 --> 00:08:28,630
+Our server had automatically restarted.
+
+128
+00:08:28,650 --> 00:08:32,380
+So a quick refresh should show our page join a chat app.
+
+129
+00:08:32,610 --> 00:08:40,650
+The goal is to set this up to take a name like Andrew and a room name like Noad course students you
+
+130
+00:08:40,650 --> 00:08:44,580
+click join and it joins you into this room with this name.
+
+131
+00:08:44,580 --> 00:08:48,280
+Now currently it's going to do is redirect us to chat dot h TNL.
+
+132
+00:08:48,330 --> 00:08:51,900
+But as you'll see it does indeed pass the data along.
+
+133
+00:08:51,930 --> 00:08:58,230
+Here we have a name equal to Andrew and we have real name equal to Noad course students just like we
+
+134
+00:08:58,230 --> 00:09:01,590
+specified over inside of index dot h t.
+
+135
+00:09:01,590 --> 00:09:07,620
+And now with this in place we are now ready to start talking about how we can join a specific rooms
+
+136
+00:09:07,860 --> 00:09:09,410
+inside a socket I O.
+
+137
+00:09:09,510 --> 00:09:14,190
+Making sure the events we emit only go to other people connected to that room.
+
+138
+00:09:14,220 --> 00:09:16,530
+We have the stuff in place to get this done.
+
+139
+00:09:16,650 --> 00:09:20,180
+So we're gonna get started with all of that in the next video.
+
+140
+00:09:20,190 --> 00:09:22,770
+For now we have a pretty great looking joined page.
+
+141
+00:09:22,770 --> 00:09:24,960
+This is where we can join a room.
+
+142
+00:09:25,200 --> 00:09:27,950
+Let's wrap this up with a commit committing our changes.
+
+143
+00:09:28,080 --> 00:09:31,420
+If Iran gets status you're going to see that we have a modified file index.
+
+144
+00:09:31,480 --> 00:09:32,450
+H TNL.
+
+145
+00:09:32,520 --> 00:09:36,730
+And that also thinks we deleted index dot J us although we add something down below.
+
+146
+00:09:36,930 --> 00:09:43,170
+When we run get add dot and rerun get status to understand exactly what happened here you can see we
+
+147
+00:09:43,170 --> 00:09:46,030
+copied indexed HVM to chat.
+
+148
+00:09:46,070 --> 00:09:46,910
+HVM.
+
+149
+00:09:46,990 --> 00:09:48,500
+We then modified index.
+
+150
+00:09:48,540 --> 00:09:52,590
+H TNL and we renamed index dot J s to chat.
+
+151
+00:09:52,680 --> 00:09:53,060
+J asked.
+
+152
+00:09:53,070 --> 00:09:55,190
+Which is exactly what we did.
+
+153
+00:09:55,200 --> 00:10:02,390
+I'm going to go ahead and actually make the commit using get commit with the M flag and join page that
+
+154
+00:10:03,570 --> 00:10:08,200
+submits to chat DML.
+
+155
+00:10:08,380 --> 00:10:12,070
+We can then make the commit push it up to get how and that is it for this one.
+
+156
+00:10:12,070 --> 00:10:13,700
+I will see you next time
+

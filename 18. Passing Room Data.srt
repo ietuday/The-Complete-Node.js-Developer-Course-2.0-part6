@@ -1,0 +1,1188 @@
+﻿1
+00:00:00,370 --> 00:00:06,420
+In the last video we created a little chat page we can type in a name like Andrew and a room like Noad
+
+2
+00:00:06,420 --> 00:00:09,360
+course and we can go ahead and join that room.
+
+3
+00:00:09,450 --> 00:00:13,350
+Now when we do we're brought to the chat page but nothing is actually happening behind the scenes to
+
+4
+00:00:13,350 --> 00:00:14,890
+use any of these values.
+
+5
+00:00:14,970 --> 00:00:17,800
+They're showing up in the you are l but that's about it.
+
+6
+00:00:17,820 --> 00:00:23,100
+The goal in this video is to take these values and pass them from the client to the server so the server
+
+7
+00:00:23,100 --> 00:00:25,130
+can keep track of who's in which room.
+
+8
+00:00:25,260 --> 00:00:27,660
+And we can set up that private communication.
+
+9
+00:00:27,690 --> 00:00:33,680
+Currently if User 1 is in Noad course and user two is in re-act course both of them are going to be
+
+10
+00:00:33,680 --> 00:00:37,940
+able to talk to each other because this data is not used.
+
+11
+00:00:38,220 --> 00:00:41,910
+Now the first step in getting this data to the server is figuring out where it lives.
+
+12
+00:00:41,940 --> 00:00:44,330
+This actually lives in the location object.
+
+13
+00:00:44,330 --> 00:00:47,060
+We're going to use the council to just play around with it.
+
+14
+00:00:47,340 --> 00:00:50,730
+Location is a global object as provided by your browser.
+
+15
+00:00:50,820 --> 00:00:53,340
+And on it we have a whole bunch of really interesting things.
+
+16
+00:00:53,340 --> 00:00:59,970
+Things like host hostname Tref origin path name what we're going to be using is search as you can see
+
+17
+00:00:59,970 --> 00:01:05,590
+here search is the query string everything from the question mark to the end of the word course.
+
+18
+00:01:05,670 --> 00:01:10,560
+What I have highlighted here the goal is to get this into a more useful format.
+
+19
+00:01:10,560 --> 00:01:13,620
+Right now we have just the string we're going to need to parse this.
+
+20
+00:01:13,650 --> 00:01:15,890
+We're actually going to use a library to do that.
+
+21
+00:01:15,900 --> 00:01:24,260
+Now that we know where it lives we can access window that location dot search to get this value.
+
+22
+00:01:24,600 --> 00:01:29,370
+Now I'm adding window up front just to make sure we're accessing the global location property as opposed
+
+23
+00:01:29,370 --> 00:01:32,730
+to a local variable which may or may not exist called location.
+
+24
+00:01:32,730 --> 00:01:37,190
+This is going to be the most foolproof way to fetch the query string.
+
+25
+00:01:37,530 --> 00:01:42,310
+Now the next thing we're going to do is talk about programs and deep harams inside of J.
+
+26
+00:01:42,310 --> 00:01:48,390
+Querrey we actually have access to the function we can access it by calling Jay query dot PERVAN and
+
+27
+00:01:48,390 --> 00:01:49,650
+we can pass in an object.
+
+28
+00:01:49,650 --> 00:01:52,040
+Let's go ahead and create a little object right here.
+
+29
+00:01:52,140 --> 00:01:55,700
+We'll set name equal to your first name.
+
+30
+00:01:55,700 --> 00:01:59,960
+I'm going to set it equal to Andrew and we'll set age equal to something like 25.
+
+31
+00:02:00,200 --> 00:02:04,760
+Now when I run this statement J query is going to take that object and convert it into a set of parameters
+
+32
+00:02:04,760 --> 00:02:07,020
+that could be added onto what you are out here.
+
+33
+00:02:07,070 --> 00:02:10,550
+You can see we have name equals Andrew and age equals 25.
+
+34
+00:02:10,550 --> 00:02:14,100
+This is similar to the format we had up above minus the question mark.
+
+35
+00:02:14,120 --> 00:02:18,950
+All we'd have to do is add one onto the beginning and we would have a complete search string.
+
+36
+00:02:18,950 --> 00:02:23,960
+Now the problem with Jay Querrey is that it cannot do it in the other direction meaning it cannot take
+
+37
+00:02:24,020 --> 00:02:27,620
+this string and convert it back into an object which is kind of what we want.
+
+38
+00:02:27,770 --> 00:02:30,160
+We want to be able to access this data easily.
+
+39
+00:02:30,170 --> 00:02:32,240
+Currently that is just not possible.
+
+40
+00:02:32,240 --> 00:02:35,620
+There's also quirks like encoding and plus characters.
+
+41
+00:02:35,630 --> 00:02:39,490
+This was originally a space but it got converted to a plus by the form.
+
+42
+00:02:39,620 --> 00:02:41,720
+We don't want to decode all of that too.
+
+43
+00:02:41,720 --> 00:02:50,020
+Luckily there is a simple library we can include and we can grab it by going to Linx dot mead and I
+
+44
+00:02:50,110 --> 00:02:56,560
+go forward slash and de-program Param takes your object and returns the string de-program takes the
+
+45
+00:02:56,560 --> 00:03:01,800
+string and returns an object and here we have a simple just it's a really short function that we're
+
+46
+00:03:01,810 --> 00:03:03,680
+going to be adding to our project.
+
+47
+00:03:03,880 --> 00:03:05,840
+Let's go to the raw version of this page.
+
+48
+00:03:05,920 --> 00:03:10,210
+Then we're going to save it using right click save as and we're going to add it right into a project.
+
+49
+00:03:11,750 --> 00:03:17,190
+We have our public J.S. libs folder and right in here we'll simply save it as deep.
+
+50
+00:03:17,270 --> 00:03:22,020
+J.S. Now once we have that file saved we can actually include it.
+
+51
+00:03:22,030 --> 00:03:27,990
+This is going to make it much easier to work with the search data down below inside of Adam.
+
+52
+00:03:28,060 --> 00:03:31,290
+I'm going to head over to chat Dom HTL.
+
+53
+00:03:31,300 --> 00:03:36,910
+We're not going to need this in index HVM Al but inside of chat Scott H DML we are going to load it
+
+54
+00:03:36,910 --> 00:03:37,180
+in.
+
+55
+00:03:37,180 --> 00:03:39,320
+Down below we'll make a new script tag
+
+56
+00:03:43,540 --> 00:03:50,280
+and we're going to go ahead and set the source equal to inside of quotes forward slash James forwards
+
+57
+00:03:50,280 --> 00:03:54,610
+slash libs forward slash d Param dot J.
+
+58
+00:03:54,610 --> 00:03:55,350
+S.
+
+59
+00:03:55,480 --> 00:03:56,670
+Now when we save chat.
+
+60
+00:03:56,710 --> 00:03:58,930
+HTL melon head back into the browser.
+
+61
+00:03:58,930 --> 00:04:03,310
+We can actually refresh the page and play around with this in the council before ever adding it to our
+
+62
+00:04:03,310 --> 00:04:04,380
+code.
+
+63
+00:04:04,390 --> 00:04:07,380
+We now have access to Jay queery dot D parameter.
+
+64
+00:04:07,510 --> 00:04:12,370
+If I run this statement we're going to get our function back confirming that it does exist and all we
+
+65
+00:04:12,370 --> 00:04:14,630
+need to do is pass in the string.
+
+66
+00:04:14,650 --> 00:04:16,510
+This is the search string.
+
+67
+00:04:16,510 --> 00:04:20,780
+Window that location dot search.
+
+68
+00:04:21,050 --> 00:04:26,090
+So we're taking that search string we're passing it into deep RAM and the resulting object is exactly
+
+69
+00:04:26,090 --> 00:04:26,930
+what we want.
+
+70
+00:04:26,930 --> 00:04:31,410
+We have a name property equal to Andrew and we have a room property equal to node space.
+
+71
+00:04:31,430 --> 00:04:37,520
+Course all those special characters like the end symbol the question mark and the plus character they've
+
+72
+00:04:37,520 --> 00:04:41,450
+all been removed and replaced with this nicely formatted object.
+
+73
+00:04:41,450 --> 00:04:46,700
+This is what we're going to use inside of our client side code to get the values and pass them to the
+
+74
+00:04:46,700 --> 00:04:50,510
+server which is what we're going to do right now inside of atom.
+
+75
+00:04:50,510 --> 00:04:56,870
+This is all going to happen in chat Dhananjay s right here we have our connect callback function.
+
+76
+00:04:56,870 --> 00:05:02,300
+This happens when we first connect and right away when we connect we're going to emit an event that's
+
+77
+00:05:02,300 --> 00:05:08,570
+going to start the process of joining a room socket Io has a built in support for the idea of Romes
+
+78
+00:05:08,780 --> 00:05:13,260
+creating these little isolated areas where only certain people can emit and listen to events.
+
+79
+00:05:13,280 --> 00:05:15,220
+All of that gets set up on the server though.
+
+80
+00:05:15,260 --> 00:05:18,500
+Which means right in here when we connect to the server.
+
+81
+00:05:18,620 --> 00:05:21,760
+All we're going to do is emit an event called join.
+
+82
+00:05:21,770 --> 00:05:24,290
+This is going to start the process.
+
+83
+00:05:24,350 --> 00:05:26,760
+First up let's go ahead and grab our parameters.
+
+84
+00:05:26,780 --> 00:05:31,420
+The ones that we just learned how to deep program over inside of the console.
+
+85
+00:05:31,510 --> 00:05:35,580
+Var Parama equals J.
+
+86
+00:05:35,600 --> 00:05:42,040
+Queried dot deep herem and we're going to pass in window ADOT location and search just like we did.
+
+87
+00:05:42,050 --> 00:05:47,630
+But for now we have our object and we can go ahead and emit an event right here.
+
+88
+00:05:47,750 --> 00:05:52,610
+We're going to call socket dot emit and the event that we're going to emit it's going to be a custom
+
+89
+00:05:52,610 --> 00:05:55,650
+event we'll be creating is going to be called join.
+
+90
+00:05:55,670 --> 00:06:00,290
+This is going to get emitted from the client and it's going to get listened to by the server when the
+
+91
+00:06:00,290 --> 00:06:04,760
+server hears this you join in that it's going to go through the process of setting up the room.
+
+92
+00:06:04,760 --> 00:06:09,470
+Now not all of that is going to happen in this video but we can get started if the data that we're going
+
+93
+00:06:09,470 --> 00:06:12,480
+to send across is just going to be the Paramo object.
+
+94
+00:06:12,550 --> 00:06:17,480
+It may or may not include everything we need we'll be doing a little validation on the server.
+
+95
+00:06:17,540 --> 00:06:21,240
+And last but not least we are going to set up acknowledgements for this one.
+
+96
+00:06:21,290 --> 00:06:25,870
+If someone does join the room we want to know that if someone doesn't we want to know that too because
+
+97
+00:06:25,870 --> 00:06:30,740
+if they don't join the room it's most likely because they provided invalid data which means that we
+
+98
+00:06:30,740 --> 00:06:36,950
+want to kick them back to that joined form forcing them to provide both a name and a room name right
+
+99
+00:06:36,950 --> 00:06:37,380
+here.
+
+100
+00:06:37,430 --> 00:06:42,830
+We can go ahead and set up our function and this function could take an argument.
+
+101
+00:06:42,840 --> 00:06:46,540
+We're going to be setting it up ourselves so we can decide if it takes an argument.
+
+102
+00:06:46,650 --> 00:06:50,760
+And it definitely does make sense for it to take one in this case.
+
+103
+00:06:50,760 --> 00:06:54,230
+We're going to go ahead and provide any errors if there is an error.
+
+104
+00:06:54,330 --> 00:06:56,620
+That's fine we'll be able to handle it if there is no error.
+
+105
+00:06:56,640 --> 00:06:57,690
+That's great too.
+
+106
+00:06:57,690 --> 00:07:00,140
+We'll go ahead and do something else right in here.
+
+107
+00:07:00,150 --> 00:07:07,020
+We can do something if an error exists using if air and we can go ahead and add an else clause to if
+
+108
+00:07:07,020 --> 00:07:10,050
+there is no error we want to do a different thing.
+
+109
+00:07:10,290 --> 00:07:12,150
+Now we're not going to fill this out at the moment.
+
+110
+00:07:12,150 --> 00:07:16,800
+Well we're going to do at this point in time is go ahead and actually set up the listener inside of
+
+111
+00:07:16,800 --> 00:07:17,260
+server.
+
+112
+00:07:17,290 --> 00:07:24,120
+As for join that is going to happen over in server J.S. we can make that the very first event just above
+
+113
+00:07:24,150 --> 00:07:29,720
+create message right here Sacket dot on join.
+
+114
+00:07:29,800 --> 00:07:34,350
+Now as we already know we are going to be taking some arguments in the callback function.
+
+115
+00:07:34,350 --> 00:07:36,130
+We're going to get our parameters.
+
+116
+00:07:36,300 --> 00:07:40,680
+We can call these programs and we're also going to get that call back functions since we are setting
+
+117
+00:07:40,680 --> 00:07:44,680
+up acknowledgements inside of the join function.
+
+118
+00:07:44,680 --> 00:07:48,640
+The first thing that we're going to want to do is actually validate the data that came through both
+
+119
+00:07:48,640 --> 00:07:50,890
+the name and the room.
+
+120
+00:07:50,890 --> 00:07:54,170
+These are both potential properties on Puranas.
+
+121
+00:07:54,190 --> 00:08:00,100
+All we really care is that they are not empty strings meaning that it's not just a space it's not just
+
+122
+00:08:00,100 --> 00:08:06,220
+an empty string and it's not a non string type like a number or an object something like this might
+
+123
+00:08:06,220 --> 00:08:11,770
+have a length but it's not exactly going to be a valid username or a valid or room name in order to
+
+124
+00:08:11,770 --> 00:08:15,870
+set up this validation which we're going to be doing other places to like create message.
+
+125
+00:08:15,940 --> 00:08:19,090
+We're going to create a separate tills file in here.
+
+126
+00:08:19,090 --> 00:08:21,200
+I'm going to call this validation Dot.
+
+127
+00:08:21,330 --> 00:08:25,830
+Yes and this is where we can put some validators that we're going to need throughout the project.
+
+128
+00:08:25,930 --> 00:08:30,350
+In this video we're going to create one called is real strength.
+
+129
+00:08:30,460 --> 00:08:35,440
+This is going to verify that a value is of a type string and that it's not just a bunch of spaces it
+
+130
+00:08:35,440 --> 00:08:38,090
+actually has real characters inside of it.
+
+131
+00:08:38,110 --> 00:08:41,030
+We're going to set this equal to a function that takes a string.
+
+132
+00:08:41,050 --> 00:08:46,060
+This is going to be the string we validate and it's actually not going to be terribly difficult.
+
+133
+00:08:46,090 --> 00:08:51,760
+We're going to return and we're going to return in the following conditions it'll return true if it
+
+134
+00:08:51,790 --> 00:08:53,250
+is a real string and false.
+
+135
+00:08:53,260 --> 00:08:59,110
+If it's not first up we'll use Type of this is going to get the type of the string variable.
+
+136
+00:08:59,110 --> 00:09:02,150
+This needs to equal in quotes string.
+
+137
+00:09:02,170 --> 00:09:08,200
+Now currently this is going to return true for any string and false for any non string value.
+
+138
+00:09:08,410 --> 00:09:11,080
+But it does not take into account these spaces.
+
+139
+00:09:11,080 --> 00:09:17,380
+What we're going to do is use the trim method available on Strang's which takes a string like this and
+
+140
+00:09:17,380 --> 00:09:19,300
+converts it into a string like this.
+
+141
+00:09:19,300 --> 00:09:25,030
+Trimming all whitespace if you pass a string like this it's going to convert it into a string like this.
+
+142
+00:09:25,030 --> 00:09:27,760
+Trimming leading and trailing whitespace only.
+
+143
+00:09:27,790 --> 00:09:30,120
+It's not going to trim any interior spacing.
+
+144
+00:09:30,190 --> 00:09:36,220
+So if I have space are down below I am still gonna get that space between F and R but all of the leading
+
+145
+00:09:36,220 --> 00:09:38,490
+and trailing spaces are removed.
+
+146
+00:09:38,650 --> 00:09:40,090
+We're going to use that right here.
+
+147
+00:09:42,800 --> 00:09:49,130
+As TR ADOT trim has a length greater than zero after we called trim.
+
+148
+00:09:49,130 --> 00:09:51,190
+We do need a length greater than zero.
+
+149
+00:09:51,200 --> 00:09:53,510
+Otherwise we have an empty string.
+
+150
+00:09:53,510 --> 00:09:58,700
+This is going to be R is real string function and we're going to go ahead and export it real quickly.
+
+151
+00:09:58,710 --> 00:10:05,330
+Module exports setting it equal to an object where we set is real string equal to the is real string
+
+152
+00:10:05,330 --> 00:10:07,530
+function as defined above.
+
+153
+00:10:07,580 --> 00:10:08,540
+Awesome.
+
+154
+00:10:08,570 --> 00:10:10,610
+Now I can go ahead and save this file.
+
+155
+00:10:10,730 --> 00:10:16,700
+I'm also going to go ahead and inside of server J S call this function we need to import it first before
+
+156
+00:10:16,700 --> 00:10:19,820
+we can actually validate those two properties just up above.
+
+157
+00:10:19,820 --> 00:10:26,750
+We're going to do that right here and we can make a contest and use E.S. six destructuring to grab is
+
+158
+00:10:27,110 --> 00:10:35,130
+real string and we're gonna grab it using require we're requiring a local file dot forward slash it's
+
+159
+00:10:35,150 --> 00:10:38,350
+in that utility directory and the file name is validation.
+
+160
+00:10:38,390 --> 00:10:39,530
+Just like this.
+
+161
+00:10:39,570 --> 00:10:43,280
+Now we can call is real string inside of join.
+
+162
+00:10:43,280 --> 00:10:44,920
+That's exactly what we're going to do.
+
+163
+00:10:44,930 --> 00:10:49,970
+We're going to check if either of them are not real strings if one or more are not real strings.
+
+164
+00:10:49,970 --> 00:10:54,010
+We're going to call the call back passing in the error right here.
+
+165
+00:10:54,290 --> 00:11:00,680
+If Prim's dot name is the first one we're going to pass that into is real string
+
+166
+00:11:04,020 --> 00:11:07,660
+harams dot name.
+
+167
+00:11:07,670 --> 00:11:12,800
+Now we want to check if it's not a real string so we're going to flip that or.
+
+168
+00:11:12,910 --> 00:11:18,260
+And here we're going to check if the other property the room name is not a real string.
+
+169
+00:11:18,310 --> 00:11:27,590
+Now inside of the query string that is called Room a back inside of Adam if it's not is real string
+
+170
+00:11:27,740 --> 00:11:31,750
+passing in the correct value Puranas room then that's going to be an error too.
+
+171
+00:11:31,760 --> 00:11:34,680
+And right here we can handle that error.
+
+172
+00:11:34,940 --> 00:11:44,040
+All I'm going to do is call the callback with a little string message name and room name are required.
+
+173
+00:11:44,180 --> 00:11:45,250
+Perfect.
+
+174
+00:11:45,260 --> 00:11:49,940
+Now if that's not the case we do still want to call the call back but we don't want to pass any arguments
+
+175
+00:11:49,940 --> 00:11:54,010
+and because remember that first argument we set that up to be the error argument.
+
+176
+00:11:54,140 --> 00:11:59,250
+And if both things are valid we do not want to pass any errors back over inside of a server.
+
+177
+00:11:59,250 --> 00:12:03,080
+J.S. we now have some pretty basic validation set up.
+
+178
+00:12:03,080 --> 00:12:07,010
+And before we actually do anything in here which is going to be in the upcoming videos all we're going
+
+179
+00:12:07,010 --> 00:12:10,730
+to do is add a few cases right here.
+
+180
+00:12:10,730 --> 00:12:15,910
+If it isn't air that's a pretty big problem and we're going to want to send the user back to the root
+
+181
+00:12:15,920 --> 00:12:22,310
+of the application by changing one of the properties under location window and data location.
+
+182
+00:12:22,570 --> 00:12:26,370
+RATH here we can manipulate which page the users on.
+
+183
+00:12:26,420 --> 00:12:31,160
+Essentially we're going to be read you're writing them back to that root page by having the forward
+
+184
+00:12:31,160 --> 00:12:34,690
+slash value set to the H ref property.
+
+185
+00:12:34,880 --> 00:12:39,830
+Now before we do that we can do whatever we like maybe we want to splay a modal using our framework
+
+186
+00:12:39,830 --> 00:12:44,590
+of choice whether it's foundation bootstrap or anything else to keep things simple here.
+
+187
+00:12:44,600 --> 00:12:48,410
+All we're going to do is call alert passing in the error just like this.
+
+188
+00:12:48,560 --> 00:12:50,990
+So a user will see a little alert box.
+
+189
+00:12:50,990 --> 00:12:54,910
+They'll then click OK and they'll be redirected back to the home page.
+
+190
+00:12:54,920 --> 00:12:56,440
+Now if there is no error.
+
+191
+00:12:56,570 --> 00:12:59,860
+All we're going to do for the moment is use console dialog.
+
+192
+00:13:01,070 --> 00:13:04,610
+To print no error.
+
+193
+00:13:04,660 --> 00:13:05,650
+Awesome.
+
+194
+00:13:05,650 --> 00:13:07,660
+With this in place let's go ahead and test that.
+
+195
+00:13:07,660 --> 00:13:09,640
+Things are working as expected.
+
+196
+00:13:09,640 --> 00:13:13,390
+Over inside of the browser I'm going to get my current pager refreshed.
+
+197
+00:13:13,390 --> 00:13:16,520
+Now here we do have a valid name and a valid room.
+
+198
+00:13:16,540 --> 00:13:21,250
+So when I click refresh we should see no error printing in the council and that's exactly what we get
+
+199
+00:13:21,460 --> 00:13:21,870
+the data.
+
+200
+00:13:21,880 --> 00:13:24,670
+We passed through was indeed valid.
+
+201
+00:13:24,670 --> 00:13:29,710
+Now we can go ahead and go to the root of the page and try some invalid data to demonstrate this.
+
+202
+00:13:29,710 --> 00:13:32,760
+All I'm going to do is click join without providing either value.
+
+203
+00:13:32,770 --> 00:13:36,850
+This is going to bring us to the chat app and you can see we can get our little alert box name and room
+
+204
+00:13:36,850 --> 00:13:38,080
+name are required.
+
+205
+00:13:38,080 --> 00:13:43,280
+We click OK which is all we can do and we're immediately redirected back to join a chat.
+
+206
+00:13:43,570 --> 00:13:51,040
+If I do provide some valid data like I display name of Mike and a room name of developers we are going
+
+207
+00:13:51,040 --> 00:13:55,930
+to be brought to the chat page and we'll see no error shows up which is fantastic.
+
+208
+00:13:55,930 --> 00:13:59,200
+Now one last test real quick if we have just spaces.
+
+209
+00:13:59,230 --> 00:14:02,620
+I'm going to change the room name to a bunch of spaces and we click join.
+
+210
+00:14:02,620 --> 00:14:08,140
+We are going to still get the error even though we do have a bunch of plus signs for spaces up above.
+
+211
+00:14:08,140 --> 00:14:13,600
+Those are going to be swapped out for spaces when we run our code through deep herem and the air is
+
+212
+00:14:13,600 --> 00:14:15,180
+still going to occur.
+
+213
+00:14:15,520 --> 00:14:20,470
+Now that we have this in place we are in a pretty good spot to actually integrate rooms in the next
+
+214
+00:14:20,470 --> 00:14:21,950
+video before we do though.
+
+215
+00:14:21,970 --> 00:14:27,280
+Your challenge for this one is going to be to write some test cases for the brand new validation function
+
+216
+00:14:27,280 --> 00:14:32,870
+we just created which means we're going to make a new test file called a validation test.
+
+217
+00:14:32,950 --> 00:14:33,530
+Yes.
+
+218
+00:14:33,670 --> 00:14:38,060
+And inside of here we're going to load in expect making a variable called expect.
+
+219
+00:14:38,080 --> 00:14:41,750
+We could also make it a constant.
+
+220
+00:14:41,920 --> 00:14:47,110
+We're going to set that equal to require and we're going to require the expect library just like we
+
+221
+00:14:47,110 --> 00:14:48,220
+always do.
+
+222
+00:14:48,220 --> 00:14:52,160
+Next up we're going to load in a real string which is going to be part of the challenge.
+
+223
+00:14:52,600 --> 00:14:58,640
+Import is real sharing and we're going to add three test cases down below.
+
+224
+00:14:58,690 --> 00:15:04,820
+They describe block should be something like is real string and the three test cases will be as follows.
+
+225
+00:15:05,760 --> 00:15:11,190
+Should reject the 9 string values in this case.
+
+226
+00:15:11,220 --> 00:15:16,110
+I want you to pass a number object or anything else into the real string function.
+
+227
+00:15:16,200 --> 00:15:18,200
+You should get false back.
+
+228
+00:15:18,210 --> 00:15:23,260
+Next up should reject strings with only spaces.
+
+229
+00:15:23,400 --> 00:15:29,660
+If I have a string that's just a bunch of spaces that should not pass the is real string function validation.
+
+230
+00:15:29,760 --> 00:15:34,260
+That's also going to fail trim is going to remove all of those spaces and the length will be zero.
+
+231
+00:15:34,350 --> 00:15:35,060
+Last up.
+
+232
+00:15:35,160 --> 00:15:41,500
+Should allow strings with non space characters.
+
+233
+00:15:41,600 --> 00:15:45,300
+In this case you can pass in whatever you like some sort of valid value.
+
+234
+00:15:45,320 --> 00:15:47,070
+You could have space space.
+
+235
+00:15:47,240 --> 00:15:49,620
+L O T R for a lord of the Rings.
+
+236
+00:15:49,700 --> 00:15:52,940
+The beginning spaces are going to get trimmed out so it's not important.
+
+237
+00:15:53,000 --> 00:15:54,060
+You put out the letter.
+
+238
+00:15:54,080 --> 00:15:57,080
+Any valid string is going to pass this one.
+
+239
+00:15:57,080 --> 00:16:02,470
+Go ahead and set up those three test cases making sure the right boolean value comes back from.
+
+240
+00:16:02,480 --> 00:16:06,130
+Is real string when you're done run NPM test from the terminal.
+
+241
+00:16:06,140 --> 00:16:13,020
+Make sure all of your three tests passed and then you can go ahead and click play how you do hopefully
+
+242
+00:16:13,040 --> 00:16:15,990
+you were able to test this function without too much trouble.
+
+243
+00:16:16,000 --> 00:16:20,560
+The first thing we're going to do is inport it by making a variable we can make this a constant or a
+
+244
+00:16:20,560 --> 00:16:21,100
+variable.
+
+245
+00:16:21,100 --> 00:16:22,460
+I'm going to go with a constant.
+
+246
+00:16:22,870 --> 00:16:29,230
+And we're going to use yes 60 structuring to grab it is real string and we're going to grab it off of
+
+247
+00:16:29,440 --> 00:16:35,980
+the required call to our local file forward slash validation which is just alongside the current file
+
+248
+00:16:35,980 --> 00:16:38,760
+validation test dot J S.
+
+249
+00:16:38,800 --> 00:16:43,180
+Now we can add the things we have down below starting with our describe the block.
+
+250
+00:16:43,440 --> 00:16:48,250
+We're going to describe the is real string function.
+
+251
+00:16:48,450 --> 00:16:54,150
+Then we can add our arrow function and inside of here we can go ahead and provide our individual test
+
+252
+00:16:54,180 --> 00:16:55,350
+cases.
+
+253
+00:16:55,350 --> 00:17:01,560
+It and I'm going to copy it directly should reject non string values.
+
+254
+00:17:01,560 --> 00:17:06,200
+This is going to be a synchronous test so there's no reason to add the Done argument inside of here.
+
+255
+00:17:06,210 --> 00:17:08,670
+We're going to pass in a non string value.
+
+256
+00:17:08,700 --> 00:17:14,270
+I'm going make a variable called response which will store the return result from is real string.
+
+257
+00:17:14,310 --> 00:17:17,000
+We're going to call it passing in some sort of non-cheating value.
+
+258
+00:17:17,040 --> 00:17:17,880
+Anything would work.
+
+259
+00:17:17,880 --> 00:17:20,120
+I'm going to use a number 98.
+
+260
+00:17:20,310 --> 00:17:25,080
+Now down below we can use expect to assert that the response variable equals false which should be the
+
+261
+00:17:25,080 --> 00:17:25,850
+case.
+
+262
+00:17:25,880 --> 00:17:30,920
+We're expecting response to be false.
+
+263
+00:17:30,970 --> 00:17:31,830
+Perfect.
+
+264
+00:17:31,840 --> 00:17:37,780
+Next up it should reject string with only spaces.
+
+265
+00:17:37,900 --> 00:17:42,300
+I'm going to copy that text exactly pasting it inside of our IT name.
+
+266
+00:17:42,400 --> 00:17:44,710
+Then we can go ahead and add our arrow function.
+
+267
+00:17:44,710 --> 00:17:49,810
+And for this case all we're gonna do is create a variable called response passing in some sort of string
+
+268
+00:17:49,810 --> 00:17:51,500
+with just spaces.
+
+269
+00:17:51,640 --> 00:17:52,710
+We're still going to be calling.
+
+270
+00:17:52,710 --> 00:17:53,800
+Is real strength.
+
+271
+00:17:53,950 --> 00:17:56,340
+And right here we'll pass in a bunch of spaces.
+
+272
+00:17:56,470 --> 00:18:03,490
+And now we're going to assert that responds is false expect response to be false which it should be
+
+273
+00:18:03,490 --> 00:18:06,440
+because we do not have a valid string.
+
+274
+00:18:06,470 --> 00:18:13,670
+Next up last test case it should allow strings with non space characters.
+
+275
+00:18:13,670 --> 00:18:17,550
+I'm going to paste that in here and then we can go ahead and actually set up the test case.
+
+276
+00:18:17,570 --> 00:18:22,400
+You could have provided a bunch of different values as the argument to is real string.
+
+277
+00:18:22,400 --> 00:18:24,760
+We're still going to make that response variable.
+
+278
+00:18:24,770 --> 00:18:30,380
+We're still going to call is real string but right here I'm going to choose to pass in that space space
+
+279
+00:18:31,100 --> 00:18:34,160
+Andrew space space which is valid.
+
+280
+00:18:34,190 --> 00:18:39,980
+The trim function is going to remove those spaces in the validation process and the Double-O we can
+
+281
+00:18:39,980 --> 00:18:46,910
+expect that response is true to be true.
+
+282
+00:18:46,910 --> 00:18:47,430
+Awesome.
+
+283
+00:18:47,510 --> 00:18:48,700
+That's all you needed to do.
+
+284
+00:18:48,710 --> 00:18:53,600
+We can go ahead and remove the comments since we have the actual code in place and the last thing to
+
+285
+00:18:53,600 --> 00:18:57,120
+do is run the test case to make sure our code actually works.
+
+286
+00:18:57,230 --> 00:18:59,280
+NPM test is going to get that done.
+
+287
+00:18:59,300 --> 00:19:04,220
+This is going to run our test suite and right here we have our three test cases for is real string.
+
+288
+00:19:04,220 --> 00:19:06,460
+All of them are passing which is fantastic.
+
+289
+00:19:06,470 --> 00:19:09,240
+Now as I mentioned you could pretty much pass anything in here.
+
+290
+00:19:09,290 --> 00:19:13,970
+The letter D would work as a valid room name or user name.
+
+291
+00:19:14,000 --> 00:19:19,760
+If I rerun the test suite with as my string the test case still passes it doesn't really matter what
+
+292
+00:19:19,760 --> 00:19:20,650
+you passed into here.
+
+293
+00:19:20,660 --> 00:19:24,180
+As long as it had a real non-space character.
+
+294
+00:19:24,350 --> 00:19:27,620
+Now that we have this in place we are done we're not going to make a commit just yet.
+
+295
+00:19:27,620 --> 00:19:32,120
+We're kind of halfway through a feature we'll commit once we have a little more in place that's coming
+
+296
+00:19:32,120 --> 00:19:33,540
+up next so stay tuned.
+
+297
+00:19:33,540 --> 00:19:34,870
+I will see you then.
+

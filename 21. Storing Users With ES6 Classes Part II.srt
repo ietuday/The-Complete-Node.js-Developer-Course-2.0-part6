@@ -1,0 +1,1064 @@
+﻿1
+00:00:00,640 --> 00:00:05,560
+It before we can integrate users into our application let's go ahead and finish building it out which
+
+2
+00:00:05,560 --> 00:00:07,330
+is going to be the goal of this video.
+
+3
+00:00:07,330 --> 00:00:09,720
+We have three more methods to add and test.
+
+4
+00:00:09,790 --> 00:00:15,120
+The first one is remove user which is going to take an argument of the ID of the user.
+
+5
+00:00:15,120 --> 00:00:19,920
+You want to remove this is also going to return the user that was just removed.
+
+6
+00:00:20,020 --> 00:00:24,570
+So if I remove the user with an ID of three I want to get rid of it from this list.
+
+7
+00:00:24,580 --> 00:00:28,480
+But I do want to return the object will leave a little note about that right here.
+
+8
+00:00:28,480 --> 00:00:32,290
+Return user that was removed.
+
+9
+00:00:32,470 --> 00:00:33,090
+Awesome.
+
+10
+00:00:33,310 --> 00:00:38,350
+Now the next method that we're going to be filling out is a get user get user is going to take the exact
+
+11
+00:00:38,350 --> 00:00:40,440
+same arguments as remove user.
+
+12
+00:00:40,510 --> 00:00:45,970
+We're going to find a user by id returning the user object but we're not going to be removing it from
+
+13
+00:00:46,060 --> 00:00:47,230
+the array.
+
+14
+00:00:47,230 --> 00:00:53,440
+Now the final one that we're going to create as specified up above is a method called the get user list
+
+15
+00:00:53,720 --> 00:01:00,940
+and this is going to get a list of all the users just their names by the room name which means that
+
+16
+00:01:00,940 --> 00:01:05,770
+we're going to iterate through the user's array looking for all the users whose room matches the room
+
+17
+00:01:05,800 --> 00:01:08,300
+specified perfect.
+
+18
+00:01:08,370 --> 00:01:11,220
+This is going to return an array something like this.
+
+19
+00:01:11,310 --> 00:01:20,150
+Mike Genn Kalib assuming those are the people inside of the room now notice here we're not specifying
+
+20
+00:01:20,150 --> 00:01:25,070
+the room or the id property we're just returning an array of strings.
+
+21
+00:01:25,080 --> 00:01:25,590
+Awesome.
+
+22
+00:01:25,820 --> 00:01:30,440
+Now that we have this in place let's go ahead and add one thing to our test file in order to get these
+
+23
+00:01:30,440 --> 00:01:31,440
+methods to work.
+
+24
+00:01:31,460 --> 00:01:35,350
+We're going to need seed data we're going to need users that already exist.
+
+25
+00:01:35,360 --> 00:01:36,850
+Otherwise we can't remove one.
+
+26
+00:01:36,920 --> 00:01:37,820
+We can't get one.
+
+27
+00:01:37,840 --> 00:01:43,220
+And we definitely can't get a list of the rooms these non-existent users are in in order to fix that
+
+28
+00:01:43,250 --> 00:01:45,370
+over inside of user test.
+
+29
+00:01:45,430 --> 00:01:51,050
+J.S. we're going to add a before each call which we've used in the past before each as we know is going
+
+30
+00:01:51,050 --> 00:01:53,600
+to get called before every single test case.
+
+31
+00:01:53,630 --> 00:01:57,370
+It's going to help us initialize some data.
+
+32
+00:01:57,410 --> 00:02:03,450
+Now the data we're going to initialize is going to be defined just above in a variable called users.
+
+33
+00:02:03,620 --> 00:02:07,980
+And the reason I'm defining an outside of a For Each is so it's accessible inside.
+
+34
+00:02:08,000 --> 00:02:14,280
+Before each end it's accessible inside of the test cases down below inside before each.
+
+35
+00:02:14,410 --> 00:02:23,250
+We're going to set users equal to new users and we're also going to set the users users Iraq right here.
+
+36
+00:02:23,270 --> 00:02:29,550
+We can specify an array of objects and this is going to let us add some initialising data.
+
+37
+00:02:29,570 --> 00:02:31,120
+Let's go ahead and provide three.
+
+38
+00:02:31,160 --> 00:02:38,630
+The first one will have an ID equal to one will set the name equal to something like Mike and we can
+
+39
+00:02:38,630 --> 00:02:41,150
+go ahead and set the room equal to whatever we like.
+
+40
+00:02:41,220 --> 00:02:47,030
+I'm going to go ahead and use a room name of Noad course we can take this object and copy it two more
+
+41
+00:02:47,030 --> 00:02:52,910
+times I'm going to add a comma paste in what I just copied and do the same thing again comma followed
+
+42
+00:02:52,910 --> 00:02:53,920
+by paste.
+
+43
+00:02:54,110 --> 00:02:57,500
+I'm going to change it to an idea of two for the second user.
+
+44
+00:02:57,740 --> 00:03:05,000
+We'll change the name to something like Jan and we'll change the room name to react of course.
+
+45
+00:03:05,000 --> 00:03:10,610
+Now for the last user we are going to change the ID and the name will make the ID 3 and we'll make the
+
+46
+00:03:10,610 --> 00:03:11,930
+name something like.
+
+47
+00:03:11,930 --> 00:03:16,190
+Julie but we're going to leave the room as Noad course so we can test that.
+
+48
+00:03:16,200 --> 00:03:21,310
+Our Get user list function does indeed return the correct results.
+
+49
+00:03:21,320 --> 00:03:26,990
+The test cases aren't going to be required to use our users variable as defined here we can still define
+
+50
+00:03:26,990 --> 00:03:29,290
+a custom one like we do down below.
+
+51
+00:03:29,360 --> 00:03:37,190
+If I run the test watch script and PM run test HIF and watch we're going to see that our one test case
+
+52
+00:03:37,280 --> 00:03:38,600
+is still passing.
+
+53
+00:03:38,660 --> 00:03:44,780
+I'm going to save the file to rerun the test suite and right here we have 6 passing test cases regardless
+
+54
+00:03:44,780 --> 00:03:46,280
+of whether or not we use this.
+
+55
+00:03:46,370 --> 00:03:52,820
+We can still use a custom one like we do here now that we have this in place we can go ahead and start
+
+56
+00:03:52,820 --> 00:03:54,490
+filling out some of these methods.
+
+57
+00:03:54,560 --> 00:03:59,570
+We're going to fill out to get user list together and you're going to be responsible for remove a user
+
+58
+00:03:59,780 --> 00:04:01,730
+and get user.
+
+59
+00:04:01,880 --> 00:04:08,510
+Now in order to fill out get a user list we're going to start by finding all of the users whose room
+
+60
+00:04:08,600 --> 00:04:11,560
+matches the room argument specified here.
+
+61
+00:04:11,750 --> 00:04:16,360
+In order to do that we're going to use the filter method on arrays which we've used in the past.
+
+62
+00:04:16,430 --> 00:04:24,080
+Let's make a variable we'll call it users and we'll set it equal to this dot users which is the right
+
+63
+00:04:24,080 --> 00:04:26,380
+of users dot filter.
+
+64
+00:04:26,390 --> 00:04:33,400
+Now if you remember filter takes a function as its argument this function gets called with each individual
+
+65
+00:04:33,400 --> 00:04:38,800
+user and we can return TRUE to keep this item in the array or we can return false to have it removed
+
+66
+00:04:38,830 --> 00:04:39,700
+from the array.
+
+67
+00:04:39,760 --> 00:04:42,240
+Right here I'm going to go ahead and return.
+
+68
+00:04:42,730 --> 00:04:48,730
+And we're going to return user dot to Rome and we're going to check if that equals using three equals
+
+69
+00:04:48,730 --> 00:04:49,220
+signs.
+
+70
+00:04:49,240 --> 00:04:54,580
+The room argument if they are equal this is going to result in true that value will get returned if
+
+71
+00:04:54,580 --> 00:04:59,080
+they're not equal it's going to result in false and the user will not be added to the list above.
+
+72
+00:04:59,080 --> 00:05:04,660
+Now we can go ahead and use the shortcut for our iOS 6 arrow function instead of adding the return keyword
+
+73
+00:05:04,660 --> 00:05:11,110
+here and specifying the actual arrow we'll use the shorthand like this exact same functionality just
+
+74
+00:05:11,140 --> 00:05:13,180
+a different technique.
+
+75
+00:05:13,180 --> 00:05:18,480
+Now that we have this in place we have a list of all the users who do match the criteria.
+
+76
+00:05:18,520 --> 00:05:23,500
+The next step in the process is to take that array of objects and convert it to an array of strings.
+
+77
+00:05:23,500 --> 00:05:27,450
+All we care about is getting that list of names in order to do that.
+
+78
+00:05:27,460 --> 00:05:30,190
+We're going to use map right here.
+
+79
+00:05:30,360 --> 00:05:33,450
+I'm going to create a variable called names array.
+
+80
+00:05:33,880 --> 00:05:38,290
+And we're going to set this equal to users dot nap.
+
+81
+00:05:38,290 --> 00:05:45,850
+Now we have used map in the past as we know map also takes a function similar to filter it also gets
+
+82
+00:05:45,850 --> 00:05:49,450
+called with the individual item in this case an individual user.
+
+83
+00:05:49,590 --> 00:05:53,580
+But map lets us return the value we want to use instead.
+
+84
+00:05:53,710 --> 00:05:55,660
+So we're going to get an object in here.
+
+85
+00:05:55,660 --> 00:06:01,090
+This is going to have the ID property room property and the name property and all we want is the name
+
+86
+00:06:01,090 --> 00:06:01,540
+property.
+
+87
+00:06:01,540 --> 00:06:08,710
+So we are going to return user dot name and we can simplify that even further using the shorthand for
+
+88
+00:06:08,710 --> 00:06:11,130
+the arrow function user name.
+
+89
+00:06:11,140 --> 00:06:14,900
+Right here is going to be implicitly returned.
+
+90
+00:06:15,010 --> 00:06:21,860
+Now that we have our names are-I all we need to do is go ahead and return it by returning names array.
+
+91
+00:06:21,910 --> 00:06:23,580
+Now this is going to get the job done.
+
+92
+00:06:23,650 --> 00:06:25,540
+Before we simplify it any further.
+
+93
+00:06:25,540 --> 00:06:31,050
+Let's go ahead and write a test case to make sure it works inside of users and test.
+
+94
+00:06:31,100 --> 00:06:40,600
+J.S. we can get this done below our other test case it should return names for node course right here
+
+95
+00:06:40,600 --> 00:06:44,640
+we're going to write a test case that returns all of the users inside of the node.
+
+96
+00:06:44,640 --> 00:06:47,020
+Course we should get the two users back.
+
+97
+00:06:47,050 --> 00:06:54,520
+Mike and Julie right here we'll make a variable we'll call that variable user list and what we're going
+
+98
+00:06:54,520 --> 00:06:58,950
+to do is call the users variable defined up here.
+
+99
+00:06:58,950 --> 00:07:00,530
+This is the one with our seed data.
+
+100
+00:07:00,540 --> 00:07:04,800
+We do not need to create a custom one like we do for the other test case.
+
+101
+00:07:04,800 --> 00:07:12,900
+Users do not get user list and we don't get user list takes one argument the name of the room you want
+
+102
+00:07:12,900 --> 00:07:16,580
+to fetch the list for this one is called node space course.
+
+103
+00:07:16,650 --> 00:07:19,230
+Make sure your capitalization lines up.
+
+104
+00:07:19,230 --> 00:07:22,290
+Then we can go ahead and add a semicolon at the end.
+
+105
+00:07:22,290 --> 00:07:27,390
+The last thing to do is add our assertion making sure that when we get back is what's expected right
+
+106
+00:07:27,390 --> 00:07:35,880
+here we'll expect that the user list equals using two equal the following array.
+
+107
+00:07:35,880 --> 00:07:39,000
+It's going to be an array where the first item is Mike.
+
+108
+00:07:39,150 --> 00:07:41,600
+And the second item is Julie.
+
+109
+00:07:41,880 --> 00:07:46,740
+If that assertion passes we know get user list worked as expected because that's exactly what we have
+
+110
+00:07:46,740 --> 00:07:48,410
+to find up above.
+
+111
+00:07:48,480 --> 00:07:54,570
+Now we can go ahead and copy this test case doing the exact same thing for the react course should return
+
+112
+00:07:54,570 --> 00:07:58,820
+names for re-act course will change node to react.
+
+113
+00:07:58,920 --> 00:08:04,140
+And we're going to go ahead and update what we expect the re-act course has just one user that user
+
+114
+00:08:04,140 --> 00:08:07,200
+has a name equal to Jan..
+
+115
+00:08:07,500 --> 00:08:10,980
+Now this is a pretty good test case if we save users test.
+
+116
+00:08:11,110 --> 00:08:14,260
+Yes it's going to rerun the entire test suite.
+
+117
+00:08:14,280 --> 00:08:20,180
+We should see we have our three tests under the users describe black and they should all be passing.
+
+118
+00:08:20,220 --> 00:08:21,960
+That is indeed the case.
+
+119
+00:08:22,050 --> 00:08:27,360
+The next two methods that we're going to be creating remove user and get user are going to be yours
+
+120
+00:08:27,360 --> 00:08:29,330
+to do as a challenge.
+
+121
+00:08:29,340 --> 00:08:34,590
+I'd also like you to write some test cases that make sure they work as expected.
+
+122
+00:08:34,590 --> 00:08:39,810
+Let's go ahead and write the statements for the test cases together and you'll be responsible for actually
+
+123
+00:08:39,810 --> 00:08:44,880
+filling out the method and filling out the test case right here.
+
+124
+00:08:44,880 --> 00:08:53,790
+It should remove a user and this method is going to take the idea of one of our seed users whether it's
+
+125
+00:08:53,790 --> 00:08:59,520
+one two or three it's going to pass it to the function remove user and your job is going to be to assert
+
+126
+00:08:59,580 --> 00:09:02,190
+that the user was indeed removed.
+
+127
+00:09:02,340 --> 00:09:05,700
+Now there really is no right or wrong way to make the assertions.
+
+128
+00:09:05,790 --> 00:09:09,890
+If you find you do things a little differently than what I do as I go through the challenge at the end
+
+129
+00:09:09,900 --> 00:09:12,210
+that is perfectly fine.
+
+130
+00:09:12,210 --> 00:09:18,650
+Next up it should not remove user in this case.
+
+131
+00:09:18,670 --> 00:09:22,630
+I want you to pass in an ID that is not part of our seed user array.
+
+132
+00:09:22,750 --> 00:09:29,200
+That means something like 44 128 or basically any string that's not one two or three.
+
+133
+00:09:29,380 --> 00:09:32,980
+In this case you should be asserting that the array has not changed.
+
+134
+00:09:33,010 --> 00:09:36,220
+We should still have those three items.
+
+135
+00:09:36,250 --> 00:09:40,180
+Now those are the two test cases for our remove user method.
+
+136
+00:09:40,180 --> 00:09:41,650
+Next up is get user.
+
+137
+00:09:41,650 --> 00:09:44,140
+We're going to add to similar test cases.
+
+138
+00:09:44,140 --> 00:09:52,820
+First up it should find user you should pass in a valid ID and you should get the user object back.
+
+139
+00:09:52,900 --> 00:10:00,820
+And the other one is going to be it should not find user just like it should not remove a user pass
+
+140
+00:10:00,820 --> 00:10:06,040
+in an invalid ID and make sure that you do not get a user object back.
+
+141
+00:10:06,070 --> 00:10:08,900
+Now that you have this in place you know what tests you need to fill out.
+
+142
+00:10:08,980 --> 00:10:10,440
+Over inside of user data.
+
+143
+00:10:10,500 --> 00:10:11,060
+Yes.
+
+144
+00:10:11,110 --> 00:10:14,750
+All you need to do is fill out these two functions and I'll give you a hint.
+
+145
+00:10:14,770 --> 00:10:20,350
+I used the filter method on the array extensively inside of both of these.
+
+146
+00:10:20,350 --> 00:10:25,550
+The goal here is to search through the user's array finding items with this idea.
+
+147
+00:10:25,720 --> 00:10:27,270
+Now there is no wrong way to do it.
+
+148
+00:10:27,280 --> 00:10:32,860
+If you find you use something like low dash underscore another array method aside from filter whatever
+
+149
+00:10:32,860 --> 00:10:34,570
+it takes to get the job done.
+
+150
+00:10:34,570 --> 00:10:36,360
+And that is perfectly fine.
+
+151
+00:10:36,460 --> 00:10:41,370
+Once you are done go ahead and make sure everything is working as expected by rerunning the test suite.
+
+152
+00:10:41,440 --> 00:10:44,440
+If you do see all of your tests passing that's great.
+
+153
+00:10:44,440 --> 00:10:52,020
+You can go ahead and click play Jiddu Hopefully you are able to fill out both of those methods and you
+
+154
+00:10:52,020 --> 00:10:55,140
+are also able to get those test cases up and running.
+
+155
+00:10:55,140 --> 00:11:00,930
+I'm going to start off with a get user the goal here is to return the user object whose I.D. matches
+
+156
+00:11:00,930 --> 00:11:03,880
+the ID of this argument to get that done.
+
+157
+00:11:03,960 --> 00:11:05,720
+I am going to be using filter.
+
+158
+00:11:05,760 --> 00:11:12,540
+We're going to return the result from this dot user's dot filter just like we do down below.
+
+159
+00:11:12,540 --> 00:11:16,340
+We're going to be filtering by ID here we filter by room.
+
+160
+00:11:16,500 --> 00:11:20,740
+We're going to pass in our era function using the expression syntax.
+
+161
+00:11:20,790 --> 00:11:22,860
+The argument will be the user.
+
+162
+00:11:23,370 --> 00:11:30,930
+And right here we are going to go ahead and return true if the user's ID property equals the ID of the
+
+163
+00:11:31,020 --> 00:11:32,550
+argument if that is the case.
+
+164
+00:11:32,610 --> 00:11:35,060
+We do want to keep this user in the array.
+
+165
+00:11:35,220 --> 00:11:40,920
+And in the end we should have just one user or zero users and all were going to do is return the first
+
+166
+00:11:41,250 --> 00:11:41,940
+item.
+
+167
+00:11:41,940 --> 00:11:45,610
+If theres one user in the array we're going to get its object back right here.
+
+168
+00:11:45,690 --> 00:11:50,150
+If there no users we're going to get undefined which is exactly what we want.
+
+169
+00:11:50,190 --> 00:11:54,210
+Now that we have get user in place we can write the test case for that.
+
+170
+00:11:54,210 --> 00:12:00,940
+We have to write here it should find user and it should not find user for it should find user.
+
+171
+00:12:01,050 --> 00:12:05,850
+I'm going to get started by making a variable called user ID and I'm going to set this equal to the
+
+172
+00:12:05,850 --> 00:12:06,800
+ID I want to use.
+
+173
+00:12:06,810 --> 00:12:12,120
+I need a valid ID so I'm going to go ahead and use two one two or three it would have worked here.
+
+174
+00:12:12,120 --> 00:12:15,480
+Next up I am going to go ahead and make a user variable.
+
+175
+00:12:15,480 --> 00:12:19,640
+This is going to be the return result from a get user.
+
+176
+00:12:19,770 --> 00:12:28,140
+I'll set it equal to users dot get user and we're going to try to fetch a user whose ID is to by passing
+
+177
+00:12:28,140 --> 00:12:29,940
+an user ID.
+
+178
+00:12:29,940 --> 00:12:33,520
+Now the next thing we're going to do is make an assertion about what we get back.
+
+179
+00:12:33,570 --> 00:12:43,280
+We should have gotten our object back and we can expect that user dot I.D. equals using to be the idea
+
+180
+00:12:43,390 --> 00:12:46,380
+above the user id variable.
+
+181
+00:12:46,410 --> 00:12:51,090
+I'm going to go ahead and save the test suite and you can see all of our test cases are still passing
+
+182
+00:12:51,270 --> 00:12:52,830
+which is fantastic.
+
+183
+00:12:52,950 --> 00:12:56,450
+If it does not equal the I.D. maybe the ID is three.
+
+184
+00:12:56,550 --> 00:13:01,080
+You're going to see the test case fail and we do get a pretty clear error message we expected two to
+
+185
+00:13:01,110 --> 00:13:03,270
+be three which clearly is not the case.
+
+186
+00:13:03,310 --> 00:13:09,010
+This is the final test case though and we can move on to it should not find a user in this case.
+
+187
+00:13:09,060 --> 00:13:13,500
+We're going to follow a very similar format creating the user id variable and setting it equal to a
+
+188
+00:13:13,500 --> 00:13:19,800
+user ID that does not exist inside of our built in users something like 99 would get the job done.
+
+189
+00:13:19,800 --> 00:13:26,110
+Next up will be making a user variable once again to store the return result from get user users ADOT
+
+190
+00:13:26,190 --> 00:13:29,150
+to get user passing in our user ID.
+
+191
+00:13:29,160 --> 00:13:33,950
+Now in this case we would expect that undefined comes back filter should return nothing.
+
+192
+00:13:33,990 --> 00:13:38,350
+And if you try to fetch the first item in an empty array you're going to get undefined.
+
+193
+00:13:38,400 --> 00:13:44,250
+We can prove that over in the terminal by running node and right here inside of our little console we
+
+194
+00:13:44,250 --> 00:13:47,470
+can create an empty array and we can access the first item.
+
+195
+00:13:47,490 --> 00:13:48,330
+What do we get back.
+
+196
+00:13:48,330 --> 00:13:50,910
+We get back undefined.
+
+197
+00:13:51,040 --> 00:13:52,040
+I'm going to shut that down.
+
+198
+00:13:52,060 --> 00:13:54,010
+Restart our test suite.
+
+199
+00:13:54,010 --> 00:13:56,990
+And over here we are going to go ahead and make our assertion.
+
+200
+00:13:57,070 --> 00:14:03,070
+We're going to expect user to not exist.
+
+201
+00:14:03,220 --> 00:14:03,940
+Perfect.
+
+202
+00:14:04,210 --> 00:14:07,530
+I'm going to save the file and all of our test cases should still be passing.
+
+203
+00:14:07,530 --> 00:14:08,420
+They both are.
+
+204
+00:14:08,500 --> 00:14:09,550
+That's great.
+
+205
+00:14:09,550 --> 00:14:15,910
+Next up we need to write the remove user method and we also need to fill out the test cases over inside
+
+206
+00:14:15,910 --> 00:14:16,640
+of user data.
+
+207
+00:14:16,660 --> 00:14:20,670
+Yes we can get started by finding the user if any.
+
+208
+00:14:20,770 --> 00:14:23,920
+That means that we're going to use a similar technique to what we have right here.
+
+209
+00:14:24,100 --> 00:14:28,390
+I'm going to actually copy this line and paste it just right here.
+
+210
+00:14:28,390 --> 00:14:33,910
+Creating a variable called user sending an equal to what else but this.
+
+211
+00:14:33,910 --> 00:14:38,340
+Now you could also go ahead and actually call get user right here.
+
+212
+00:14:38,350 --> 00:14:43,800
+I could call this dot get user passing in the Id just like that.
+
+213
+00:14:43,840 --> 00:14:47,380
+Both of those solutions are going to work as expected.
+
+214
+00:14:47,380 --> 00:14:53,730
+Next up if there is a user we want to remove it if user We're going to do something special in here.
+
+215
+00:14:53,830 --> 00:15:00,100
+And regardless of whether or not a user did exist we are going to return the value user if it didn't
+
+216
+00:15:00,100 --> 00:15:00,700
+exist.
+
+217
+00:15:00,700 --> 00:15:05,260
+We're going to return undefined which is great if it did exist after we remove it which is going to
+
+218
+00:15:05,260 --> 00:15:06,110
+happen right here.
+
+219
+00:15:06,160 --> 00:15:07,860
+We'll be returning the object also.
+
+220
+00:15:08,030 --> 00:15:09,180
+What we want.
+
+221
+00:15:09,410 --> 00:15:13,210
+All we need to do inside of here is figure out how to remove it from the list.
+
+222
+00:15:13,300 --> 00:15:22,450
+To do this I'm going to set this users equal to this users and we're going to call philtre finding all
+
+223
+00:15:22,450 --> 00:15:28,840
+users whose I.D. does not match the one specified up above we're going to call FELTER passing in our
+
+224
+00:15:28,840 --> 00:15:30,130
+aero function.
+
+225
+00:15:30,130 --> 00:15:35,380
+We're going to get the individual user right here and all we're going to do inside of our erro expression
+
+226
+00:15:35,500 --> 00:15:44,740
+syntax is add user ID does not equal I d this is going to create a new array right here setting it equal
+
+227
+00:15:44,740 --> 00:15:51,430
+to this users and we're going to have the item removed if any if there was no item that's fine the statement
+
+228
+00:15:51,430 --> 00:15:54,880
+is never going to run and we'll be able to continue on returning undefined.
+
+229
+00:15:54,880 --> 00:15:59,620
+Now that we have this in place we can go ahead and write a test case that make sure it works as expected.
+
+230
+00:15:59,630 --> 00:16:03,690
+I'm going to say user dot J.S. and right here we're going to fill both of these out.
+
+231
+00:16:03,940 --> 00:16:06,460
+Let's get started with should remove a user.
+
+232
+00:16:06,610 --> 00:16:12,640
+I'm going to make a variable user ID to store the ideal ID which would be 1 2 or 3.
+
+233
+00:16:12,730 --> 00:16:16,330
+I'll go with one then we can go ahead and actually remove it.
+
+234
+00:16:16,330 --> 00:16:19,450
+Storing the return result in a user variable.
+
+235
+00:16:19,450 --> 00:16:25,870
+I'm going to call users dot remove user passing in my user ID variable which is one.
+
+236
+00:16:26,080 --> 00:16:32,020
+Now that we have the potentially removed user we should be able to go ahead and assert some stuff.
+
+237
+00:16:32,020 --> 00:16:38,130
+We're going to expect that the user object exists right here.
+
+238
+00:16:38,130 --> 00:16:45,920
+We're going to expect that it's ID equals the ID we have up above expect that the user removed has an
+
+239
+00:16:45,920 --> 00:16:49,790
+ID equal to using to be user ID.
+
+240
+00:16:49,790 --> 00:16:50,370
+Awesome.
+
+241
+00:16:50,510 --> 00:16:53,810
+Next up we're going to make sure that the user was removed from the array.
+
+242
+00:16:53,840 --> 00:17:02,550
+We're going to expect users dot users dot length to be in this case too.
+
+243
+00:17:02,620 --> 00:17:07,330
+It should have been three in the beginning and once we removed the user it should have been two down
+
+244
+00:17:07,330 --> 00:17:07,820
+below.
+
+245
+00:17:07,900 --> 00:17:09,490
+We're going to do some similar stuff.
+
+246
+00:17:09,490 --> 00:17:11,530
+We're just going to be tweaking the user ID.
+
+247
+00:17:11,560 --> 00:17:16,960
+I can actually copy the contents of our first test case paste it into the second one and only to do
+
+248
+00:17:17,170 --> 00:17:18,520
+is make a few tweaks.
+
+249
+00:17:18,560 --> 00:17:22,360
+I'm going to change the ID to an invalid Id like 99.
+
+250
+00:17:22,390 --> 00:17:25,030
+We are still going to call remove user with the ID.
+
+251
+00:17:25,150 --> 00:17:29,890
+In this case though instead of expecting the user to have an id property we're going to expect that
+
+252
+00:17:29,890 --> 00:17:36,910
+user does not exist using two not exist.
+
+253
+00:17:36,990 --> 00:17:37,740
+Perfect.
+
+254
+00:17:37,740 --> 00:17:41,720
+Next up we're going to expect the length has not changed right here.
+
+255
+00:17:41,820 --> 00:17:45,440
+We're going to make sure that the length still equals three.
+
+256
+00:17:45,450 --> 00:17:47,910
+Now I can go ahead and save the test file.
+
+257
+00:17:47,910 --> 00:17:53,440
+This is going to restart everything inside of gnomon and what we should get is a test suite that's passing.
+
+258
+00:17:53,460 --> 00:17:56,960
+It looks like it did already run although the content and change.
+
+259
+00:17:57,000 --> 00:17:59,780
+So it's a little hard to figure out if anything happened.
+
+260
+00:17:59,790 --> 00:18:03,480
+I'm going to shut that down and run NPM test just to verify.
+
+261
+00:18:03,480 --> 00:18:09,810
+And right here you can see all 12 test cases are passing and this is fantastic.
+
+262
+00:18:09,840 --> 00:18:15,930
+We now have all of the methods we need to persist a user across the different event listeners whether
+
+263
+00:18:15,930 --> 00:18:20,760
+they're sending a message a location message whether they're connecting or leaving we're going to be
+
+264
+00:18:20,760 --> 00:18:25,480
+able to keep track of them and send the right thing to the right people.
+
+265
+00:18:25,500 --> 00:18:28,870
+The actual integration is coming up next so stay tuned.
+
+266
+00:18:28,900 --> 00:18:30,440
+I will see you then.
+

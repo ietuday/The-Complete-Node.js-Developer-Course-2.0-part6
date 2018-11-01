@@ -1,0 +1,1128 @@
+﻿1
+00:00:00,440 --> 00:00:05,090
+It now that you have a basic express application up and running in this one you're going to configure
+
+2
+00:00:05,120 --> 00:00:09,470
+your server to allow for incoming web socket connections.
+
+3
+00:00:09,470 --> 00:00:14,630
+This means the server will be able to accept connections and will be setting up the client to make the
+
+4
+00:00:14,630 --> 00:00:19,550
+connection then we'll have a persistent connection and we can send data back and forth whether it's
+
+5
+00:00:19,550 --> 00:00:25,730
+data from the server to the client or data from the client to the server because that is the beauty
+
+6
+00:00:25,730 --> 00:00:26,930
+of web sockets.
+
+7
+00:00:26,930 --> 00:00:29,720
+You can send data in either direction.
+
+8
+00:00:29,750 --> 00:00:34,870
+Now in order to set up the web sockets we're going to be using a library called socket I O.
+
+9
+00:00:35,060 --> 00:00:42,040
+Just like Express makes it really easy to set up an HTP server socket I O makes it dead simple to set
+
+10
+00:00:42,040 --> 00:00:48,350
+up a server that supports web sockets and to create a front end that communicates with the server socket
+
+11
+00:00:48,350 --> 00:00:51,810
+Io has a back and front end library.
+
+12
+00:00:51,830 --> 00:00:57,590
+We're going to be using both to set up Web sockets to get started over inside of the terminal.
+
+13
+00:00:57,590 --> 00:01:05,000
+Let's go ahead and install the most recent version of socket IO using NPM I the module name is socket
+
+14
+00:01:05,190 --> 00:01:06,390
+dot I O.
+
+15
+00:01:06,500 --> 00:01:07,920
+And the most recent version.
+
+16
+00:01:07,940 --> 00:01:15,310
+At one point four point eight we'll be using the same dev flag to update the package Chaisson file.
+
+17
+00:01:15,380 --> 00:01:20,210
+Once this is in place we can go ahead and make a few changes to our server file.
+
+18
+00:01:20,210 --> 00:01:23,570
+First up we're going to go ahead and load in the library.
+
+19
+00:01:23,750 --> 00:01:26,190
+I'm going to make a constant called socket.
+
+20
+00:01:27,200 --> 00:01:34,130
+And I'm going to set an equal to the require statement for the socket I O library with this in place.
+
+21
+00:01:34,190 --> 00:01:38,420
+We now need to integrate socket o into our existing web server.
+
+22
+00:01:38,420 --> 00:01:41,220
+Currently we use Express to make our web server.
+
+23
+00:01:41,290 --> 00:01:45,560
+We create a new Express app we configure our middleware and we call app.
+
+24
+00:01:45,590 --> 00:01:53,360
+Listen now behind the scenes Express is actually using a built in node module called HTP to create this
+
+25
+00:01:53,360 --> 00:01:54,130
+server.
+
+26
+00:01:54,170 --> 00:02:01,070
+We're going to need to use HTP ourselves configure express to work with HTP then and only then will
+
+27
+00:02:01,070 --> 00:02:04,220
+we also be able to add a socket I O support.
+
+28
+00:02:04,250 --> 00:02:08,270
+Now if that sounded like a mouthful I promise it's actually going to be pretty easy.
+
+29
+00:02:08,270 --> 00:02:11,480
+We only have to change a few lines to get things to work.
+
+30
+00:02:11,690 --> 00:02:15,580
+First up we're going to load in this module it's called HTP.
+
+31
+00:02:15,620 --> 00:02:18,210
+So let's make a constant called HTP.
+
+32
+00:02:18,260 --> 00:02:21,540
+It's a built in node module so there's no need to install it.
+
+33
+00:02:21,560 --> 00:02:26,730
+We can simply require HTP just like this from here.
+
+34
+00:02:26,720 --> 00:02:33,480
+We're going to go ahead and create a server using this HTP library just below our app variable.
+
+35
+00:02:33,560 --> 00:02:36,260
+Let's make a variable called server.
+
+36
+00:02:36,350 --> 00:02:41,710
+And what we're going to do is call HTP dot create server.
+
+37
+00:02:41,720 --> 00:02:46,160
+Now you might not know it but you're actually already using the Create server method behind the scenes
+
+38
+00:02:46,460 --> 00:02:49,070
+when you call app dot listen on your express app.
+
+39
+00:02:49,100 --> 00:02:57,080
+It literally calls this exact same method passing in the app as the argument for create server create
+
+40
+00:02:57,080 --> 00:02:59,450
+server takes a function.
+
+41
+00:02:59,450 --> 00:03:03,460
+This function looks really similar to one of our express callbacks.
+
+42
+00:03:03,510 --> 00:03:06,530
+It gets called with a request and a response.
+
+43
+00:03:06,530 --> 00:03:12,560
+Now as I mentioned HTP is actually used behind the scenes for Express they're integrated so much so
+
+44
+00:03:12,560 --> 00:03:16,450
+that you can actually provide the app as the argument.
+
+45
+00:03:16,490 --> 00:03:22,610
+And we are done now before we integrate socket I'll just go ahead and wrap up this change.
+
+46
+00:03:22,610 --> 00:03:27,040
+We're now using the HTP server as opposed to the Express server.
+
+47
+00:03:27,080 --> 00:03:32,670
+So instead of calling app listen we're going to call server listen once again.
+
+48
+00:03:32,680 --> 00:03:35,860
+There's no need to change the arguments passed in here.
+
+49
+00:03:35,870 --> 00:03:39,170
+They're exactly the same they're built really closely to each other.
+
+50
+00:03:39,170 --> 00:03:45,110
+So the server listen arguments are the same as the Express app lesson method arguments.
+
+51
+00:03:45,200 --> 00:03:48,890
+Now that we have this in place we haven't actually changed any app functionality.
+
+52
+00:03:48,890 --> 00:03:53,060
+Our server is still going to work on port three thousand but we're still not going to have access to
+
+53
+00:03:53,060 --> 00:03:53,640
+socket.
+
+54
+00:03:53,750 --> 00:03:58,730
+So over in the terminal I can prove this by clearing the terminal output and starting up our server
+
+55
+00:03:58,790 --> 00:04:03,660
+using gnomon gnomon server forward slash server.
+
+56
+00:04:03,850 --> 00:04:09,650
+J.S. and I'm just going to load localhost 3000 in the browser and see what I get back right here.
+
+57
+00:04:09,710 --> 00:04:10,410
+What do we get.
+
+58
+00:04:10,460 --> 00:04:11,720
+We get our HTL.
+
+59
+00:04:11,750 --> 00:04:14,370
+Welcome to the chat app shows up.
+
+60
+00:04:14,390 --> 00:04:19,280
+This means that our app is still working even though we're now using the HTP server.
+
+61
+00:04:19,310 --> 00:04:24,080
+The next thing that we're going to do is configure the server to also use socket I O.
+
+62
+00:04:24,170 --> 00:04:28,060
+That's the entire reason we made this change on the next line.
+
+63
+00:04:28,130 --> 00:04:32,350
+We're going to make a variable called I O we'll talk about that in just a second.
+
+64
+00:04:32,390 --> 00:04:37,200
+We're going to set it equal to a call to socket I O.
+
+65
+00:04:37,320 --> 00:04:41,810
+And we're going to pass in the server that we want to use with our web sockets.
+
+66
+00:04:41,960 --> 00:04:42,170
+Right.
+
+67
+00:04:42,180 --> 00:04:47,070
+Here we have access to that server via the server variable so we'll pass that in as the first and only
+
+68
+00:04:47,070 --> 00:04:47,830
+argument.
+
+69
+00:04:47,850 --> 00:04:54,660
+Now when we get back is our web sockets server on here we can do anything we want in terms of emitting
+
+70
+00:04:54,810 --> 00:04:56,460
+or listening to events.
+
+71
+00:04:56,520 --> 00:05:00,840
+This is how we're going to communicate between the server and the client and we'll talk more about that
+
+72
+00:05:00,840 --> 00:05:02,230
+in just a second.
+
+73
+00:05:02,310 --> 00:05:04,500
+With this in place our server is ready to go.
+
+74
+00:05:04,500 --> 00:05:07,440
+We are ready to accept new connections.
+
+75
+00:05:07,440 --> 00:05:12,850
+The problem is we don't have any connections to accept when we load our Web page we're not doing anything.
+
+76
+00:05:12,870 --> 00:05:17,700
+We're not actually connecting to the server and we are going to need to manually run some javascript
+
+77
+00:05:17,700 --> 00:05:21,040
+code to initiate that connection process.
+
+78
+00:05:21,060 --> 00:05:26,720
+Now when we integrated socket I O with our server we actually got access to a few cool things.
+
+79
+00:05:26,730 --> 00:05:32,580
+First up we got access to a route that accepts incoming connections which means that we can now accept
+
+80
+00:05:32,640 --> 00:05:38,970
+web socket connections and we got access to a javascript library that makes it really easy to work with
+
+81
+00:05:38,970 --> 00:05:41,460
+socket I O on the client.
+
+82
+00:05:41,460 --> 00:05:49,920
+This library is available at the following path forward slash socket I O board slash socket dot I O
+
+83
+00:05:50,040 --> 00:05:50,930
+dot J.
+
+84
+00:05:50,940 --> 00:05:57,030
+S If you load this javascript file on the browser you can see it's just a really long javascript library.
+
+85
+00:05:57,030 --> 00:06:02,730
+This contains all of the code we're going to need on the client to make the connection and to transfer
+
+86
+00:06:02,730 --> 00:06:06,500
+data whether it's server at a client or client to server.
+
+87
+00:06:06,690 --> 00:06:12,480
+But we're going to do in order to make the connection from our HTL file is load this in I'm going to
+
+88
+00:06:12,480 --> 00:06:18,250
+go back to localhost 3000 and now we can go ahead and move into Adam opening up index.
+
+89
+00:06:18,300 --> 00:06:24,090
+H DML and down near the bottom of the body tag we're going to add a script tag loading in the file we
+
+90
+00:06:24,090 --> 00:06:25,650
+just pulled up in the browser.
+
+91
+00:06:25,830 --> 00:06:28,480
+First up will make the script tag itself.
+
+92
+00:06:29,250 --> 00:06:30,980
+Opening and closing it.
+
+93
+00:06:31,290 --> 00:06:37,140
+And in order to load in an external file We're going to use the source attribute providing the path.
+
+94
+00:06:37,230 --> 00:06:39,590
+Now this path is relative to our server.
+
+95
+00:06:39,660 --> 00:06:44,780
+It's going to be a forward slash socket I go forward slash socket Dom IO.
+
+96
+00:06:44,800 --> 00:06:50,490
+J Yes exactly as we typed in the browser just moments ago by adding the script tag we're now loading
+
+97
+00:06:50,490 --> 00:06:56,160
+in the library and on the browser we have access to all sorts of methods available because of the socket
+
+98
+00:06:56,160 --> 00:07:01,980
+library one of those methods is going to let us initiate a connection request and that's exactly what
+
+99
+00:07:01,980 --> 00:07:03,780
+we're going to do down below.
+
+100
+00:07:03,840 --> 00:07:08,610
+Let's add a second script to tag this time instead of loading an external script.
+
+101
+00:07:08,640 --> 00:07:13,470
+We're going to write some javascript right in line right in here we can add any javascript and this
+
+102
+00:07:13,470 --> 00:07:19,080
+javascript is going to run right after the socket IO library loads a little bit later on we'll be breaking
+
+103
+00:07:19,080 --> 00:07:24,180
+this out into its own file but for the moment we can simply have our javascript code right inside of
+
+104
+00:07:24,180 --> 00:07:31,470
+our h tim l file right here but we're going to do is call I O I O is a method available to us because
+
+105
+00:07:31,470 --> 00:07:32,980
+we loaded in this library.
+
+106
+00:07:33,060 --> 00:07:34,710
+It's not native to the browser.
+
+107
+00:07:34,770 --> 00:07:40,590
+And when we call it we're actually initiating the request we're making a request from the client to
+
+108
+00:07:40,590 --> 00:07:45,480
+the server to open up a web socket and keep that connection open.
+
+109
+00:07:45,480 --> 00:07:48,030
+Now what we get back from Iowa is really important.
+
+110
+00:07:48,030 --> 00:07:51,900
+We're going to want to save that in a variable called socket just like this.
+
+111
+00:07:51,900 --> 00:07:57,600
+This creates our connection and it stores the socket in a variable and this variable is critical to
+
+112
+00:07:57,600 --> 00:07:58,560
+communicating.
+
+113
+00:07:58,600 --> 00:08:02,510
+It's exactly what we need in order to listen for data from the server.
+
+114
+00:08:02,580 --> 00:08:09,030
+And in order to send data to the server now that we have this in place let's go ahead and save our TNL
+
+115
+00:08:09,030 --> 00:08:09,650
+file.
+
+116
+00:08:09,720 --> 00:08:14,030
+We're going to move into the browser and we're going to open up the chrome developer tools.
+
+117
+00:08:14,250 --> 00:08:20,070
+Now regardless of what browser you use whether it's IEEE Safari Firefox or chrome you're going to have
+
+118
+00:08:20,100 --> 00:08:25,290
+access to a set of developer tools which makes it really easy to debug and see what's going on behind
+
+119
+00:08:25,290 --> 00:08:27,000
+the scenes in your web page.
+
+120
+00:08:27,030 --> 00:08:30,620
+We're going to be using the chrome developer tools here to do a little debugging.
+
+121
+00:08:30,720 --> 00:08:35,680
+I'd highly recommend using Chrome for these videos just so you can follow along exactly.
+
+122
+00:08:35,850 --> 00:08:39,990
+To open up the developer tools we go to settings more tools developer tools.
+
+123
+00:08:39,990 --> 00:08:44,720
+You can also use the keyboard shortcut as shown here for your operating system.
+
+124
+00:08:44,820 --> 00:08:49,760
+When you open developer tools you're going to be greeted with an overwhelming set of options you're
+
+125
+00:08:49,770 --> 00:08:54,930
+most likely brought to the elements panel if you've never used the developer tools before the panel
+
+126
+00:08:54,930 --> 00:08:58,010
+we're going to be using right now is the network panel.
+
+127
+00:08:58,170 --> 00:09:02,390
+The network panel keeps track of all of the requests made by your web page.
+
+128
+00:09:02,400 --> 00:09:07,020
+So if I make a request for a javascript file I'm going to see that in a nice list here.
+
+129
+00:09:07,110 --> 00:09:11,420
+We're going to have to refresh the page in order to see the list of network requests.
+
+130
+00:09:11,490 --> 00:09:17,340
+And right here we have six the network request at the very top is the first one that was made and the
+
+131
+00:09:17,340 --> 00:09:19,880
+one at the very bottom is the last one that was made.
+
+132
+00:09:20,010 --> 00:09:25,590
+The first one was for the page you see here it's for the H T and L file that loads Welcome to the chat
+
+133
+00:09:25,650 --> 00:09:26,270
+app.
+
+134
+00:09:26,280 --> 00:09:29,990
+The second one is for that javascript file that we saw in the browser.
+
+135
+00:09:30,000 --> 00:09:35,400
+This gives us the library and gives us access to calling that I O method which starts the connection
+
+136
+00:09:35,400 --> 00:09:42,080
+process the next four are all related to starting up and maintaining that connection with this in place.
+
+137
+00:09:42,120 --> 00:09:47,400
+We now have that live connection between the client and the server and we can start communicating whatever
+
+138
+00:09:47,400 --> 00:09:48,810
+we want to communicate.
+
+139
+00:09:48,810 --> 00:09:51,150
+Now this communication could be anything at all.
+
+140
+00:09:51,180 --> 00:09:53,480
+This comes in the form of an event.
+
+141
+00:09:53,580 --> 00:09:59,400
+Events can be emitted from either the client or the server and either the client or the server can listen
+
+142
+00:09:59,430 --> 00:10:00,750
+for events.
+
+143
+00:10:00,750 --> 00:10:04,460
+Let's talk about an event that might happen in an e-mail app in an email app.
+
+144
+00:10:04,470 --> 00:10:09,840
+For example the server might emit an event called new e-mail when a new e-mail comes in.
+
+145
+00:10:09,840 --> 00:10:14,830
+The client is then going to listen for that event when it fires it'll get the new e-mail data and it
+
+146
+00:10:14,830 --> 00:10:17,750
+will render the e-mail to the screen below the other ones.
+
+147
+00:10:17,820 --> 00:10:22,560
+The same thing could happen the other way maybe the client wants to create a new e-mail and send it
+
+148
+00:10:22,560 --> 00:10:23,530
+to someone else.
+
+149
+00:10:23,550 --> 00:10:29,490
+It's going to ask for the e-mail address of the person and the message it's then going to emit an event
+
+150
+00:10:29,580 --> 00:10:32,220
+on the client that the server is going to listen to.
+
+151
+00:10:32,220 --> 00:10:37,680
+So this whole server client relationship is entirely ran via these events.
+
+152
+00:10:37,680 --> 00:10:42,620
+Now we're going to be creating custom events for our specific application throughout this section.
+
+153
+00:10:42,690 --> 00:10:46,950
+But for now we're going to look at a couple of different ones that are built in that let you keep track
+
+154
+00:10:46,950 --> 00:10:50,190
+of new users and disconnecting users.
+
+155
+00:10:50,190 --> 00:10:55,920
+This means we'll be able to do something like greet a user when they join our application in order to
+
+156
+00:10:55,920 --> 00:10:59,970
+play around with this over inside of Adam inside of server Dom.
+
+157
+00:11:00,000 --> 00:11:03,710
+J.S. we are going to call a method on I O.
+
+158
+00:11:03,880 --> 00:11:12,990
+I o dot on I O dot on lets you register an event Lessner we can listen for a specific event and do something
+
+159
+00:11:13,050 --> 00:11:15,010
+when that event happens.
+
+160
+00:11:15,090 --> 00:11:20,370
+One built in event that we're going to use the most popular one is called connection.
+
+161
+00:11:20,370 --> 00:11:26,190
+This lets you listen for a new connection meaning that a client connected to the server and it lets
+
+162
+00:11:26,190 --> 00:11:31,780
+you do something when that connection comes in in order to do something you provide a callback function
+
+163
+00:11:31,810 --> 00:11:37,190
+as the second argument and this callback function is going to get called with a socket.
+
+164
+00:11:37,270 --> 00:11:43,010
+The socket argument is really similar to the socket argument we have access to over inside an index.
+
+165
+00:11:43,070 --> 00:11:49,450
+HTL this represents the individual socket as opposed to all of the users connected to the server.
+
+166
+00:11:49,780 --> 00:11:52,170
+Now with this in place we can do whatever we like.
+
+167
+00:11:52,180 --> 00:11:56,710
+For example I could use council that like to print a little message.
+
+168
+00:11:56,800 --> 00:12:04,070
+New user connected every time a user connects to our app we're going to print a message to the con.
+
+169
+00:12:04,490 --> 00:12:09,140
+I'm going to go ahead and save the server japes file move into the terminal and you're going to see
+
+170
+00:12:09,140 --> 00:12:15,680
+that the message actually already exists to explain why we need to understand one thing about web sockets
+
+171
+00:12:16,010 --> 00:12:16,660
+web sockets.
+
+172
+00:12:16,670 --> 00:12:22,670
+As I mentioned they are a persistent technology meaning that the client and server they both keep the
+
+173
+00:12:22,670 --> 00:12:28,190
+communication channel open for as long as both of them want to if the server shuts down the client doesn't
+
+174
+00:12:28,190 --> 00:12:29,120
+really have a choice.
+
+175
+00:12:29,180 --> 00:12:32,370
+And the same thing for the client and server relationship.
+
+176
+00:12:32,510 --> 00:12:37,270
+And I close a browser tab the server cannot force me to keep the connection open.
+
+177
+00:12:37,310 --> 00:12:43,130
+Now when a connection drops the client it's still going to try to reconnect when we restart the server
+
+178
+00:12:43,170 --> 00:12:44,220
+using gnomon.
+
+179
+00:12:44,240 --> 00:12:49,490
+There's about a quarter of a second of time where the servers down and the client notices that it says
+
+180
+00:12:49,490 --> 00:12:53,560
+well 00 server went down let's try to reconnect and eventually it reconnects.
+
+181
+00:12:53,570 --> 00:12:56,690
+And that's why we're seeing the message right here.
+
+182
+00:12:56,690 --> 00:12:58,480
+New user connected.
+
+183
+00:12:58,640 --> 00:13:02,390
+I'm going to go ahead and shut down the server and over inside of the client.
+
+184
+00:13:02,450 --> 00:13:05,420
+You're going to see that network requests are being made right here.
+
+185
+00:13:05,420 --> 00:13:11,280
+We're trying to reconnect to the server and you can see they're failing because the server is not up.
+
+186
+00:13:11,490 --> 00:13:16,920
+Now if we go back into the terminal and we restart the server over inside of the client We're going
+
+187
+00:13:16,920 --> 00:13:18,420
+to try to reconnect again.
+
+188
+00:13:18,510 --> 00:13:24,000
+We're going to get a successive result from the server and boom we are back just like that.
+
+189
+00:13:24,090 --> 00:13:29,130
+Now when we reconnect you can see that we get the message over here and that's why we saw it when we
+
+190
+00:13:29,130 --> 00:13:33,060
+first added it to the server DHHS file.
+
+191
+00:13:33,060 --> 00:13:36,600
+Now the connection of that also exists over in the client.
+
+192
+00:13:36,600 --> 00:13:41,010
+That means on the client we can do something when we successfully connect to the server.
+
+193
+00:13:41,010 --> 00:13:42,350
+It might not happen right away.
+
+194
+00:13:42,420 --> 00:13:45,030
+It might take a little time over inside of Adam.
+
+195
+00:13:45,120 --> 00:13:49,920
+We can add this event inside of index HTL right below our call to.
+
+196
+00:13:49,980 --> 00:13:56,790
+Oh right here we're going to call Sacket dot on we want to listen for an event and this event is a little
+
+197
+00:13:56,790 --> 00:13:58,280
+different than the one we have here.
+
+198
+00:13:58,410 --> 00:13:59,900
+It's not on connection.
+
+199
+00:13:59,910 --> 00:14:05,940
+It's on CONNECT THE on method here is exactly the same as the one we use in server.
+
+200
+00:14:06,000 --> 00:14:09,940
+J.S. the first argument is the event name and the second argument.
+
+201
+00:14:09,960 --> 00:14:12,390
+That is the callback function.
+
+202
+00:14:12,450 --> 00:14:18,460
+In this case we don't get access to a socket argument since we already have it right here called socket.
+
+203
+00:14:18,630 --> 00:14:24,060
+In this case all I'm going to do is use console dialog to print a little message to the console connected
+
+204
+00:14:24,810 --> 00:14:26,890
+to server.
+
+205
+00:14:26,910 --> 00:14:27,610
+Awesome.
+
+206
+00:14:28,020 --> 00:14:33,350
+Now that we have this in place we can go into the browser and go to a new tab in the developer tools.
+
+207
+00:14:33,390 --> 00:14:38,870
+We're going to load the console tab the console tab is kind of like the terminal inside of node.
+
+208
+00:14:39,030 --> 00:14:44,250
+If we use cancel that log in our client side javascript code those messages are going to show up here.
+
+209
+00:14:44,250 --> 00:14:49,410
+As you can see we also have some errors these errors occurred when our server was down as I was showing
+
+210
+00:14:49,410 --> 00:14:50,570
+you how it reconnects.
+
+211
+00:14:50,760 --> 00:14:57,270
+But if we refreshed the page as you're going to see connected to server shows up right here as soon
+
+212
+00:14:57,270 --> 00:15:03,000
+as the connection happens the client and the server they both had that event fired the client prints
+
+213
+00:15:03,000 --> 00:15:10,410
+connected to server and the server prints new user connected with this in place we've now used the event
+
+214
+00:15:10,470 --> 00:15:11,600
+system in socket.
+
+215
+00:15:11,650 --> 00:15:17,110
+So we haven't set our own custom events but we have taken advantage of some built in ones.
+
+216
+00:15:17,130 --> 00:15:22,200
+The last thing we're going to talk about in this video is the disconnect event which lets you do something
+
+217
+00:15:22,200 --> 00:15:27,000
+on both the server and the client when the connection drops.
+
+218
+00:15:27,200 --> 00:15:31,900
+We're going to add an event listener on the client together and your challenge will be to do the same
+
+219
+00:15:31,900 --> 00:15:34,290
+thing on the server on the client.
+
+220
+00:15:34,290 --> 00:15:39,520
+Down below our connect event we can call socket on again to listen to a new event.
+
+221
+00:15:39,610 --> 00:15:43,460
+Once again the name of the event here is the name of a built in event.
+
+222
+00:15:43,570 --> 00:15:45,950
+So it's only going to work if you type it correctly.
+
+223
+00:15:45,970 --> 00:15:53,130
+This one is called Disconnect the disconnect event is going to fire when ever the connection drops.
+
+224
+00:15:53,200 --> 00:15:58,300
+If the server goes down the client is going to be able to do something for now that something is just
+
+225
+00:15:58,300 --> 00:16:03,180
+going to be Lague a message console log unable to connect.
+
+226
+00:16:03,310 --> 00:16:06,870
+Actually on cable is the incorrect terminology disconnected.
+
+227
+00:16:07,920 --> 00:16:09,480
+From server.
+
+228
+00:16:09,540 --> 00:16:12,460
+Much clearer now that we had this message in place.
+
+229
+00:16:12,570 --> 00:16:14,520
+We can actually save our index.
+
+230
+00:16:14,650 --> 00:16:20,560
+TMF I'll go over to the browser and we can give it a refreshed to load in our new javascript file.
+
+231
+00:16:20,580 --> 00:16:25,320
+I'm going to go ahead and make my browser screen just a little bit smaller so he can see it in the background
+
+232
+00:16:25,350 --> 00:16:26,690
+of the terminal.
+
+233
+00:16:26,730 --> 00:16:28,010
+I'm going to go to the terminal.
+
+234
+00:16:28,080 --> 00:16:31,350
+I'm going to shut down the connection by shutting down the server.
+
+235
+00:16:31,350 --> 00:16:34,050
+And over inside of the browser what do we get.
+
+236
+00:16:34,080 --> 00:16:37,490
+We get disconnected from server printing to the screen.
+
+237
+00:16:37,620 --> 00:16:42,900
+If I restart my server over inside of the terminal you can see we've automatically connected and connected
+
+238
+00:16:42,900 --> 00:16:45,020
+to server prints to the screen.
+
+239
+00:16:45,180 --> 00:16:48,470
+Now the exact same event exists on the server.
+
+240
+00:16:48,480 --> 00:16:54,360
+We can listen for a disconnecting client and we can do something when they leave in order to register
+
+241
+00:16:54,360 --> 00:16:55,060
+this event.
+
+242
+00:16:55,110 --> 00:17:02,370
+You are going to go into server dot J.S. and inside of our callback you're going to call socket dot
+
+243
+00:17:02,490 --> 00:17:05,050
+on just like we do right here.
+
+244
+00:17:05,100 --> 00:17:07,120
+It's the exact same signature.
+
+245
+00:17:07,140 --> 00:17:12,840
+The first argument is the event name it's the disconnect event and the callback function should do something
+
+246
+00:17:12,840 --> 00:17:16,210
+simple like print client disconnected.
+
+247
+00:17:16,230 --> 00:17:21,810
+Once you have that in place what I want you to do is open up the browser and open up the terminal then
+
+248
+00:17:21,870 --> 00:17:27,670
+close the browser tab and you should see the message print in the server whatever message you happen
+
+249
+00:17:27,710 --> 00:17:33,760
+to type here try to open up another browser tab close that one and make sure you get the same message.
+
+250
+00:17:33,810 --> 00:17:39,600
+This message should print every time one of your browser tabs closes assuming that browser tab had an
+
+251
+00:17:39,600 --> 00:17:43,620
+open connection socket dot on is your challenge.
+
+252
+00:17:43,620 --> 00:17:44,870
+Take a moment to knock this out.
+
+253
+00:17:44,880 --> 00:17:45,330
+Test it.
+
+254
+00:17:45,330 --> 00:17:46,760
+And when you're done click play
+
+255
+00:17:50,630 --> 00:17:56,260
+right all you needed to do was copy the exact same signature as we used here socket.
+
+256
+00:17:56,360 --> 00:18:00,150
+On takes two arguments the first one is the name.
+
+257
+00:18:00,440 --> 00:18:03,270
+Disconnect is the event name we're trying to listen to.
+
+258
+00:18:03,380 --> 00:18:07,430
+And the second argument is the function to run when the event fires.
+
+259
+00:18:07,430 --> 00:18:11,510
+This means the function to run when a socket is disconnected.
+
+260
+00:18:11,540 --> 00:18:18,870
+In this case all we're going to do is use console dialog to print user was disconnected just like this
+
+261
+00:18:19,130 --> 00:18:23,230
+and we're going to save the file which is automatically going to restart our application.
+
+262
+00:18:23,450 --> 00:18:28,030
+I'm going to switch to the terminal and then to the browser so I can see the terminal in the background.
+
+263
+00:18:28,110 --> 00:18:29,470
+I'm going to open up a new tab.
+
+264
+00:18:29,480 --> 00:18:33,110
+So when I close this one the chrome browser doesn't close completely.
+
+265
+00:18:33,140 --> 00:18:38,540
+I'm going to close the tab with open connection and right here inside of the terminal we got user was
+
+266
+00:18:38,600 --> 00:18:39,750
+disconnected.
+
+267
+00:18:39,770 --> 00:18:46,320
+If I open up a new tab and go to a local host 3000 live right as I do it new user connected Prince.
+
+268
+00:18:46,400 --> 00:18:52,340
+And as soon as I close it bam on the server user it was disconnected prints to the screen.
+
+269
+00:18:52,340 --> 00:18:58,190
+Hopefully you're starting to see why web sockets are so awesome that instant two way communication makes
+
+270
+00:18:58,220 --> 00:19:02,650
+any sort of realtime application effortless to build in the next video.
+
+271
+00:19:02,720 --> 00:19:07,250
+We're going to get into the very very interesting stuff you're going to learn how to emit and listen
+
+272
+00:19:07,250 --> 00:19:08,740
+to custom events.
+
+273
+00:19:08,750 --> 00:19:14,020
+This means you can send any data you like from the server to the client and vice versa.
+
+274
+00:19:14,030 --> 00:19:15,580
+Let's wrap this one up with a comment.
+
+275
+00:19:15,590 --> 00:19:21,060
+I'm going to shut down our server run and get status and I can see we only have modified files.
+
+276
+00:19:21,080 --> 00:19:28,740
+So get commit with the M flag is going to get the job done right here we can add our message and connect
+
+277
+00:19:29,100 --> 00:19:32,600
+and disconnect event handlers.
+
+278
+00:19:32,760 --> 00:19:33,690
+Awesome.
+
+279
+00:19:33,690 --> 00:19:36,430
+I'm going to make the commit and push it up to get hub.
+
+280
+00:19:36,420 --> 00:19:38,790
+There's no need to deploy to Heroku just yet.
+
+281
+00:19:38,790 --> 00:19:40,520
+With that in place we are done.
+
+282
+00:19:40,540 --> 00:19:42,070
+I'll see you in the next one.
+

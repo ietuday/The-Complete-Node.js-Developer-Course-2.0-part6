@@ -1,0 +1,128 @@
+﻿1
+00:00:00,780 --> 00:00:05,160
+Now that we have our people list in place and our messages are only getting sent to the users in the
+
+2
+00:00:05,160 --> 00:00:07,290
+same chat room we are done.
+
+3
+00:00:07,410 --> 00:00:12,420
+But that doesn't mean you have to stop developing the chat app students like to add on new features
+
+4
+00:00:12,420 --> 00:00:17,020
+and they always post them in the Q&amp;A and it's really cool to see what people build.
+
+5
+00:00:17,130 --> 00:00:20,290
+I like to give you a few ideas as to what you can build right now.
+
+6
+00:00:20,370 --> 00:00:24,450
+You might get stuck with adding these features it might be a real pain in the butt and it might take
+
+7
+00:00:24,450 --> 00:00:30,610
+forever but I promise you're going to learn so much along the way and doing something on your own.
+
+8
+00:00:30,630 --> 00:00:35,250
+They have all the skills to do these features so let's just go down the list really quick one awesome
+
+9
+00:00:35,250 --> 00:00:38,820
+idea would be to make chat rooms case insensitive.
+
+10
+00:00:38,820 --> 00:00:45,450
+Currently if I go to EHLO TR with a lowercase are not actually in the same chat room as my friend who's
+
+11
+00:00:45,510 --> 00:00:51,300
+an EHLO TR uppercase r it would be nice if regardless of case we were all in the same room.
+
+12
+00:00:51,660 --> 00:00:54,310
+Next up I'd like to make user names unique.
+
+13
+00:00:54,310 --> 00:01:00,700
+Currently I can copy the R L and paste in a new tab and now I have two people with the name of jewels.
+
+14
+00:01:00,750 --> 00:01:06,870
+It would be cool to reject new users who also have the same name as an existing user.
+
+15
+00:01:06,870 --> 00:01:11,760
+Next up one idea that I was thinking about adding that would be pretty cool is to add a list of the
+
+16
+00:01:11,760 --> 00:01:14,590
+currently active chat rooms down below.
+
+17
+00:01:14,730 --> 00:01:17,060
+This could be a select dropdown.
+
+18
+00:01:17,100 --> 00:01:18,180
+It's going to repopulate.
+
+19
+00:01:18,180 --> 00:01:20,770
+Kind of like the People's list repopulate.
+
+20
+00:01:20,790 --> 00:01:24,830
+This is by far the hardest feature but I think it would be really cool.
+
+21
+00:01:24,840 --> 00:01:30,210
+That means I would see a drop down in between the join and the input box and it would have the two currently
+
+22
+00:01:30,210 --> 00:01:31,170
+active rooms.
+
+23
+00:01:31,260 --> 00:01:36,990
+Hello TR and EHLO TR with an uppercase are although hopefully if you implement that first feature we
+
+24
+00:01:36,990 --> 00:01:38,690
+would only see one room.
+
+25
+00:01:38,880 --> 00:01:43,380
+Then instead of typing in a room name I could just pick one from the dropdown type in a name and join
+
+26
+00:01:43,470 --> 00:01:44,150
+that way.
+
+27
+00:01:44,340 --> 00:01:49,560
+These are just a few ideas of how you can continue on with a chat app if you do end up adding any of
+
+28
+00:01:49,560 --> 00:01:49,890
+these.
+
+29
+00:01:49,890 --> 00:01:52,210
+I would love to see what you built.
+
+30
+00:01:52,260 --> 00:01:58,620
+Please post it in the Q&amp;A with a link to the Heroku application or any other link that lets me play
+
+31
+00:01:58,620 --> 00:02:00,730
+around with it and that's it for now.
+
+32
+00:02:00,780 --> 00:02:02,260
+I will see you soon
+

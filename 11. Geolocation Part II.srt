@@ -1,0 +1,1128 @@
+﻿1
+00:00:00,530 --> 00:00:05,810
+In this video you're going to wrap up the two part series on geo location in the last one we got the
+
+2
+00:00:05,810 --> 00:00:10,910
+data flowing and in this one we're going to make a little more useful instead of rendering latitude
+
+3
+00:00:10,910 --> 00:00:13,140
+and longitude information as text.
+
+4
+00:00:13,220 --> 00:00:17,900
+Instead what we're going to do is render a clickable link a user will be able to click that link when
+
+5
+00:00:17,900 --> 00:00:19,990
+they receive the location from someone else.
+
+6
+00:00:20,030 --> 00:00:24,080
+It's going to bring him over to Google Maps and they'll be able to view exactly where the other user
+
+7
+00:00:24,170 --> 00:00:24,790
+is.
+
+8
+00:00:24,800 --> 00:00:27,890
+This is going to be much more useful than spitting out these text.
+
+9
+00:00:27,980 --> 00:00:30,160
+Latitude and longitude.
+
+10
+00:00:30,290 --> 00:00:35,180
+Now in order to get that done we are going to need to tweak how we transmit this data the way we send
+
+11
+00:00:35,180 --> 00:00:38,190
+the data is still fine over inside of index Dot.
+
+12
+00:00:38,250 --> 00:00:43,670
+Yes we're still going to emit create location message but inside of server instead of emitting a new
+
+13
+00:00:43,670 --> 00:00:46,880
+message we need to emit something else entirely.
+
+14
+00:00:46,910 --> 00:00:50,130
+We're going to set up a new event called new location message.
+
+15
+00:00:50,150 --> 00:00:51,210
+We're going to emit that.
+
+16
+00:00:51,230 --> 00:00:58,040
+And then over inside of index dot J S will write a handler for new location message similar to new message
+
+17
+00:00:58,070 --> 00:00:59,820
+but distinctly different.
+
+18
+00:00:59,850 --> 00:01:04,350
+And instead of rendering some text it's going to help us render a link.
+
+19
+00:01:04,360 --> 00:01:08,710
+Now in order to get started before we can do any of this we have to figure out exactly what sort of
+
+20
+00:01:08,710 --> 00:01:11,490
+view or else structure we're going to use to get that data.
+
+21
+00:01:11,510 --> 00:01:17,150
+The latitude and longitude information showing up correctly in Google Maps and there's actually a pretty
+
+22
+00:01:17,150 --> 00:01:22,760
+uniform way to set up the R L which is going to make this really easy to show you exactly what you are
+
+23
+00:01:22,760 --> 00:01:25,400
+and we're going to be using Let's go ahead and open up a new tab.
+
+24
+00:01:25,400 --> 00:01:33,110
+D u r l is going to go to h TTP s colon forward slash forward slash w w w dot Google dot com forward
+
+25
+00:01:33,110 --> 00:01:34,550
+slash maps.
+
+26
+00:01:34,550 --> 00:01:39,020
+Now from here we are going to be providing a query parameter and the query parameter will be specifying
+
+27
+00:01:39,030 --> 00:01:45,950
+is called Q And it expects the latitude and longitude to be the value separated by a comma.
+
+28
+00:01:45,950 --> 00:01:50,810
+Now we actually have that here although there is a little space between the comma and the minus sign.
+
+29
+00:01:50,810 --> 00:01:55,220
+Either way we can copy this value head back over into the other tab.
+
+30
+00:01:55,230 --> 00:01:57,830
+Paste it in and just remove the space.
+
+31
+00:01:58,280 --> 00:02:03,060
+With this in place we now have a u r l that we can use inside of our application.
+
+32
+00:02:03,200 --> 00:02:06,830
+Now when I hit Enter we are going to view a map at the correct location.
+
+33
+00:02:06,830 --> 00:02:11,750
+But you'll notice that you are l changes that's perfectly fine as long as we send the user to this you
+
+34
+00:02:11,750 --> 00:02:14,320
+R-AL it doesn't really matter what it ends up becoming.
+
+35
+00:02:14,360 --> 00:02:15,330
+I'm going to hit enter.
+
+36
+00:02:15,380 --> 00:02:17,930
+You can see right away we are getting a Google map.
+
+37
+00:02:17,930 --> 00:02:21,530
+And as the page loads the U R L is indeed going to change.
+
+38
+00:02:21,530 --> 00:02:24,590
+Now we're looking at something completely different from what we typed in.
+
+39
+00:02:24,800 --> 00:02:29,580
+But the actual pin this red pin it is correct within a couple of houses.
+
+40
+00:02:29,600 --> 00:02:34,760
+I won't tell you my exact address but it is pretty close to accurate.
+
+41
+00:02:35,030 --> 00:02:39,820
+Now with that knowledge we can generate a u r l that follows that same format.
+
+42
+00:02:39,830 --> 00:02:45,350
+Spit that out inside of the Web site and we'll have that clickable link where someone can view the location
+
+43
+00:02:45,440 --> 00:02:47,720
+of someone else.
+
+44
+00:02:47,720 --> 00:02:48,550
+To get started.
+
+45
+00:02:48,620 --> 00:02:55,160
+Let's go ahead and move into Adam into server J.S. and instead of emitting a new message event we're
+
+46
+00:02:55,160 --> 00:02:58,920
+going to emit new location message.
+
+47
+00:02:59,090 --> 00:03:01,710
+Now we don't have a handler for that over an index.
+
+48
+00:03:01,800 --> 00:03:03,520
+Yes but that's perfectly fine.
+
+49
+00:03:03,560 --> 00:03:05,500
+We'll set that up in just a minute.
+
+50
+00:03:05,570 --> 00:03:10,340
+Now we are going to need to change the data we send across to Currently we're sending the plain text
+
+51
+00:03:10,340 --> 00:03:15,890
+data but we want to do is generate a you R-AL we're actually going to create a completely separate function
+
+52
+00:03:15,980 --> 00:03:22,130
+for generating a location message and we'll call it generate location message.
+
+53
+00:03:22,130 --> 00:03:26,960
+Now this function is going to take some arguments to generate that data just like we have for the generate
+
+54
+00:03:26,960 --> 00:03:29,850
+message function we're going to start with the from name.
+
+55
+00:03:29,960 --> 00:03:34,490
+Then we're going to move on to the data specific to this function that's going to be the latitude and
+
+56
+00:03:34,490 --> 00:03:35,570
+longitude.
+
+57
+00:03:35,630 --> 00:03:39,380
+I'm going to remove our template string and we're going to pass in the raw values.
+
+58
+00:03:39,380 --> 00:03:48,020
+The first value will be cord's dot latitude and the second one will be chord's dot longitude.
+
+59
+00:03:48,020 --> 00:03:54,080
+Now it's the second coordinate value but it is indeed the third argument with this argument's list set
+
+60
+00:03:54,080 --> 00:03:56,790
+up we can actually go ahead and define generate location.
+
+61
+00:03:56,870 --> 00:04:01,880
+We'll be able to export it required in this file and then everything is going to work as expected.
+
+62
+00:04:01,880 --> 00:04:02,980
+Let's go ahead and load it in.
+
+63
+00:04:03,020 --> 00:04:08,780
+Up top before we actually add it to the message file right here we load and generate message along alongside
+
+64
+00:04:08,780 --> 00:04:09,140
+of that.
+
+65
+00:04:09,140 --> 00:04:14,430
+We're going to load in generate location message.
+
+66
+00:04:14,450 --> 00:04:15,490
+Excellent.
+
+67
+00:04:15,500 --> 00:04:19,360
+Let's save server J.S. and move into our message file.
+
+68
+00:04:19,370 --> 00:04:22,450
+Now the function that we're about to create is going to look really similar to that.
+
+69
+00:04:22,460 --> 00:04:25,330
+We're going to take some data in we're going to return an object.
+
+70
+00:04:25,340 --> 00:04:30,950
+The big difference is that we'll be generating that you r l as well instead of from text and created
+
+71
+00:04:31,010 --> 00:04:36,340
+at we're going to have from you Arel and created that right here.
+
+72
+00:04:37,120 --> 00:04:45,100
+We can make a variable we can call this variable generate location message and we can go ahead and set
+
+73
+00:04:45,100 --> 00:04:55,010
+it equal to a function that takes those three arguments from latitude and longitude awesome now we can
+
+74
+00:04:55,010 --> 00:04:56,350
+finish off the arrow function.
+
+75
+00:04:56,360 --> 00:05:02,720
+Adding the arrow and our curly braces and inside of here we can get started by returning the empty object.
+
+76
+00:05:02,720 --> 00:05:07,970
+Now we're going to set up those three properties from the U R L property and created at firms going
+
+77
+00:05:07,970 --> 00:05:12,920
+to be easy just like we do for generate message we're simply going to reference the argument that you
+
+78
+00:05:12,920 --> 00:05:14,450
+are one is going to be a little trickier.
+
+79
+00:05:14,450 --> 00:05:17,180
+For now we'll set that equal to an empty template string.
+
+80
+00:05:17,180 --> 00:05:20,990
+We'll come back to it in a moment and finally created and created out.
+
+81
+00:05:20,990 --> 00:05:22,220
+We've done that before.
+
+82
+00:05:22,250 --> 00:05:27,510
+We're going to set it equal to a time stamp by getting a new date and calling get.
+
+83
+00:05:27,890 --> 00:05:29,940
+Time now for that you are out.
+
+84
+00:05:29,960 --> 00:05:34,540
+We're going to need to use that exact same format that we just typed into the browser.
+
+85
+00:05:34,550 --> 00:05:42,890
+HTP Yes Colon forward slash forward slash w w w Google dot com forward slash maps.
+
+86
+00:05:42,950 --> 00:05:48,350
+Then we got to set up our query parameter adding a question mark and our Q Param setting it equal to
+
+87
+00:05:48,380 --> 00:05:52,370
+the latitude followed by a comma followed by the longitude.
+
+88
+00:05:52,370 --> 00:05:58,260
+Right here we're going to inject the latitude then we're going to add a comma and then we're going to
+
+89
+00:05:58,260 --> 00:06:01,800
+inject the longitude awesome.
+
+90
+00:06:01,810 --> 00:06:02,590
+Now we're done.
+
+91
+00:06:02,590 --> 00:06:07,300
+Generate location message is going to work as expected although you will be writing a test case a little
+
+92
+00:06:07,360 --> 00:06:08,280
+later on.
+
+93
+00:06:08,290 --> 00:06:10,610
+For now we can simply export it.
+
+94
+00:06:10,660 --> 00:06:16,430
+I'm going to export generate location message.
+
+95
+00:06:16,490 --> 00:06:17,300
+Awesome.
+
+96
+00:06:17,690 --> 00:06:23,280
+Now the data is going to flow from the client by calling emit passing and generate location message.
+
+97
+00:06:23,330 --> 00:06:26,560
+We're going to get the latitude and longitude over inside of the server.
+
+98
+00:06:26,570 --> 00:06:33,350
+We are then going to emit the new location message event with the object that we just defined over inside
+
+99
+00:06:33,350 --> 00:06:35,820
+of generate location message.
+
+100
+00:06:35,870 --> 00:06:41,090
+The last piece to the puzzle to really get all this working is to add an event listener for the new
+
+101
+00:06:41,210 --> 00:06:43,550
+location message event.
+
+102
+00:06:43,550 --> 00:06:47,630
+Right here we can call socket dom on to do just that.
+
+103
+00:06:47,630 --> 00:06:49,070
+We're going to pass in our two arguments.
+
+104
+00:06:49,070 --> 00:06:55,850
+First up is the event name we want to listen for new location message and the second and final argument
+
+105
+00:06:55,850 --> 00:06:56,900
+is our function.
+
+106
+00:06:56,900 --> 00:06:59,990
+This is going to get called with the message information.
+
+107
+00:06:59,990 --> 00:07:02,510
+Once the event occurs.
+
+108
+00:07:02,510 --> 00:07:06,680
+Now that we have this we can go ahead and start generating the down elements that we want to spit out
+
+109
+00:07:06,680 --> 00:07:07,290
+to the user.
+
+110
+00:07:07,460 --> 00:07:11,390
+And just like we did above we're going to make a list item and we're going to add our anchor tag our
+
+111
+00:07:11,390 --> 00:07:15,760
+link inside of it and we'll be replacing this method completely in a few videos.
+
+112
+00:07:15,770 --> 00:07:18,850
+But for now it's a simple way to get started.
+
+113
+00:07:18,860 --> 00:07:23,270
+We're going to make a variable called a list item and we're going to make a new element using Jey query
+
+114
+00:07:23,690 --> 00:07:24,800
+as that first argument.
+
+115
+00:07:24,800 --> 00:07:30,200
+We're going to pass in our string and we are going to go ahead and set it equal to the list item just
+
+116
+00:07:30,200 --> 00:07:31,640
+like we did above.
+
+117
+00:07:31,640 --> 00:07:33,890
+Next up we can go ahead and create the second element.
+
+118
+00:07:33,890 --> 00:07:34,880
+We're going to need.
+
+119
+00:07:34,970 --> 00:07:36,490
+I'm going to make a variable.
+
+120
+00:07:36,590 --> 00:07:41,630
+We're going to call this variable a for the anchor tag and we're going to set it equal to the return
+
+121
+00:07:41,630 --> 00:07:47,870
+revalue once again to a call to J query and this time around we're going to create the anchor tag.
+
+122
+00:07:47,870 --> 00:07:54,800
+Now the anchor tag uses the a tag just like this and the contents inside of the tag that's the link
+
+123
+00:07:54,980 --> 00:07:55,700
+text.
+
+124
+00:07:55,730 --> 00:08:00,990
+In our case we're going to go with my current location.
+
+125
+00:08:01,070 --> 00:08:04,190
+Now we are going to be specifying one attribute on the anchor tag.
+
+126
+00:08:04,190 --> 00:08:09,190
+This is going to be a non dynamic attribute meaning it's not going to come from the message object.
+
+127
+00:08:09,200 --> 00:08:15,230
+This one is going to be called Target and we're going to set target equal to inside of quotes underscore
+
+128
+00:08:15,610 --> 00:08:16,690
+blank.
+
+129
+00:08:16,700 --> 00:08:21,890
+When you said Target equal to blank it tells the browser to open up to you R-AL any new tab as opposed
+
+130
+00:08:21,890 --> 00:08:23,850
+to redirecting the current tab.
+
+131
+00:08:23,900 --> 00:08:28,400
+If we redirected the current tab I'd get kicked out of the chat room if I clicked one of the links with
+
+132
+00:08:28,400 --> 00:08:34,460
+the target set to blank will simply open up a new tab to view the Google Maps information.
+
+133
+00:08:34,460 --> 00:08:38,040
+Next up we're going to go ahead and set some properties on these attributes.
+
+134
+00:08:38,120 --> 00:08:41,690
+We're going to set the text using ally dot text.
+
+135
+00:08:41,690 --> 00:08:47,390
+This is going to let us set the person's name as well as that colon right inside of template strings.
+
+136
+00:08:47,390 --> 00:08:54,650
+We are going to inject the value message dot from after that value we're going to add a colon and a
+
+137
+00:08:54,650 --> 00:08:55,700
+space.
+
+138
+00:08:55,700 --> 00:08:59,240
+Next up we're going to go ahead and update our anchor tag.
+
+139
+00:09:00,810 --> 00:09:07,860
+A dot TTR you can set and fetch attributes on your Jey queries selected elements.
+
+140
+00:09:07,860 --> 00:09:13,590
+Using this method if you provide one argument like Target it fetches the value in which case it would
+
+141
+00:09:13,590 --> 00:09:16,050
+return the string underscore blank.
+
+142
+00:09:16,050 --> 00:09:19,560
+If you specify two arguments it actually sets the value.
+
+143
+00:09:19,590 --> 00:09:25,790
+Here we can set the H ref value equal to r u r l which we have under message dot.
+
+144
+00:09:25,890 --> 00:09:27,050
+You r l.
+
+145
+00:09:27,060 --> 00:09:31,290
+Now you'll notice for all of these dynamic values and not simply adding them in template strings up
+
+146
+00:09:31,290 --> 00:09:31,820
+above.
+
+147
+00:09:31,920 --> 00:09:36,940
+Instead I'm using these safe methods like Ally text and a dom attribute.
+
+148
+00:09:36,960 --> 00:09:42,380
+This prevents any malicious behavior if someone tries to inject h TNL they shouldn't be injecting.
+
+149
+00:09:42,450 --> 00:09:49,260
+Using this code with this in place we can now go ahead and append the anchor tag to the end of the list
+
+150
+00:09:49,260 --> 00:09:51,480
+item which is going to add it after the text.
+
+151
+00:09:51,480 --> 00:09:57,940
+We just set using ally Datti penned and we're going to append the anchor tag.
+
+152
+00:09:58,170 --> 00:10:03,520
+And now we can go ahead and not all of this to the Dom and using the exact same statement we used above.
+
+153
+00:10:03,530 --> 00:10:05,450
+I'm going to copy and paste it down below.
+
+154
+00:10:05,440 --> 00:10:07,430
+It's fine that we pasted this line.
+
+155
+00:10:07,430 --> 00:10:12,120
+For the moment we'll be tweaking both of these functions later to use a different system for rendering
+
+156
+00:10:12,440 --> 00:10:13,280
+anyways.
+
+157
+00:10:13,350 --> 00:10:15,310
+But with this in place we are done.
+
+158
+00:10:15,390 --> 00:10:16,640
+Now I'm going to save indexed.
+
+159
+00:10:16,750 --> 00:10:18,910
+Yes and restart things over in the browser.
+
+160
+00:10:19,020 --> 00:10:23,990
+We made quite a few changes so it's all right if you had a few typos for the second first or third time
+
+161
+00:10:24,000 --> 00:10:27,130
+as long as you're able to track them down it's no big deal.
+
+162
+00:10:27,360 --> 00:10:30,530
+I'm going to refresh both of my tabs over inside of chrome.
+
+163
+00:10:30,540 --> 00:10:35,220
+This is going to get the new connections up and running using the latest client side code.
+
+164
+00:10:35,340 --> 00:10:39,660
+And to kick things off I'm going to send a simple message from the second tab to the first tab that
+
+165
+00:10:39,660 --> 00:10:41,380
+showing up here in the second tab.
+
+166
+00:10:41,490 --> 00:10:45,750
+And if I go over to the first tab we see user test right here.
+
+167
+00:10:45,750 --> 00:10:47,750
+Now I can click send location.
+
+168
+00:10:47,760 --> 00:10:51,510
+This is going to take about one to three seconds to actually get the location.
+
+169
+00:10:51,600 --> 00:10:54,660
+Then it's going to go through the socket IO chain and what do we get.
+
+170
+00:10:54,660 --> 00:10:55,610
+We get the link.
+
+171
+00:10:55,650 --> 00:11:00,410
+My current location showing up for user 1 and 4 user 2.
+
+172
+00:11:00,420 --> 00:11:06,240
+Now if I click that link it should open up a brand new tab with the proper You are al the latitude and
+
+173
+00:11:06,240 --> 00:11:08,300
+longitude information rendered in it.
+
+174
+00:11:08,340 --> 00:11:14,520
+And what do I get I get just that right here we have the location for the user who clicked that send
+
+175
+00:11:14,610 --> 00:11:16,080
+location button.
+
+176
+00:11:16,140 --> 00:11:19,970
+With this in place we have a fantastic geolocation feature.
+
+177
+00:11:19,980 --> 00:11:24,720
+All you do is click the button it fetches your current location no matter where you are and it renders
+
+178
+00:11:24,720 --> 00:11:29,340
+a clickable link so anyone else can view it inside of Google Maps.
+
+179
+00:11:29,340 --> 00:11:34,890
+Now before we go I would like you to add a single test case for that brand new generate location message
+
+180
+00:11:34,920 --> 00:11:39,770
+function over inside of the terminal I can shut down the server and use clear to clear the output.
+
+181
+00:11:39,870 --> 00:11:45,020
+And if I run our test suite using NPM test we see that we have our one test and it's passing.
+
+182
+00:11:45,030 --> 00:11:49,530
+Your job is going to be to add a second over inside of message.
+
+183
+00:11:49,620 --> 00:11:51,310
+Test Dhananjay Yes.
+
+184
+00:11:51,450 --> 00:11:52,500
+We'll get started together.
+
+185
+00:11:52,560 --> 00:11:57,950
+Right here we're going to add it describe block we're going to describe the following function generate
+
+186
+00:11:58,250 --> 00:12:04,440
+a location message and you're going to be responsible for adding a test case inside of the callback
+
+187
+00:12:04,740 --> 00:12:05,400
+in here.
+
+188
+00:12:05,490 --> 00:12:06,950
+You're going to call it.
+
+189
+00:12:07,080 --> 00:12:13,650
+It should generate correct location object.
+
+190
+00:12:13,650 --> 00:12:16,010
+Next up we can go ahead and add our function.
+
+191
+00:12:16,020 --> 00:12:17,600
+This is going to be a synchronous task.
+
+192
+00:12:17,610 --> 00:12:20,180
+So there is no need to add the Done argument.
+
+193
+00:12:20,370 --> 00:12:25,260
+And your job is going to be to write a test case pretty similar to this one although instead of passing
+
+194
+00:12:25,260 --> 00:12:30,960
+in Frome and taxed you're going to pass in from latitude and longitude then you're going to make some
+
+195
+00:12:30,960 --> 00:12:33,300
+assertions about the values you get back.
+
+196
+00:12:33,360 --> 00:12:39,510
+Make sure the from property is correct make sure created at is a number and make sure the u r l property
+
+197
+00:12:39,600 --> 00:12:42,270
+is what you'd expect given the input.
+
+198
+00:12:42,360 --> 00:12:50,560
+If I input a latitude and longitude of 1 I would expect to see that you are out like this where the
+
+199
+00:12:50,560 --> 00:12:56,080
+latitude is replaced by the number 1 and the longitude excuse me the longitude is replaced by the number
+
+200
+00:12:56,080 --> 00:12:58,530
+1 and then the latitude as well.
+
+201
+00:12:58,660 --> 00:13:05,260
+This would be the value that I would expect over inside the test case given an input of 1 and 1.
+
+202
+00:13:05,260 --> 00:13:10,300
+Now your job is going to be to write that test case then run it and make sure everything passes over
+
+203
+00:13:10,300 --> 00:13:11,560
+inside of the terminal.
+
+204
+00:13:11,560 --> 00:13:13,310
+Take a moment to knock that out.
+
+205
+00:13:13,390 --> 00:13:14,020
+When you're done.
+
+206
+00:13:14,050 --> 00:13:14,590
+Test it.
+
+207
+00:13:14,590 --> 00:13:17,710
+Then click play.
+
+208
+00:13:17,710 --> 00:13:18,280
+All right.
+
+209
+00:13:18,280 --> 00:13:21,280
+Hopefully you didn't have too much trouble with that to get started.
+
+210
+00:13:21,280 --> 00:13:22,990
+I'm going to make a few variables.
+
+211
+00:13:23,070 --> 00:13:27,070
+I'm going to make a from variable and I'll set that equal to something like.
+
+212
+00:13:27,190 --> 00:13:33,100
+Deb then we can go ahead and create a latitude variable.
+
+213
+00:13:33,140 --> 00:13:40,790
+I'm going to set that equal to 15 and we can go ahead and create a variable longitude set of that equal
+
+214
+00:13:40,790 --> 00:13:42,550
+do something like 19.
+
+215
+00:13:42,710 --> 00:13:48,740
+And then I can go ahead and finally create a u r l variable that u r l variable is going to be the final
+
+216
+00:13:48,740 --> 00:13:49,940
+result of the U r al.
+
+217
+00:13:49,940 --> 00:13:57,620
+I would expect to get back now that you are always going to be inside of quotes H Yes yes Colin forward
+
+218
+00:13:57,620 --> 00:14:03,500
+slash forward slash w w w dot Google dot com forward slash maps.
+
+219
+00:14:03,500 --> 00:14:05,630
+Then we're going to add the appropriate query parameter.
+
+220
+00:14:05,630 --> 00:14:11,240
+Given the information we're going to pass in at the latitudes 15 we would expect 15 after the equal
+
+221
+00:14:11,240 --> 00:14:16,390
+sign and if the longitude is 19 after the comma we would expect 19.
+
+222
+00:14:16,730 --> 00:14:20,200
+Now that we have that in place we can actually go ahead and call our function.
+
+223
+00:14:20,220 --> 00:14:26,810
+Storing the response I'm going to make a variable called message then we're going to go ahead and call
+
+224
+00:14:27,050 --> 00:14:32,720
+generate location message which currently isn't required we can do that in just a second and we're going
+
+225
+00:14:32,720 --> 00:14:39,560
+to pass in our three arguments from latitude and longitude.
+
+226
+00:14:41,550 --> 00:14:42,600
+Excellent.
+
+227
+00:14:42,600 --> 00:14:45,950
+Now let's go ahead and also pull off generate location message right here.
+
+228
+00:14:46,930 --> 00:14:49,320
+Generate location.
+
+229
+00:14:49,690 --> 00:14:50,560
+Message.
+
+230
+00:14:50,560 --> 00:14:51,310
+Excellent.
+
+231
+00:14:51,310 --> 00:14:54,610
+Now the only thing left to do is make our assertions.
+
+232
+00:14:54,640 --> 00:14:59,330
+We're going to start in much the same way I'm actually going to copy these two lines down below.
+
+233
+00:14:59,500 --> 00:15:04,150
+We're expecting the message doc created at property to be a number which it should be then and down
+
+234
+00:15:04,150 --> 00:15:04,650
+below.
+
+235
+00:15:04,690 --> 00:15:08,640
+We're expecting message to include a from property equal to Deb..
+
+236
+00:15:08,730 --> 00:15:14,260
+And we're going to expect it to have a u r l property equal to the U R L string we define above.
+
+237
+00:15:14,260 --> 00:15:19,840
+If both of these assertions pass them we know the object returned from generate location message is
+
+238
+00:15:19,840 --> 00:15:20,730
+correct.
+
+239
+00:15:20,860 --> 00:15:25,020
+I'm going to rerun the test suite over inside of the terminal.
+
+240
+00:15:25,170 --> 00:15:25,890
+And what do we get.
+
+241
+00:15:25,890 --> 00:15:32,250
+We get a failing test here we're expecting that some object with created at from and you are l equals
+
+242
+00:15:32,310 --> 00:15:33,870
+some other object.
+
+243
+00:15:33,870 --> 00:15:35,910
+Now as you can see there's a discrepancy here.
+
+244
+00:15:36,000 --> 00:15:40,920
+The Q was left off and the u r l right here over inside of our test case.
+
+245
+00:15:40,930 --> 00:15:42,910
+All I need to do is fix that.
+
+246
+00:15:43,020 --> 00:15:43,700
+Save it.
+
+247
+00:15:43,830 --> 00:15:48,250
+Rerun the test suite and this time everything should work as expected.
+
+248
+00:15:48,330 --> 00:15:50,560
+These error messages are super useful.
+
+249
+00:15:50,580 --> 00:15:53,270
+It can take a little bit of time to dig into the details.
+
+250
+00:15:53,280 --> 00:15:56,300
+You have three properties and you have those three properties twice.
+
+251
+00:15:56,400 --> 00:15:58,990
+So it can take some time to figure out where you went wrong.
+
+252
+00:15:59,040 --> 00:16:05,490
+But in this case I clearly went wrong inside of my assertion and a test case is only as good as the
+
+253
+00:16:05,490 --> 00:16:07,830
+assertions you have in place and that's it.
+
+254
+00:16:07,830 --> 00:16:10,080
+For this why don't we have geo location all set up.
+
+255
+00:16:10,080 --> 00:16:11,240
+We have our link rendered.
+
+256
+00:16:11,250 --> 00:16:13,720
+We are in great shape to continue on.
+
+257
+00:16:13,740 --> 00:16:17,190
+I'm going to go ahead and add a commit over inside of the terminal.
+
+258
+00:16:17,190 --> 00:16:22,530
+I'm going to run the clear command to clear the terminal output then we'll run get status to see all
+
+259
+00:16:22,530 --> 00:16:27,820
+of our changed files and we can use a get commit with the flag to add a message for this one.
+
+260
+00:16:28,170 --> 00:16:35,350
+Add geo location support via geo location API.
+
+261
+00:16:35,390 --> 00:16:36,230
+Awesome.
+
+262
+00:16:36,320 --> 00:16:40,970
+I'm going to go ahead and commit this and push it up to get hub and we can also take a quick moment
+
+263
+00:16:40,970 --> 00:16:43,210
+to deploy this to Heroku as well.
+
+264
+00:16:43,210 --> 00:16:45,640
+You can get push Heroku.
+
+265
+00:16:46,040 --> 00:16:50,960
+This is going to deploy our latest code which has geo location stuff built in and we'll be able to run
+
+266
+00:16:50,960 --> 00:16:56,830
+this and this code is going to run on things like the chrome mobile browser because we'll be in HTP
+
+267
+00:16:56,930 --> 00:17:02,960
+s Google Chrome's browser on mobile and other mobile browsers have pretty strict security guidelines
+
+268
+00:17:02,960 --> 00:17:05,990
+as to when they'll send geolocation information.
+
+269
+00:17:05,990 --> 00:17:07,170
+It is going to need to be over.
+
+270
+00:17:07,370 --> 00:17:11,270
+HTP connection which is exactly what we have here.
+
+271
+00:17:11,340 --> 00:17:16,470
+I'm going to open up our Heroku app in a few tabs will open it up here and will also open it up in a
+
+272
+00:17:16,470 --> 00:17:17,390
+second tab.
+
+273
+00:17:17,580 --> 00:17:19,790
+I'm going to click that send the location button.
+
+274
+00:17:19,860 --> 00:17:21,870
+I do need to approve this and say different.
+
+275
+00:17:21,870 --> 00:17:22,630
+You are Al.
+
+276
+00:17:22,630 --> 00:17:25,600
+Yes I do want them to be able to use my location.
+
+277
+00:17:25,610 --> 00:17:27,720
+It's going to grab the location send it off.
+
+278
+00:17:27,720 --> 00:17:29,810
+And the first tab gets the link.
+
+279
+00:17:29,820 --> 00:17:32,520
+Click the link and hopefully it get the same spot.
+
+280
+00:17:32,550 --> 00:17:33,590
+And we do.
+
+281
+00:17:33,870 --> 00:17:34,780
+That's it for this one.
+
+282
+00:17:34,780 --> 00:17:36,430
+I will see you next time.
+

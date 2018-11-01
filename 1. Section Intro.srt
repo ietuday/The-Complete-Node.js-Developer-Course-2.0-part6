@@ -1,0 +1,76 @@
+﻿1
+00:00:01,600 --> 00:00:05,730
+Welcome to Section 9 a real time web apps with socket I O.
+
+2
+00:00:05,890 --> 00:00:10,480
+In this section you're going to learn about socket IO and web sockets which enable two way communication
+
+3
+00:00:10,480 --> 00:00:12,820
+between the server and the client.
+
+4
+00:00:12,820 --> 00:00:16,450
+This means that we're not only going to be setting up a node server We're also going to be setting up
+
+5
+00:00:16,450 --> 00:00:22,000
+a client this client could be a web app it could be an iPhone app or an Android app for this course.
+
+6
+00:00:22,000 --> 00:00:24,570
+The client will be a web application.
+
+7
+00:00:24,580 --> 00:00:28,900
+This means that we're going to be connecting the two allowing data to flow seamlessly from either the
+
+8
+00:00:28,900 --> 00:00:32,070
+browser to the server or from the server to the browser.
+
+9
+00:00:32,080 --> 00:00:36,730
+Now with our to do app data can only flow in one direction the client had to initialize the request
+
+10
+00:00:36,970 --> 00:00:38,040
+with socket I O.
+
+11
+00:00:38,170 --> 00:00:41,220
+We're going to be able to send data back and forth instantly.
+
+12
+00:00:41,230 --> 00:00:46,960
+This means that for real time apps like an email app a food ordering app or a chat app the server doesn't
+
+13
+00:00:46,960 --> 00:00:52,450
+need to wait for the client to request information the server can say hey I just got something you probably
+
+14
+00:00:52,450 --> 00:00:53,490
+want to show the user.
+
+15
+00:00:53,500 --> 00:00:54,640
+So here it is.
+
+16
+00:00:54,730 --> 00:00:58,630
+This is going to open up a world of possibilities and we're going to get started by figuring out how
+
+17
+00:00:58,630 --> 00:01:01,320
+to integrate SOC and I go into a node app.
+
+18
+00:01:01,390 --> 00:01:03,090
+That's exactly what we're going to get started.
+
+19
+00:01:03,100 --> 00:01:04,380
+So let's dive in.
+

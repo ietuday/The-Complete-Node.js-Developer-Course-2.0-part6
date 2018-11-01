@@ -1,0 +1,904 @@
+﻿1
+00:00:00,430 --> 00:00:01,830
+In this video you're going to start.
+
+2
+00:00:01,830 --> 00:00:04,500
+Part 1 of a two part series on geo location.
+
+3
+00:00:04,500 --> 00:00:10,110
+Instead of just sending text back and forth we're also going to set it up so I can beam my actual coordinates
+
+4
+00:00:10,110 --> 00:00:13,760
+my long tuning latitude to everyone else connected to the chat app.
+
+5
+00:00:13,860 --> 00:00:17,570
+Then we can render a link and that link could go wherever we like in our case.
+
+6
+00:00:17,610 --> 00:00:22,890
+We're going to set it up to pull up a Google Maps page where the actual location of the user who set
+
+7
+00:00:22,890 --> 00:00:25,120
+their location is marked.
+
+8
+00:00:25,170 --> 00:00:30,150
+Now to actually fetch a user's location or we're going to use the geo location API which is available
+
+9
+00:00:30,150 --> 00:00:34,780
+in your client side javascript and it's actually a pretty well supported API.
+
+10
+00:00:34,830 --> 00:00:38,810
+It's available on all modern browsers whether that's mobile or desktop.
+
+11
+00:00:38,910 --> 00:00:45,780
+And the documentation can be found by googling geo location API and looking for the NTN documentation
+
+12
+00:00:45,780 --> 00:00:49,680
+page the MDA docs or the Mozilla Developer Network.
+
+13
+00:00:49,710 --> 00:00:55,630
+They are my favorite docs for clients that technologies things like your web API is your CSSA and your
+
+14
+00:00:55,960 --> 00:00:57,670
+HMO guidelines.
+
+15
+00:00:57,720 --> 00:01:00,450
+And as I mentioned this is a well-supported feature.
+
+16
+00:01:00,540 --> 00:01:06,390
+You can pretty much use it everywhere except for older versions of Internet Explorer and the Opera Mini
+
+17
+00:01:06,390 --> 00:01:10,580
+browser but all your major desktop and mobile browsers are going to support this.
+
+18
+00:01:10,650 --> 00:01:15,600
+And if the browser is old we will set up a little message to let them know their browser does not support
+
+19
+00:01:15,810 --> 00:01:17,160
+geo location.
+
+20
+00:01:17,160 --> 00:01:21,510
+If you ever want to learn more about geolocation or explore features that we do not cover in the next
+
+21
+00:01:21,510 --> 00:01:26,850
+two videos you can refer to this page though we will be using most of the features geo location has
+
+22
+00:01:26,850 --> 00:01:28,790
+to offer to get started.
+
+23
+00:01:28,800 --> 00:01:31,690
+What we're going to do is add a new button to our application.
+
+24
+00:01:31,710 --> 00:01:36,840
+It's going to sit alongside of sand and it's going to say something like send location when the user
+
+25
+00:01:36,840 --> 00:01:38,860
+clicks that send location button.
+
+26
+00:01:38,920 --> 00:01:44,310
+We're going to use the geolocation API and usually this is going to require the user to confirm they
+
+27
+00:01:44,310 --> 00:01:49,400
+want to share their location with this tab in the browser that pop up box is going to happen.
+
+28
+00:01:49,410 --> 00:01:53,370
+It's going to be triggered by the browser there's no way around that you're going to need to make sure
+
+29
+00:01:53,370 --> 00:01:56,260
+the user actually wants to share their location.
+
+30
+00:01:56,280 --> 00:02:00,180
+Once you have the coordinates you're going to an event that's going to go to the server the server is
+
+31
+00:02:00,180 --> 00:02:02,520
+going to send it to all the other connected users.
+
+32
+00:02:02,610 --> 00:02:05,610
+And we're going to be able to render that information in a nice link.
+
+33
+00:02:05,610 --> 00:02:09,760
+Now we're going to get started in this video and we'll wrap up the feature in the next one.
+
+34
+00:02:09,900 --> 00:02:10,720
+To kick things off.
+
+35
+00:02:10,800 --> 00:02:11,840
+We're going to add that button.
+
+36
+00:02:11,880 --> 00:02:18,070
+This is going to be the button that starts the entire process over inside of atom inside of index.
+
+37
+00:02:18,240 --> 00:02:18,910
+AML.
+
+38
+00:02:19,020 --> 00:02:21,900
+We're going to add a button just below our form tag.
+
+39
+00:02:21,900 --> 00:02:26,370
+It's going to be outside of our existing form right here.
+
+40
+00:02:26,390 --> 00:02:36,440
+We're going to add the button tag and we're going to go ahead and give this an I.D. of send location.
+
+41
+00:02:36,440 --> 00:02:43,100
+Now as for the visible button text we can go ahead and use send location as our string saved the file.
+
+42
+00:02:43,100 --> 00:02:48,020
+And if we go ahead and refresh our app in the browser we should now see we have our second location
+
+43
+00:02:48,020 --> 00:02:50,480
+button showing up just below.
+
+44
+00:02:50,480 --> 00:02:53,020
+We're going to fix all this later when we add the default styles.
+
+45
+00:02:53,030 --> 00:02:55,320
+But for now this does get the job done.
+
+46
+00:02:55,340 --> 00:02:57,980
+Now clicking this button currently is not going to do anything.
+
+47
+00:02:58,010 --> 00:03:02,570
+It's not tied to a form so it's not going to do any weird form submissions or page reloads.
+
+48
+00:03:02,570 --> 00:03:08,470
+All we need to do is add a click listener to this button and we'll be able to run whatever code we like.
+
+49
+00:03:08,470 --> 00:03:11,490
+In our case we're going to run that geolocation code.
+
+50
+00:03:11,510 --> 00:03:15,740
+This is going to happen over inside of atom inside of index dot J.S..
+
+51
+00:03:15,860 --> 00:03:18,960
+We're going to add some code down near the bottom.
+
+52
+00:03:18,980 --> 00:03:24,280
+Now the first thing I want to do is create a variable and I'm going to call this variable location button.
+
+53
+00:03:25,230 --> 00:03:27,220
+And this is going to store our selector.
+
+54
+00:03:27,220 --> 00:03:31,780
+This is the J query selector that targets the button we just created because we're going to need to
+
+55
+00:03:31,780 --> 00:03:35,140
+reference it multiple times and storing it in a variable.
+
+56
+00:03:35,140 --> 00:03:40,300
+Saves the need to make those calls again right here we're going to call a query like we've done for
+
+57
+00:03:40,330 --> 00:03:45,670
+other selectors passing in one argument a string and we're selecting something by ID which means we
+
+58
+00:03:45,670 --> 00:03:47,190
+got to start with that pound sign.
+
+59
+00:03:47,290 --> 00:03:55,380
+And the actual ID is send hyphen location send hyphen location right here.
+
+60
+00:03:55,380 --> 00:03:59,640
+Now that we have this in place we can go ahead and do whatever we like in our case what we're going
+
+61
+00:03:59,640 --> 00:04:01,610
+to be doing is adding a click event.
+
+62
+00:04:01,740 --> 00:04:05,930
+We want to do something when someone clicks that button to get that done.
+
+63
+00:04:05,970 --> 00:04:12,900
+We're going to go to location button dot on now this is identical to doing the following.
+
+64
+00:04:13,180 --> 00:04:19,600
+Jay query selecting the ID central location both of these are going to do the same thing.
+
+65
+00:04:19,620 --> 00:04:23,640
+The benefit of the first solution is that we have a reusable variable which we are going to reference
+
+66
+00:04:23,640 --> 00:04:27,660
+later on making to Jay query calls to the same selector.
+
+67
+00:04:27,660 --> 00:04:33,210
+It wastes time because it is going to require J query to manipulate the DOM fetching that information
+
+68
+00:04:33,210 --> 00:04:34,270
+and that's expensive.
+
+69
+00:04:35,500 --> 00:04:39,780
+Location button on is going to be our event listener.
+
+70
+00:04:39,910 --> 00:04:44,380
+We're listening for the Click event inside of quotes for the first argument and the second argument
+
+71
+00:04:44,410 --> 00:04:47,560
+as always is going to be our function.
+
+72
+00:04:47,560 --> 00:04:51,080
+This function is going to get called when someone clicks the button.
+
+73
+00:04:51,370 --> 00:04:56,220
+For now all we're going to do is check if the user has access to that geolocation API.
+
+74
+00:04:56,350 --> 00:04:59,230
+If they don't we want to go ahead and print a message.
+
+75
+00:04:59,230 --> 00:05:01,050
+We're going to create an if statement.
+
+76
+00:05:01,360 --> 00:05:09,370
+The geolocation API exists on Navigator dot geolocation and we want to run some code if it doesn't exist.
+
+77
+00:05:09,370 --> 00:05:14,410
+So we're going to flip it if there is no geo location object on a navigator.
+
+78
+00:05:14,410 --> 00:05:19,120
+We want to do something we're going to use return to prevent the rest of the function from executing
+
+79
+00:05:19,120 --> 00:05:24,160
+and we're going to call the alert function available in all browsers that pops up one of those default
+
+80
+00:05:24,190 --> 00:05:26,600
+alert boxes that makes you click OK.
+
+81
+00:05:26,710 --> 00:05:31,240
+We're going to use this as opposed to a fancy or motile if you are using something like bootstrap or
+
+82
+00:05:31,240 --> 00:05:32,080
+foundation.
+
+83
+00:05:32,080 --> 00:05:34,240
+You can implement one of their built in tools.
+
+84
+00:05:34,240 --> 00:05:37,720
+For now though we're going to use alert which takes just one argument a string.
+
+85
+00:05:37,720 --> 00:05:45,300
+Your message geolocation not supported by your browser.
+
+86
+00:05:45,310 --> 00:05:46,000
+Awesome.
+
+87
+00:05:46,010 --> 00:05:50,530
+And now users who don't have support for this are gonna see a little message as opposed to wondering
+
+88
+00:05:50,530 --> 00:05:54,930
+whether or not anything actually happened to actually fetcher users position.
+
+89
+00:05:55,000 --> 00:05:59,880
+We're going to use a function available on geolocation to access it.
+
+90
+00:05:59,890 --> 00:06:07,390
+It's navigator dot geo location dot get current position.
+
+91
+00:06:07,540 --> 00:06:10,770
+You get current position is a function that starts the process.
+
+92
+00:06:10,810 --> 00:06:14,090
+It's going to actively get the coordinates for the user.
+
+93
+00:06:14,170 --> 00:06:17,260
+In this case it's going to find the coordinates based off of the browser.
+
+94
+00:06:17,350 --> 00:06:19,460
+And this takes two functions.
+
+95
+00:06:19,510 --> 00:06:21,510
+The first one is your success function.
+
+96
+00:06:21,640 --> 00:06:23,700
+Right here we can at our first callback.
+
+97
+00:06:23,740 --> 00:06:26,750
+This is going to get called within the location information.
+
+98
+00:06:26,860 --> 00:06:29,770
+We're going to name this argument position.
+
+99
+00:06:29,900 --> 00:06:35,120
+The second argument to get current position is going to be our air handler if something goes wrong.
+
+100
+00:06:36,030 --> 00:06:41,420
+We're going to create a function right here and we'll be learning a message to the user when we're not
+
+101
+00:06:41,420 --> 00:06:43,770
+able to fetch the location using alert.
+
+102
+00:06:43,880 --> 00:06:45,940
+Let's go ahead and call alert a second time.
+
+103
+00:06:46,010 --> 00:06:50,590
+Printing a message like unable to fetch location.
+
+104
+00:06:50,600 --> 00:06:51,370
+This is going to print.
+
+105
+00:06:51,380 --> 00:06:55,700
+If someone gets prompted to share their location with the browser but they click deny we're going to
+
+106
+00:06:55,700 --> 00:07:00,560
+say hey we can't fetch the location if you don't give us that permission.
+
+107
+00:07:00,560 --> 00:07:03,300
+Now the only case left is the success case.
+
+108
+00:07:03,350 --> 00:07:05,080
+This is where we're going to admit the event.
+
+109
+00:07:05,090 --> 00:07:10,580
+But before we do let's go ahead and simply logon to the screen so we can take a peek at what is happening
+
+110
+00:07:10,640 --> 00:07:13,430
+inside of the position argument.
+
+111
+00:07:13,430 --> 00:07:14,990
+I'm going to log this to the screen.
+
+112
+00:07:14,990 --> 00:07:23,110
+Our server is going to restart and over inside of Google Chrome we can open up the developer tools refresh
+
+113
+00:07:23,110 --> 00:07:27,350
+the page and we can click that send location button.
+
+114
+00:07:27,350 --> 00:07:29,900
+Now this is going to work on desktop and mobile.
+
+115
+00:07:29,960 --> 00:07:35,780
+Some mobile browsers are going to require you to be on HTP ass which is something that we're going to
+
+116
+00:07:35,780 --> 00:07:41,300
+have set up for Heroku as you know the Heroku you are out is secure which means it's not going to work
+
+117
+00:07:41,330 --> 00:07:42,520
+on localhost.
+
+118
+00:07:42,530 --> 00:07:47,080
+You can always test your mobile browsers by deploying the app to Heroku and running there.
+
+119
+00:07:47,090 --> 00:07:50,750
+For now though I will be able to click send a location.
+
+120
+00:07:50,750 --> 00:07:53,000
+This is going to go ahead and start that process.
+
+121
+00:07:53,000 --> 00:07:55,180
+The process can take up to a second.
+
+122
+00:07:55,260 --> 00:08:00,650
+Now as you can see I did get my geo location position but I was ever prompted as to whether or not I
+
+123
+00:08:00,650 --> 00:08:02,210
+wanted to share my location.
+
+124
+00:08:02,210 --> 00:08:07,460
+That's because I've already given it permission over here I can go ahead and click click these settings
+
+125
+00:08:07,520 --> 00:08:09,170
+for future visits.
+
+126
+00:08:09,170 --> 00:08:14,970
+This means that I'm going to need to reauthorize if I refreshed the page and click send location again.
+
+127
+00:08:15,020 --> 00:08:18,270
+You're going to see this little box which is probably going to show up for you.
+
+128
+00:08:18,290 --> 00:08:19,490
+You can either block it.
+
+129
+00:08:19,580 --> 00:08:22,440
+If I block it it's going to print unable to fetch location.
+
+130
+00:08:22,460 --> 00:08:23,960
+Or you can accept it.
+
+131
+00:08:24,170 --> 00:08:27,710
+I'm going to clear those settings one more time give the page a refresh.
+
+132
+00:08:27,830 --> 00:08:33,740
+And this time I am going to accept the location sharing and we're going to get the geo location printing
+
+133
+00:08:33,770 --> 00:08:35,440
+out in the con..
+
+134
+00:08:35,450 --> 00:08:39,250
+Now once we get it we can go ahead and dive in the object itself is pretty simple.
+
+135
+00:08:39,320 --> 00:08:42,280
+We have a time stamp of exactly when we fetch the data.
+
+136
+00:08:42,290 --> 00:08:46,040
+This is useful if you're tracking a user over time which we're not doing.
+
+137
+00:08:46,040 --> 00:08:47,570
+We also have our coordinates.
+
+138
+00:08:47,720 --> 00:08:52,040
+We have all sorts of properties we're not going to use like accuracy altitude which doesn't exist.
+
+139
+00:08:52,040 --> 00:08:55,540
+And other related ones we also have speed which is knowl.
+
+140
+00:08:55,610 --> 00:09:02,640
+The only tool we're ever going to use off this object is latitude and longitude which do indeed exist.
+
+141
+00:09:02,660 --> 00:09:08,030
+This is the information we want to pass to the server to the server can send it to everybody else.
+
+142
+00:09:08,030 --> 00:09:14,140
+This means we're going to go into the position object go into the records object and grab those two.
+
+143
+00:09:14,480 --> 00:09:16,740
+Let's go ahead and do that over inside of Adam.
+
+144
+00:09:16,760 --> 00:09:24,630
+We are going to call socket dot emit and we're going to emit a brand new event.
+
+145
+00:09:24,650 --> 00:09:27,060
+One we do not have registered yet.
+
+146
+00:09:27,160 --> 00:09:34,300
+We're going to call this one create a location message create a location message is not going to take
+
+147
+00:09:34,300 --> 00:09:35,560
+the standard text.
+
+148
+00:09:35,560 --> 00:09:39,790
+Instead it's going to take those long tattoo'd and latitude coordinates.
+
+149
+00:09:39,790 --> 00:09:43,620
+We're going to specify both of them starting with latitude.
+
+150
+00:09:43,740 --> 00:09:50,910
+We want to set latitude equal to position dot cords dot latitude.
+
+151
+00:09:50,930 --> 00:09:55,070
+This is the variable that we explored over inside of the council and we're going to do the same thing
+
+152
+00:09:55,070 --> 00:10:07,240
+for a long itude study an equal to position dot cord's dot latitude awesome now that we have this in
+
+153
+00:10:07,240 --> 00:10:12,280
+place we can actually go ahead and listen for this event over in the server and when we get it all we're
+
+154
+00:10:12,280 --> 00:10:16,410
+going to do is pass this data along to all the connected users.
+
+155
+00:10:16,420 --> 00:10:18,080
+Let's go ahead and do just that.
+
+156
+00:10:18,100 --> 00:10:24,310
+Over inside of server J s registering a new event listener I'm going to remove the old commented out
+
+157
+00:10:24,310 --> 00:10:29,590
+broadcast call that's no longer needed in create message and just below create message.
+
+158
+00:10:29,590 --> 00:10:34,210
+We're going to call socket dot on again specifying a listener for this event.
+
+159
+00:10:34,210 --> 00:10:40,710
+Create a location message just as we defined it over inside of index.
+
+160
+00:10:40,750 --> 00:10:47,550
+J.S. now we are using iOS 6 since we're in node which means we can go ahead and set up our arrow function.
+
+161
+00:10:47,720 --> 00:10:53,730
+We're going to have one argument this is going to be chord's and we can go ahead and finish off the
+
+162
+00:10:53,730 --> 00:10:55,150
+arrow function in here.
+
+163
+00:10:55,140 --> 00:10:58,580
+We're going to be able to run whatever code we like for the moment.
+
+164
+00:10:58,590 --> 00:11:02,640
+All we're going to do is emit a new message event passing along the coordinates.
+
+165
+00:11:02,640 --> 00:11:08,980
+Although in part two we'll be making this a lot nicer setting up that you are out for Google Maps.
+
+166
+00:11:09,120 --> 00:11:11,530
+Right now though we're going to call Oakshott emit.
+
+167
+00:11:11,670 --> 00:11:17,070
+We're going to emit a new message event and we're going to go ahead and provide the necessary data by
+
+168
+00:11:17,070 --> 00:11:19,690
+calling generate message.
+
+169
+00:11:19,920 --> 00:11:23,620
+For the moment generate message is going to take some bogus user name.
+
+170
+00:11:23,700 --> 00:11:29,190
+I'm going to go ahead and type in admin and we are going to set the text for now we're simply going
+
+171
+00:11:29,190 --> 00:11:31,290
+to set it equal to the coordinates.
+
+172
+00:11:31,290 --> 00:11:33,790
+Let's go ahead and use a template string to set that up.
+
+173
+00:11:33,840 --> 00:11:41,260
+We're going to first inject the latitude which is available on cord's dot latitude then we're going
+
+174
+00:11:41,260 --> 00:11:49,930
+to go ahead and add a comma a space and we'll inject the long itude chords dot long into.
+
+175
+00:11:50,360 --> 00:11:51,190
+Excellent.
+
+176
+00:11:51,230 --> 00:11:56,750
+Now that we have this call in place the location information is going to get passed back and forth between
+
+177
+00:11:56,840 --> 00:12:00,500
+the users and we can go ahead and actually prove this over inside of the browser.
+
+178
+00:12:00,560 --> 00:12:05,010
+I'm going to give this page a refresh and I'm also going to open up a second tab.
+
+179
+00:12:06,330 --> 00:12:09,120
+In the second tab I'm going to click send location.
+
+180
+00:12:09,120 --> 00:12:13,270
+It's not going to prompt me if I want to share my location since I've already told it.
+
+181
+00:12:13,380 --> 00:12:18,450
+I do want to share my location with this tab and right here you can see we have our admen message and
+
+182
+00:12:18,450 --> 00:12:19,790
+we have our latitude.
+
+183
+00:12:19,890 --> 00:12:25,110
+But unfortunately the long itude is undefined most likely because we typed it incorrectly somewhere
+
+184
+00:12:25,110 --> 00:12:25,950
+along the way.
+
+185
+00:12:26,140 --> 00:12:29,000
+I'm going to head back into Adam real quick and take a peek.
+
+186
+00:12:29,520 --> 00:12:32,250
+And right here you can see I forgot the end in long itude.
+
+187
+00:12:32,310 --> 00:12:37,920
+If I go ahead and add that and save the file and go back into the browser we should be able to do this
+
+188
+00:12:37,920 --> 00:12:40,680
+once again getting both pieces of information.
+
+189
+00:12:40,680 --> 00:12:45,450
+I'm going to refresh both tabs to load the latest version of our index file over inside of the first
+
+190
+00:12:45,450 --> 00:12:49,950
+one we're going to send the location and the second one is going to be responsible for receiving it.
+
+191
+00:12:50,190 --> 00:12:51,570
+Let's send the location off.
+
+192
+00:12:51,600 --> 00:12:55,920
+Remember this takes about a second for your browser to get the coordinates and then it emits the message
+
+193
+00:12:55,920 --> 00:13:00,470
+and right here you see we have the coordinates both the long itude and the latitude.
+
+194
+00:13:00,480 --> 00:13:02,670
+We also have it over inside of the second tab.
+
+195
+00:13:02,670 --> 00:13:07,970
+If I take this information we can actually Google it and prove that it is working as expected.
+
+196
+00:13:08,010 --> 00:13:13,260
+Now in the next video part two we're going to be setting up a nice link so this information isn't visible.
+
+197
+00:13:13,270 --> 00:13:17,340
+It'll be there but the user doesn't really need to know the coordinates what they really want is a link
+
+198
+00:13:17,490 --> 00:13:18,650
+to a map.
+
+199
+00:13:18,660 --> 00:13:19,780
+That's what we're going to set up.
+
+200
+00:13:19,860 --> 00:13:22,880
+But for now we can put this in Google.
+
+201
+00:13:22,970 --> 00:13:26,750
+Google is going to show us exactly where it is and the coordinates are indeed correct.
+
+202
+00:13:26,870 --> 00:13:31,850
+I am in Philadelphia filming this video which means the location was correctly fetched for these local
+
+203
+00:13:31,850 --> 00:13:33,220
+host tabs.
+
+204
+00:13:33,320 --> 00:13:36,650
+With this in place we are now done Part 1.
+
+205
+00:13:36,650 --> 00:13:41,000
+We're not going to go ahead and actually make a commit since we're not done with the feature.
+
+206
+00:13:41,060 --> 00:13:44,460
+We're simply going to leave things as they are and move on to part two.
+
+207
+00:13:44,600 --> 00:13:49,400
+Let's take just a quick moment to recap what we did because we covered quite a bit of new information
+
+208
+00:13:49,400 --> 00:13:50,240
+here.
+
+209
+00:13:50,270 --> 00:13:55,880
+Now the first thing we did is we gave a new button to the user this new button is going to allow them
+
+210
+00:13:55,880 --> 00:13:58,090
+to click it to send the location.
+
+211
+00:13:58,180 --> 00:14:01,110
+All of the heavy lifting happened over inside of index.
+
+212
+00:14:01,130 --> 00:14:02,750
+J.S. in here.
+
+213
+00:14:02,750 --> 00:14:08,000
+We set up a click listener for that send location button which means every time a user clicks it we
+
+214
+00:14:08,060 --> 00:14:09,050
+do something.
+
+215
+00:14:09,050 --> 00:14:09,790
+Now what do we do.
+
+216
+00:14:09,890 --> 00:14:13,180
+Well first we make sure they have access to the geolocation API.
+
+217
+00:14:13,310 --> 00:14:14,990
+If they do that's great.
+
+218
+00:14:14,990 --> 00:14:17,200
+If not we simply print a message.
+
+219
+00:14:17,330 --> 00:14:20,510
+If they do have access we go ahead and try to fetch the location.
+
+220
+00:14:20,510 --> 00:14:22,760
+This can either succeed or fail if it fails.
+
+221
+00:14:22,760 --> 00:14:24,550
+Once again we just give them a little message.
+
+222
+00:14:24,560 --> 00:14:31,700
+If it succeeds we actually emit an event with the long tattoo'd and latitude to the server the server
+
+223
+00:14:31,700 --> 00:14:38,550
+gets that information and it emits a new message of that to all clients and that renders it to the screen.
+
+224
+00:14:38,870 --> 00:14:41,400
+It is as good of a place as any to stop.
+
+225
+00:14:41,400 --> 00:14:43,550
+We are going to continue on in the next video.
+
+226
+00:14:43,580 --> 00:14:48,100
+Wrapping up the geo location API in part to stay tuned I'll see you then.
+

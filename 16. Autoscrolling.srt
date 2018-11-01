@@ -1,0 +1,808 @@
+﻿1
+00:00:00,820 --> 00:00:03,460
+If we're going to build a front end we might as well do it right.
+
+2
+00:00:03,460 --> 00:00:06,880
+And in this video we're going to add an auto scrolling feature.
+
+3
+00:00:06,940 --> 00:00:10,810
+So if a new message comes in it is visible inside of the messages panel.
+
+4
+00:00:10,810 --> 00:00:12,530
+Now right away this is not a problem.
+
+5
+00:00:12,550 --> 00:00:21,760
+I type in I had entered it shows up but as we get further down the list A B C D E F G H I J K you see
+
+6
+00:00:21,760 --> 00:00:25,330
+the messages start to disappear down the bottom of the bar.
+
+7
+00:00:25,330 --> 00:00:30,490
+Now I can indeed scroll down to see the most recent messages but it would be nice if I'm automatically
+
+8
+00:00:30,490 --> 00:00:32,730
+scrolled to the most recent message.
+
+9
+00:00:32,800 --> 00:00:37,740
+So if a new message comes in like one two three I'm automatically brought to the bottom.
+
+10
+00:00:37,750 --> 00:00:42,250
+Now obviously if someone does scroll up to read an old message we're going to want to keep them there
+
+11
+00:00:42,250 --> 00:00:44,320
+we're not going to want to scroll them to the bottom.
+
+12
+00:00:44,320 --> 00:00:49,560
+That would be just as annoying as not being able to see the new messages in the first place.
+
+13
+00:00:49,690 --> 00:00:53,080
+Which means that we're going to go ahead and calculate a threshold.
+
+14
+00:00:53,080 --> 00:00:57,850
+If someone can see that last message like I can here I can CD you in user.
+
+15
+00:00:57,850 --> 00:01:01,040
+We're going to go ahead and scroll down to the bottom when a new message comes in.
+
+16
+00:01:01,060 --> 00:01:05,600
+If I'm above that message like I am here we're going to go ahead and leave them alone.
+
+17
+00:01:05,680 --> 00:01:09,770
+There's no reason to scroll them to the bottom if they're digging through the archives.
+
+18
+00:01:09,820 --> 00:01:13,180
+Now in order to do that we are going to have to run a calculation.
+
+19
+00:01:13,180 --> 00:01:18,230
+Grabbing a few properties mostly the height properties of various things.
+
+20
+00:01:18,280 --> 00:01:23,400
+Now to talk about those higher properties and figure out exactly how we're going to run this calculation
+
+21
+00:01:23,400 --> 00:01:25,820
+I put together a really short set of slides.
+
+22
+00:01:25,900 --> 00:01:30,780
+Let's go ahead and dive right in to illustrate exactly how we're going to run this calculation.
+
+23
+00:01:30,780 --> 00:01:32,550
+Let's take a look at the following example.
+
+24
+00:01:32,610 --> 00:01:36,280
+We have this light purple box that's taller than the dark purple one.
+
+25
+00:01:36,300 --> 00:01:38,840
+This is the entire messages container.
+
+26
+00:01:38,850 --> 00:01:42,900
+It's probably going to contain or way more messages than we can actually see in the browser.
+
+27
+00:01:42,900 --> 00:01:44,030
+This dark purple area.
+
+28
+00:01:44,040 --> 00:01:49,260
+This is what we actually see as we scroll down the dark purple area is going to move down to the bottom
+
+29
+00:01:49,260 --> 00:01:52,560
+and as we scroll up it's going to shift up to the top.
+
+30
+00:01:52,560 --> 00:01:57,570
+Now we have access to three high properties that are going to let us make the calculations necessary
+
+31
+00:01:57,570 --> 00:02:00,170
+to determine whether or not we should scroll down a user.
+
+32
+00:02:00,210 --> 00:02:01,440
+These are the following.
+
+33
+00:02:01,440 --> 00:02:03,390
+First up scroll height.
+
+34
+00:02:03,390 --> 00:02:09,840
+This is the entire height of our messages container regardless of how much is actually visible inside
+
+35
+00:02:09,840 --> 00:02:10,830
+of the browser.
+
+36
+00:02:10,830 --> 00:02:15,450
+This means that if we have messages before and after what we can see they are still going to be accounted
+
+37
+00:02:15,450 --> 00:02:17,430
+for in scroll height.
+
+38
+00:02:17,430 --> 00:02:18,540
+Next up we have clients.
+
+39
+00:02:18,570 --> 00:02:20,510
+This is the visible height container.
+
+40
+00:02:20,640 --> 00:02:23,040
+And finally we have scroll top.
+
+41
+00:02:23,070 --> 00:02:28,230
+This is the number of pixels we have scrolled down into the purple container which would be just this
+
+42
+00:02:28,290 --> 00:02:29,850
+area here.
+
+43
+00:02:30,000 --> 00:02:34,230
+Now in the current situation what do we want to do we want to do nothing the user really isn't scrolled
+
+44
+00:02:34,290 --> 00:02:35,330
+that far down.
+
+45
+00:02:35,370 --> 00:02:37,740
+It would be a burden to them if they got to the bottom.
+
+46
+00:02:37,740 --> 00:02:43,040
+Every time a new message came in in the next scenario we scroll down just a little bit more.
+
+47
+00:02:43,110 --> 00:02:49,290
+The scroll top has increased the client height has stayed the same and so has the scroll height.
+
+48
+00:02:49,290 --> 00:02:53,000
+Now if we keep going down the list eventually we're going to get to the very bottom.
+
+49
+00:02:53,070 --> 00:02:54,470
+Currently we should do nothing.
+
+50
+00:02:54,480 --> 00:02:57,920
+But when we get to the bottom the calculations look a little different here.
+
+51
+00:02:57,990 --> 00:03:04,590
+You can see the scroll top value which is the space above what we can see plus the client height value
+
+52
+00:03:04,590 --> 00:03:06,810
+is identical to scroll height.
+
+53
+00:03:06,930 --> 00:03:09,810
+And this is going to be the basics of our equation.
+
+54
+00:03:09,810 --> 00:03:16,050
+If the scroll top plus the client height equals the scroll height we do want to scroll the user down
+
+55
+00:03:16,050 --> 00:03:20,730
+when a new message comes in because we know they're at the very bottom of the panel.
+
+56
+00:03:20,760 --> 00:03:22,860
+So in this situation what should we do.
+
+57
+00:03:22,860 --> 00:03:26,230
+We should scroll to the bottom when a new message comes in.
+
+58
+00:03:26,400 --> 00:03:30,670
+Now there is one slight little quirk we are going to have that message already added.
+
+59
+00:03:30,690 --> 00:03:36,390
+So we're going to take into account the new message height in our calculation adding up skirl top client
+
+60
+00:03:36,390 --> 00:03:41,700
+tight end message height comparing that value to the scroll height using this.
+
+61
+00:03:41,700 --> 00:03:44,830
+We will once again be able to scroll the user to the bottom.
+
+62
+00:03:44,860 --> 00:03:49,760
+Let's go ahead and wire this up in Adam now that we know how we're going to run that calculation.
+
+63
+00:03:49,770 --> 00:03:52,960
+Let's go ahead and actually do it over inside of index.
+
+64
+00:03:53,070 --> 00:03:53,700
+Yes.
+
+65
+00:03:53,700 --> 00:03:57,110
+We're going to make a new function that's going to do all this heavy lifting for us.
+
+66
+00:03:57,180 --> 00:04:02,520
+It's going to determine whether or not we should scroll the user to the bottom depending on their position.
+
+67
+00:04:02,520 --> 00:04:05,070
+Let's make a function right here at the top of index.
+
+68
+00:04:05,120 --> 00:04:05,720
+Jay Yes.
+
+69
+00:04:05,820 --> 00:04:14,880
+It's not going to take any arguments and we're going to go ahead and call this function scroll to bottom
+
+70
+00:04:15,180 --> 00:04:16,730
+and we're going to call scroll to bottom.
+
+71
+00:04:16,740 --> 00:04:22,830
+Every time we add a new message to the chat area which means we need to do it twice once inside of new
+
+72
+00:04:22,830 --> 00:04:29,490
+message and once inside of new location message right here I can call scroll to bottom passing in no
+
+73
+00:04:29,490 --> 00:04:31,890
+arguments and I'll do the same thing down below.
+
+74
+00:04:31,950 --> 00:04:37,810
+When we have penned a new location message scroll to bottom.
+
+75
+00:04:37,830 --> 00:04:38,460
+Awesome.
+
+76
+00:04:38,700 --> 00:04:43,560
+Now all we need to do is wire up this function to one determine if we should scroll them to the bottom
+
+77
+00:04:43,560 --> 00:04:45,860
+end to actually scroll them to the bottom.
+
+78
+00:04:45,860 --> 00:04:52,110
+If it's necessary to get started we are going to select the messages container creating a new variable
+
+79
+00:04:52,110 --> 00:04:53,210
+to store that in.
+
+80
+00:04:53,220 --> 00:04:56,730
+We're going to actually be creating quite a few variables to run our calculations.
+
+81
+00:04:56,730 --> 00:05:03,510
+I'm going to add two comments selectors and heights.
+
+82
+00:05:03,530 --> 00:05:08,060
+This is going to help us just break up the long list of variables right here.
+
+83
+00:05:08,070 --> 00:05:14,060
+We can make a variable we'll call this variable messages and we're going to set messages equal to a
+
+84
+00:05:14,210 --> 00:05:15,760
+query selector call.
+
+85
+00:05:15,830 --> 00:05:21,620
+We're going to select all elements with an ID equal to messages which is just our one.
+
+86
+00:05:21,770 --> 00:05:24,960
+Now that we have messages in place we can focus on getting those heights.
+
+87
+00:05:25,010 --> 00:05:29,780
+We're going to go ahead and fetch client right scroll height and scroll top.
+
+88
+00:05:29,780 --> 00:05:35,910
+First up we can make a variable called Client height setting that equal to messages.
+
+89
+00:05:36,170 --> 00:05:42,000
+And then we're going to call a prop method which gives us a cross-browser way to fetch a property.
+
+90
+00:05:42,020 --> 00:05:47,600
+This is a J query alternative to doing it without Jey query this make sure it works across all browsers
+
+91
+00:05:47,780 --> 00:05:50,620
+regardless of what they call the Propp right here.
+
+92
+00:05:50,660 --> 00:05:56,230
+We're going to go ahead and provide inside of quotes client height to fetch that client height prop
+
+93
+00:05:56,450 --> 00:06:00,520
+and we're going to do the exact same thing two more times for the other two values.
+
+94
+00:06:00,650 --> 00:06:08,850
+Skrill top is going to get set equal to messages dot Propp fetching the Propp scroll upper case t top
+
+95
+00:06:09,050 --> 00:06:11,410
+and last but not least scroll height.
+
+96
+00:06:11,540 --> 00:06:17,080
+A new variable called scroll height will store that value and we're going to set it equal to messages.
+
+97
+00:06:17,930 --> 00:06:23,250
+Drop prop passing in the prop We want to fetch scroll height.
+
+98
+00:06:23,250 --> 00:06:23,920
+Awesome.
+
+99
+00:06:24,210 --> 00:06:27,480
+Now that we have this in place we can get started with our calculation.
+
+100
+00:06:27,540 --> 00:06:33,000
+We want to figure out if the scroll top plus the client height is greater than or equal to the scroll
+
+101
+00:06:33,090 --> 00:06:33,530
+height.
+
+102
+00:06:33,720 --> 00:06:37,650
+If it is then we want to go ahead and scroll the user to the bottom because we know they're already
+
+103
+00:06:37,650 --> 00:06:38,830
+near the bottom.
+
+104
+00:06:38,970 --> 00:06:51,110
+If client height plus scroll top is greater than or equal to scroll height.
+
+105
+00:06:51,310 --> 00:06:55,880
+And if this is the case then we are going to go ahead and do something for now we'll just use console
+
+106
+00:06:55,880 --> 00:06:58,310
+dialog to put a little message to the screen.
+
+107
+00:06:59,200 --> 00:07:02,670
+Right here we'll just print should scroll.
+
+108
+00:07:02,710 --> 00:07:03,220
+Awesome.
+
+109
+00:07:03,340 --> 00:07:08,590
+Now our calculation is not quite complete since we are running this function after we append the new
+
+110
+00:07:08,590 --> 00:07:09,040
+message.
+
+111
+00:07:09,040 --> 00:07:14,980
+We do need to take that into account also and as we saw over inside of atom if we can see that last
+
+112
+00:07:14,980 --> 00:07:18,480
+message we do want to scroll down to the bottom if I'm further up the list.
+
+113
+00:07:18,580 --> 00:07:23,680
+We won't scroll them but if i'm pretty close to the bottom a few pixels up above we should scroll them
+
+114
+00:07:23,740 --> 00:07:26,920
+to the bottom because that's most likely what they want.
+
+115
+00:07:26,920 --> 00:07:31,480
+Now in order to get this done we have to take into account the height of that new message and the height
+
+116
+00:07:31,570 --> 00:07:35,280
+of the previous message right here inside of atom.
+
+117
+00:07:35,320 --> 00:07:38,170
+We're going to go ahead and get that done by first up.
+
+118
+00:07:38,200 --> 00:07:40,030
+Adding a selector.
+
+119
+00:07:40,030 --> 00:07:45,640
+We're going to make a variable called new message and this is going to store the selector for the last
+
+120
+00:07:45,640 --> 00:07:51,190
+list item the one that was just added before the call to scroll to bottom.
+
+121
+00:07:51,250 --> 00:07:55,960
+I'm going to use Jey query to get this done but instead of creating a new selector we can actually build
+
+122
+00:07:55,960 --> 00:08:01,880
+off of our previous one messages and we're going to call its children method.
+
+123
+00:08:01,880 --> 00:08:07,360
+This lets you write a selector specific to the children of the message which means that we have all
+
+124
+00:08:07,360 --> 00:08:10,900
+of our list items so we could select our list items in another context.
+
+125
+00:08:10,900 --> 00:08:14,270
+Maybe we want to select all the children that are paragraphs.
+
+126
+00:08:14,410 --> 00:08:21,040
+In our case though we're going to select the list items that are the last child using this last child
+
+127
+00:08:21,220 --> 00:08:22,150
+modifier.
+
+128
+00:08:22,300 --> 00:08:24,540
+Right here we now have just one item.
+
+129
+00:08:24,550 --> 00:08:30,100
+The last list item in the list and we can go ahead and get it's height by making a variable called New
+
+130
+00:08:31,500 --> 00:08:40,280
+Message height and we're going to set that equal to new message and we're going to call its inner Heights
+
+131
+00:08:40,670 --> 00:08:45,020
+method this is going to calculate the height of the message taking into account the padding that we've
+
+132
+00:08:45,020 --> 00:08:48,140
+also applied via C-s.
+
+133
+00:08:48,350 --> 00:08:52,510
+Now we need to take into account the height of the second to last message as well.
+
+134
+00:08:52,640 --> 00:08:56,600
+To do that we're going to create a variable called The last message I promise.
+
+135
+00:08:56,630 --> 00:08:58,170
+This is the last variable.
+
+136
+00:08:58,190 --> 00:09:05,000
+We're going gonna make and we'll set it equal to new message and we're going to call the Prevx method.
+
+137
+00:09:05,000 --> 00:09:10,820
+This moves us to the previous child so if we were at the last list item we are now at the second to
+
+138
+00:09:10,820 --> 00:09:17,530
+last list item and we can get it right by once again calling inner height just like this.
+
+139
+00:09:17,540 --> 00:09:21,340
+Now we can account for both of these values inside of our IF statement as well.
+
+140
+00:09:21,350 --> 00:09:22,690
+We're going to add them up right here.
+
+141
+00:09:22,700 --> 00:09:25,020
+New message right.
+
+142
+00:09:25,200 --> 00:09:28,240
+And we're also going to add the last message height.
+
+143
+00:09:28,250 --> 00:09:33,660
+Taking that into account as we make our calculation now that our calculation is complete we can actually
+
+144
+00:09:33,660 --> 00:09:39,630
+test out that things are working as expected we should see should scroll when we should scroll over
+
+145
+00:09:39,630 --> 00:09:40,740
+inside of the browser.
+
+146
+00:09:40,740 --> 00:09:44,850
+I'm going to go ahead and give things a refresh and I'm also going to open up the developer tools so
+
+147
+00:09:44,850 --> 00:09:47,200
+he can view our console logs statement.
+
+148
+00:09:47,250 --> 00:09:52,380
+You'll notice on smaller screens these styles and remove these sidebar here you can see new message
+
+149
+00:09:52,410 --> 00:09:56,270
+dot Prevx inner height is not a function over inside of atom.
+
+150
+00:09:56,280 --> 00:09:58,630
+I accidentally added a lowercase H.
+
+151
+00:09:58,650 --> 00:10:00,100
+Pretty easy fix there.
+
+152
+00:10:00,120 --> 00:10:05,170
+I can save those changes go back into the browser give the page a refresh and we should be good to go.
+
+153
+00:10:05,520 --> 00:10:07,460
+Now I'm going to hit enter a few times.
+
+154
+00:10:07,470 --> 00:10:12,120
+Obviously we shouldn't be able to send empty messages but we can for the moment and you can see that
+
+155
+00:10:12,120 --> 00:10:12,960
+should scroll.
+
+156
+00:10:12,960 --> 00:10:18,180
+Is printing is not actually going to scroll because of the height of our messages container doesn't
+
+157
+00:10:18,180 --> 00:10:22,390
+actually exceed the height of the browser space given to it.
+
+158
+00:10:22,470 --> 00:10:25,260
+But it does indeed pass that condition.
+
+159
+00:10:25,320 --> 00:10:30,090
+Now as we get down further and messages start to drop off the bottom of the screen you'll notice this
+
+160
+00:10:30,090 --> 00:10:34,570
+count stops going up the count incremented every time it should scroll printed.
+
+161
+00:10:34,650 --> 00:10:36,110
+But now it stays at 12.
+
+162
+00:10:36,120 --> 00:10:38,600
+Even then adding new messages down below.
+
+163
+00:10:38,910 --> 00:10:42,530
+In this case we can scroll back down to the bottom and add in new message ABC.
+
+164
+00:10:42,660 --> 00:10:45,990
+This should cause the browser to scroll we're kind of near the bottom.
+
+165
+00:10:45,990 --> 00:10:49,410
+When I do it should scroll increments to 13 which is fantastic.
+
+166
+00:10:49,590 --> 00:10:54,810
+If I scroll up to the top of the list and type 1 2 3 and hit Enter should scroll does not increment
+
+167
+00:10:54,810 --> 00:10:56,920
+to 14 which would be correct.
+
+168
+00:10:57,000 --> 00:11:01,460
+Would you not want to scroll a user to the bottom if they're up at the very top.
+
+169
+00:11:01,470 --> 00:11:05,440
+Now the only thing left to do is actually scroll the user when necessary.
+
+170
+00:11:05,550 --> 00:11:10,940
+That's going to happen over inside of our IF statement we can remove our should scroll console dialog
+
+171
+00:11:10,980 --> 00:11:18,000
+call and we're going to replace it with a call to messages dot scroll top which is the J Querrey method
+
+172
+00:11:18,000 --> 00:11:20,600
+for setting that scroll top value.
+
+173
+00:11:20,610 --> 00:11:26,280
+And we're going to set it to the scroll height which is the total height of the container which means
+
+174
+00:11:26,280 --> 00:11:32,100
+that we're going to be moving to the bottom of the messages area over inside of Google Chrome we can
+
+175
+00:11:32,100 --> 00:11:35,880
+now refresh the page to grab that latest index not just file.
+
+176
+00:11:35,890 --> 00:11:37,870
+And I'm just going to hold the enter key for a little bit.
+
+177
+00:11:37,920 --> 00:11:41,800
+And as you see we are scrolling down the list automatically if I add a new message.
+
+178
+00:11:41,800 --> 00:11:47,000
+But it shows up right there from up near the top and a new message comes in like one two three.
+
+179
+00:11:47,010 --> 00:11:50,040
+I do not scroll down the list which is correct.
+
+180
+00:11:50,250 --> 00:11:54,900
+Now if I'm not quite at the bottom but I'm pretty close like I would be right here.
+
+181
+00:11:55,050 --> 00:11:56,810
+And a new message comes in.
+
+182
+00:11:57,570 --> 00:12:02,610
+You can see I am scroll to the bottom but if I'm a little past that last message like I would be right
+
+183
+00:12:02,610 --> 00:12:06,360
+here we're not going to get scroll to the bottom which is exactly what we want.
+
+184
+00:12:06,390 --> 00:12:09,830
+This is all happening because of our calculations.
+
+185
+00:12:09,840 --> 00:12:13,300
+Let's wrap this up with a commit over inside of the terminal.
+
+186
+00:12:13,350 --> 00:12:19,380
+If we run get started we see we just have one changed file I can use get commit am to make it commit
+
+187
+00:12:19,830 --> 00:12:23,250
+scroll to your bottom.
+
+188
+00:12:24,320 --> 00:12:28,600
+If the user is close to bottom.
+
+189
+00:12:28,670 --> 00:12:29,240
+Awesome.
+
+190
+00:12:29,510 --> 00:12:35,150
+I'm going to go ahead and push that up to get Hobb and this is considered a wrap on the first part of
+
+191
+00:12:35,150 --> 00:12:36,360
+this project.
+
+192
+00:12:36,410 --> 00:12:40,310
+We have a basic chat application in place from here on out.
+
+193
+00:12:40,310 --> 00:12:44,090
+The goal is going to be to add chat rooms and names.
+
+194
+00:12:44,180 --> 00:12:45,720
+So I go to a sign up page.
+
+195
+00:12:45,740 --> 00:12:47,450
+I enter the room I'd like to join.
+
+196
+00:12:47,450 --> 00:12:53,750
+And the name I'd like to use then I get brought to a chat page like this one but only for that specific
+
+197
+00:12:53,750 --> 00:12:54,230
+room.
+
+198
+00:12:54,410 --> 00:13:00,020
+So there's two rooms users in room one are not going to be able to talk to users in a room too and vice
+
+199
+00:13:00,140 --> 00:13:00,840
+versa.
+
+200
+00:13:01,010 --> 00:13:02,750
+That's all coming up next so stay tuned.
+
+201
+00:13:02,750 --> 00:13:04,680
+I'm super excited to get to it.
+
+202
+00:13:04,700 --> 00:13:06,150
+I will see you then.
+

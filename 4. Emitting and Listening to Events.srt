@@ -1,0 +1,1028 @@
+﻿1
+00:00:00,690 --> 00:00:06,210
+In the last video you learn how to listen to those built in events things like connection events and
+
+2
+00:00:06,210 --> 00:00:07,640
+disconnection events.
+
+3
+00:00:07,680 --> 00:00:08,470
+Those are fine.
+
+4
+00:00:08,490 --> 00:00:13,170
+There are a great starting place but in this video what we want to talk about is a meeting and listening
+
+5
+00:00:13,170 --> 00:00:14,680
+to custom events.
+
+6
+00:00:14,730 --> 00:00:19,950
+And this is where socket IO gets really interesting when you're able to emit and listen to custom events
+
+7
+00:00:20,220 --> 00:00:25,950
+you can send anything you want from the server to the client or from the client to the server.
+
+8
+00:00:26,130 --> 00:00:31,580
+Now to go through a quick example of how that a look we're going to use an example app an email application
+
+9
+00:00:31,860 --> 00:00:32,340
+on the left.
+
+10
+00:00:32,340 --> 00:00:33,510
+We have our server.
+
+11
+00:00:33,510 --> 00:00:38,760
+This is starting up a socket IO web server on the right we have our email app which is showing a list
+
+12
+00:00:38,790 --> 00:00:40,790
+of all our current emails.
+
+13
+00:00:40,800 --> 00:00:46,740
+Now one customer that not our app might require is a new e-mail event the new e-mail event is going
+
+14
+00:00:46,740 --> 00:00:50,730
+to get emitted by the server when an e-mail comes in from someone else.
+
+15
+00:00:50,730 --> 00:00:55,940
+For example I sign up to a new service that service sends me an e-mail to confirm my e-mail.
+
+16
+00:00:55,950 --> 00:01:01,410
+The server eventually gets that e-mail and it emits an event that the client listens to.
+
+17
+00:01:01,410 --> 00:01:07,410
+The client is going to listen for the new e-mail event and it'll be able to rerun her the list of e-mails
+
+18
+00:01:07,410 --> 00:01:13,320
+in the browser using Jay query react Amber or whatever library it happens to be using showing the new
+
+19
+00:01:13,320 --> 00:01:15,030
+e-mail to the user.
+
+20
+00:01:15,030 --> 00:01:20,430
+Now aside from just sending that in the event happened the most important piece to the puzzle is sending
+
+21
+00:01:20,520 --> 00:01:26,880
+data and we can actually do that when you create and emit a custom event you can send whatever information
+
+22
+00:01:26,880 --> 00:01:30,780
+you like from the server to the client or from the client to the server.
+
+23
+00:01:30,780 --> 00:01:34,270
+Usually this takes the form of an object with various properties.
+
+24
+00:01:34,410 --> 00:01:38,190
+In the case of getting a new e-mail I might want to know who the emails from.
+
+25
+00:01:38,190 --> 00:01:40,580
+I definitely need to know the text of the e-mail.
+
+26
+00:01:40,680 --> 00:01:45,330
+And I also want to know when the e-mail arrived at my server so I can render that inside of the browser
+
+27
+00:01:45,510 --> 00:01:48,120
+for whoever happens to be using the email app.
+
+28
+00:01:48,300 --> 00:01:53,250
+Now this is data flowing from the server to the client which is something we were not able to accomplish
+
+29
+00:01:53,250 --> 00:01:58,260
+with H-2 requests but it is something we can accomplish using socket I O.
+
+30
+00:01:58,350 --> 00:02:03,830
+Now another event this one create e-mail is going to flow from the client to the server.
+
+31
+00:02:03,900 --> 00:02:09,030
+When I create a new email inside of my web browser I'm going to need to emit that event from the client
+
+32
+00:02:09,240 --> 00:02:11,990
+and the server is going to listen for that event.
+
+33
+00:02:12,120 --> 00:02:14,600
+Once again we are going to be sending some data across.
+
+34
+00:02:14,610 --> 00:02:16,470
+Although the data will be a little different.
+
+35
+00:02:16,530 --> 00:02:19,070
+We want to know who the e-mail needs to get sent to.
+
+36
+00:02:19,200 --> 00:02:22,920
+We need the text of the e-mail and maybe you want to schedule it for down the line.
+
+37
+00:02:22,950 --> 00:02:25,680
+So a scheduled time stamp field could be used.
+
+38
+00:02:25,830 --> 00:02:32,130
+Obviously these are all example fields fields for a real email app would probably be a little different
+
+39
+00:02:32,610 --> 00:02:37,320
+with this in place though we are ready to go ahead and actually create these two events inside of our
+
+40
+00:02:37,320 --> 00:02:38,330
+application.
+
+41
+00:02:38,340 --> 00:02:42,620
+Your challenge which will come a little later in the course is going to be to create custom events not
+
+42
+00:02:42,630 --> 00:02:46,230
+for an email app but for our messenger application.
+
+43
+00:02:46,330 --> 00:02:52,410
+Well let's try then starting with new email and create email before we start emitting or listening to
+
+44
+00:02:52,440 --> 00:02:53,370
+custom events.
+
+45
+00:02:53,370 --> 00:02:57,840
+Let's go out and make a few tweaks to our client side javascript as you might have noticed in the last
+
+46
+00:02:57,840 --> 00:02:59,130
+video I accidentally used.
+
+47
+00:02:59,130 --> 00:03:03,490
+Yes 6 arrow functions inside of our client side javascript code.
+
+48
+00:03:03,600 --> 00:03:05,530
+And as I mentioned we want to avoid this.
+
+49
+00:03:05,560 --> 00:03:10,440
+The project is going to work correctly in Chrome but if you tried to load this up on your mobile phone
+
+50
+00:03:10,440 --> 00:03:15,670
+Internet Explorer or Safari or some versions of Firefox the program is going to crash.
+
+51
+00:03:15,780 --> 00:03:21,060
+So instead of using aero functions we're going to use regular functions by removing the arrow and adding
+
+52
+00:03:21,060 --> 00:03:23,710
+the function keyword before our arguments.
+
+53
+00:03:23,730 --> 00:03:29,160
+I'm going to do this for our on that connect listener and for the on disconnect listener.
+
+54
+00:03:29,160 --> 00:03:31,750
+Adding the function keyword and removing the arrow.
+
+55
+00:03:31,920 --> 00:03:36,570
+I'm also going to take our javascript and move it into a separate file instead of editing the client
+
+56
+00:03:36,570 --> 00:03:42,180
+side javascript to write inside of our HVM file without a separate file where that code lives.
+
+57
+00:03:42,180 --> 00:03:46,140
+This is the better method for getting things done over in public.
+
+58
+00:03:46,140 --> 00:03:49,220
+We can make a new folder for this javascript file.
+
+59
+00:03:49,260 --> 00:03:54,630
+I'm going to make one called J as will have multiple javascript files by the time this apps over.
+
+60
+00:03:54,630 --> 00:03:57,760
+So it's a good idea to create a folder to house all of those.
+
+61
+00:03:57,810 --> 00:04:06,030
+For now though we just need one index dot J.S. index dot japes is going to load when we load index dot
+
+62
+00:04:06,030 --> 00:04:11,430
+h DML it's going to contain all of the JavaScript required to get this page to work starting with the
+
+63
+00:04:11,430 --> 00:04:13,730
+javascript we wrote down below.
+
+64
+00:04:13,920 --> 00:04:17,790
+I'm going to cut out all of the code in the script tag pasted into index.
+
+65
+00:04:17,800 --> 00:04:18,410
+J S.
+
+66
+00:04:18,510 --> 00:04:22,960
+We can save the file and update our script tag instead of having the code in line.
+
+67
+00:04:23,070 --> 00:04:27,600
+We're going to load it in by providing the source attribute with the path to the file.
+
+68
+00:04:27,590 --> 00:04:32,350
+Lord slash ass forward slash index dot J.
+
+69
+00:04:32,850 --> 00:04:33,810
+Excellent.
+
+70
+00:04:33,810 --> 00:04:37,790
+Now that we have this in place we have the exact same functionality we had before.
+
+71
+00:04:37,800 --> 00:04:42,420
+Only this time around the Javascript has been broken out into its own file.
+
+72
+00:04:42,440 --> 00:04:47,720
+I'm going to start up the server using man server forward slash server J S.
+
+73
+00:04:47,820 --> 00:04:53,120
+Once it's up we can go ahead and load the app by go into the browser and opening up localhost three
+
+74
+00:04:53,130 --> 00:04:54,080
+thousand.
+
+75
+00:04:54,090 --> 00:04:58,770
+I'm going to open up the developer tools as well so we can make sure everything is working as expected
+
+76
+00:04:59,100 --> 00:05:02,990
+and inside of the console we see connected to server is still printing.
+
+77
+00:05:03,030 --> 00:05:05,270
+This is code that exists in index.
+
+78
+00:05:05,370 --> 00:05:10,590
+Yes and the very fact that it's showing up here proves that the file was loaded with this in place we
+
+79
+00:05:10,590 --> 00:05:13,590
+can now move on to our custom events.
+
+80
+00:05:13,590 --> 00:05:17,760
+Now we have two events that we talked about for our example email application.
+
+81
+00:05:17,760 --> 00:05:23,730
+We have new e-mail which is from the server to the client and we have create email which is an event
+
+82
+00:05:23,760 --> 00:05:27,570
+emitted by the client and listened to by the server.
+
+83
+00:05:27,660 --> 00:05:30,630
+We're going to get started with new email and to kick things off.
+
+84
+00:05:30,660 --> 00:05:35,880
+We're going to head into our client side javascript and we're going to listen for that and that when
+
+85
+00:05:35,880 --> 00:05:39,870
+that event fires we want to do something we want to take the data we want to use.
+
+86
+00:05:39,870 --> 00:05:45,180
+Jay Querrey react or some other front end framework to render it to the browser so the user can see
+
+87
+00:05:45,180 --> 00:05:47,690
+the email as soon as it comes in.
+
+88
+00:05:47,700 --> 00:05:53,070
+Now in order to listen to a custom event we are still going to use socket dot on although instead of
+
+89
+00:05:53,070 --> 00:05:58,800
+specifying the name of one of the built in events we are going to inside of quotes provide the first
+
+90
+00:05:58,800 --> 00:06:01,750
+argument as the name of our custom event.
+
+91
+00:06:01,770 --> 00:06:07,200
+In this case that name is going to be new uppercase the email.
+
+92
+00:06:07,230 --> 00:06:13,350
+Now the second argument for socket on is the same as the second argument for the built in event listeners
+
+93
+00:06:13,580 --> 00:06:18,980
+were going to provide a function and this function is going to get called when the event fires.
+
+94
+00:06:19,110 --> 00:06:24,340
+For now all we're going to do inside of here is use console log to print a little message.
+
+95
+00:06:24,430 --> 00:06:29,440
+New email this is going to print inside of the Web Developer console.
+
+96
+00:06:29,460 --> 00:06:35,790
+Every time the client hears this event coming across the pipeline now that we have the listener in place
+
+97
+00:06:35,790 --> 00:06:40,300
+for new e-mail let's go ahead and emit this event over inside of server.
+
+98
+00:06:40,350 --> 00:06:49,480
+J.S. in here what we want to do is call a method on socket socket has a method called emet we're going
+
+99
+00:06:49,480 --> 00:06:56,230
+to use emit on both the client and the server to emit events and emit is really similar to the listeners
+
+100
+00:06:56,470 --> 00:07:00,510
+although instead of listening to an event we are creating the event.
+
+101
+00:07:00,640 --> 00:07:04,980
+The first argument is the same it's going to be the name of the event you want to admit.
+
+102
+00:07:05,140 --> 00:07:08,550
+In this case we have to match it exactly as we specified over here.
+
+103
+00:07:08,560 --> 00:07:12,190
+New email right here we're going to provide a new e-mail.
+
+104
+00:07:12,190 --> 00:07:17,210
+Now this is not a listener so we're not going to provide a callback function but we want to do is specify
+
+105
+00:07:17,310 --> 00:07:19,440
+the data now by default.
+
+106
+00:07:19,450 --> 00:07:21,310
+We don't have to specify any data.
+
+107
+00:07:21,340 --> 00:07:27,340
+Maybe we just want to emit new e-mail without anything letting the browser know that something happened.
+
+108
+00:07:27,430 --> 00:07:30,970
+If we do this over inside of the browser we can refresh the app.
+
+109
+00:07:31,030 --> 00:07:32,770
+And what do we get in the terminal.
+
+110
+00:07:32,770 --> 00:07:35,320
+We get new e-mail right here.
+
+111
+00:07:35,320 --> 00:07:39,770
+The event is still happening even though we're not sending across any customer data.
+
+112
+00:07:39,790 --> 00:07:44,550
+If you do want to send custom data which is most likely the case it's super easy.
+
+113
+00:07:44,560 --> 00:07:47,820
+All you have to do is provide a second argument for email.
+
+114
+00:07:47,830 --> 00:07:54,330
+Now you could provide an argument of three or true or anything else but most commonly you want to send
+
+115
+00:07:54,350 --> 00:07:56,080
+multiple pieces of data across.
+
+116
+00:07:56,170 --> 00:07:58,600
+So an object is going to be your second argument.
+
+117
+00:07:58,600 --> 00:08:01,700
+This is going to let you specify anything you like.
+
+118
+00:08:01,750 --> 00:08:04,900
+In our case we might specify who the emails from.
+
+119
+00:08:04,900 --> 00:08:12,730
+By specifying a from attribute It's from Mike an example dot com mania we also have the text for the
+
+120
+00:08:12,730 --> 00:08:13,520
+email.
+
+121
+00:08:13,670 --> 00:08:23,520
+Hey what is going on and we might have other attributes as well for example created it could be a time
+
+122
+00:08:23,520 --> 00:08:26,190
+stamp of when the server got the email.
+
+123
+00:08:26,250 --> 00:08:32,760
+This data this data is going to get sent along with the new e-mail event from the server to the client.
+
+124
+00:08:32,760 --> 00:08:37,550
+Now I'm going to go ahead and save server dot J S and over inside of our client side javascript.
+
+125
+00:08:37,560 --> 00:08:40,050
+We can go ahead and do something with that data.
+
+126
+00:08:40,200 --> 00:08:46,140
+The data that's emitted with your event is provided as the first argument to your callback function.
+
+127
+00:08:46,290 --> 00:08:51,270
+Here we have our callback function for a new e-mail which means we can name the first argument email
+
+128
+00:08:51,480 --> 00:08:53,260
+and we can do whatever we want with it.
+
+129
+00:08:53,280 --> 00:08:58,950
+We might be appending it to a list of emails in a real web app but for our purposes right now all we're
+
+130
+00:08:58,950 --> 00:09:04,680
+going to do is provide it as the second argument to console log rendering it to the screen.
+
+131
+00:09:04,680 --> 00:09:08,040
+With this in place we can now test that everything is working as expected.
+
+132
+00:09:08,040 --> 00:09:13,400
+If I go to the browser and give things a refresh using command are we see over inside of the console.
+
+133
+00:09:13,400 --> 00:09:18,840
+We have our new e-mail and Double-O we have our object we can click it to expand it and we see all of
+
+134
+00:09:18,840 --> 00:09:20,270
+the properties we specified.
+
+135
+00:09:20,280 --> 00:09:25,450
+We have our from property the TX property are created at property which is misspelled.
+
+136
+00:09:25,470 --> 00:09:29,430
+All of it is showing up as expected and this is fantastic.
+
+137
+00:09:29,550 --> 00:09:36,000
+In real time we were able to pass not only an event but event data from the server to the client which
+
+138
+00:09:36,000 --> 00:09:39,730
+is something we could never do with an HTP a P.
+
+139
+00:09:40,050 --> 00:09:45,210
+Now on the other side of things we have a situation where we want to emit an event from the client sending
+
+140
+00:09:45,210 --> 00:09:46,680
+some data to the server.
+
+141
+00:09:46,680 --> 00:09:50,220
+This is for our create email event.
+
+142
+00:09:50,220 --> 00:09:54,610
+Now in this case we are going to add our event listener inside of server.
+
+143
+00:09:54,630 --> 00:10:01,230
+J.S. using socket dot on it just like we do for any other event listener like we have right here.
+
+144
+00:10:01,230 --> 00:10:06,100
+The Odon on method were used for the connection event is a very special event.
+
+145
+00:10:06,150 --> 00:10:12,360
+You will usually not be attaching anything to I know you're not going to make calls to Odon on or I
+
+146
+00:10:12,420 --> 00:10:18,600
+O admit other than the one we have here are custom event listeners are going to happen down below by
+
+147
+00:10:18,600 --> 00:10:22,210
+calling socket data on like we do for disconnect.
+
+148
+00:10:22,230 --> 00:10:25,870
+Passing in the name of the event you want to listen to.
+
+149
+00:10:26,010 --> 00:10:29,460
+In this case it is the create email event.
+
+150
+00:10:29,460 --> 00:10:32,160
+Now for create email we do want to add a listener.
+
+151
+00:10:32,160 --> 00:10:37,660
+We are in our node code so we can use an arrow function and we're probably going to expect some data
+
+152
+00:10:37,730 --> 00:10:41,210
+the email to create so we can name that first argument.
+
+153
+00:10:41,220 --> 00:10:44,430
+This is going to be the data center law with the event.
+
+154
+00:10:44,430 --> 00:10:49,050
+I'm going to call this new e-mail and for this example we're going to do is print it to the council
+
+155
+00:10:49,050 --> 00:10:55,690
+so we can make sure the event is properly going from client to server console dialog.
+
+156
+00:10:55,800 --> 00:11:00,690
+I'm going to log out the event name it create e-mail and as the second argument I'm going to log out
+
+157
+00:11:00,690 --> 00:11:05,460
+the data so I can view it over here in the terminal and make sure everything works as expected.
+
+158
+00:11:05,460 --> 00:11:10,410
+Now we have a listener in place and our server did restart but we're never actually emitting the event
+
+159
+00:11:10,470 --> 00:11:11,450
+on the client.
+
+160
+00:11:11,460 --> 00:11:14,930
+We can go ahead and fix this by calling socket dot emet.
+
+161
+00:11:14,940 --> 00:11:18,650
+Now I'm going to call it right here inside of our connect callback function.
+
+162
+00:11:18,640 --> 00:11:22,670
+I don't want to admit the event until we are connected socket.
+
+163
+00:11:22,770 --> 00:11:26,370
+And Mitt is going to let me do just that right here.
+
+164
+00:11:26,370 --> 00:11:33,510
+I can call socket document and meeting the event the event name is create email and we can pass any
+
+165
+00:11:33,510 --> 00:11:36,330
+data we like in as the second argument.
+
+166
+00:11:36,330 --> 00:11:39,510
+In the case of an email app we're probably going to need to send it to someone.
+
+167
+00:11:39,600 --> 00:11:44,260
+So we'll have to address something like Jan at example dot com.
+
+168
+00:11:44,340 --> 00:11:46,330
+We're going to need some text obviously.
+
+169
+00:11:46,440 --> 00:11:48,890
+Hey this is Andrew.
+
+170
+00:11:49,080 --> 00:11:54,220
+And we might have other properties like subject but for now we're going to stick with just these two.
+
+171
+00:11:54,240 --> 00:11:58,440
+So what we've done here is we've created a client side script that connects to the server and as soon
+
+172
+00:11:58,440 --> 00:12:01,680
+as it connects it emits this create e-mail event.
+
+173
+00:12:01,680 --> 00:12:07,260
+Now this is not a realistic example in a real world app a user is most likely going to fill out a form.
+
+174
+00:12:07,260 --> 00:12:11,080
+You're going to grab these pieces of data from the form and then you're going to emit it.
+
+175
+00:12:11,130 --> 00:12:13,940
+We will be working with HVM all farms a little later.
+
+176
+00:12:13,950 --> 00:12:18,780
+For now though we're just calling socket data to play around with these custom events.
+
+177
+00:12:18,780 --> 00:12:24,630
+I'm going to save index dot J.S. over inside of the browser we can now give the page a refresh as soon
+
+178
+00:12:24,630 --> 00:12:25,290
+as it connects.
+
+179
+00:12:25,290 --> 00:12:26,610
+It's going to emit that event.
+
+180
+00:12:26,610 --> 00:12:30,630
+And right here in the terminal you see create email printing.
+
+181
+00:12:30,690 --> 00:12:36,620
+The event was emitted from the client to the server the server got the data and all is well.
+
+182
+00:12:36,660 --> 00:12:41,960
+Now another cool thing about the console is we have access to the variables created by our application.
+
+183
+00:12:42,030 --> 00:12:48,870
+Most notably this socket variable which means inside of Google Chrome in the developer Council we can
+
+184
+00:12:48,870 --> 00:12:58,020
+call socket dot emit and we could emit whatever we like I can emit an action create email I can pass
+
+185
+00:12:58,020 --> 00:13:06,660
+in some data as the second argument and object where I have a from or excuse me a to attribute equal
+
+186
+00:13:06,660 --> 00:13:13,470
+to Julie at example dot com and I have my other attributes to something like text setting that equal
+
+187
+00:13:13,470 --> 00:13:19,980
+to hey this is an example of how we can use the developer Council to make debugging our app even easier.
+
+188
+00:13:19,980 --> 00:13:22,560
+Right here I can type a statement hit enter.
+
+189
+00:13:22,560 --> 00:13:25,230
+It's going to go ahead and fire that emitting the event.
+
+190
+00:13:25,320 --> 00:13:29,280
+And over inside of the terminal we're going to get that event and do something with it whether it's
+
+191
+00:13:29,280 --> 00:13:32,700
+creating the e-mail or doing anything else we might require.
+
+192
+00:13:32,730 --> 00:13:37,620
+And right here inside of the terminal you can see create e-mail showed up where sending that one to
+
+193
+00:13:37,620 --> 00:13:38,210
+Julie.
+
+194
+00:13:38,250 --> 00:13:39,110
+And here's the text.
+
+195
+00:13:39,120 --> 00:13:42,720
+Hey it all got to the server from the client.
+
+196
+00:13:42,720 --> 00:13:48,090
+Now that we have this in place and we've played around with how we can use these custom events it's
+
+197
+00:13:48,090 --> 00:13:51,500
+time to move from the e-mail application onto the actual app.
+
+198
+00:13:51,510 --> 00:13:56,310
+We're going to be building new chat application and to talk about what you're going to do for the challenge.
+
+199
+00:13:56,310 --> 00:14:00,410
+We're going to head back into the presentation for just a few seconds.
+
+200
+00:14:00,590 --> 00:14:05,280
+Now that you know how to emit and listen to custom advance we're going to move on to your challenge
+
+201
+00:14:05,280 --> 00:14:10,610
+which is going to be to create two events that we'll actually use in the chat application.
+
+202
+00:14:10,650 --> 00:14:14,590
+These are going to be new message and create message.
+
+203
+00:14:14,670 --> 00:14:18,840
+Now for the chat app once again we have our server which is going to be the server we build and we have
+
+204
+00:14:18,840 --> 00:14:23,760
+our client which is going to be a user who is in the chat application there is most likely going to
+
+205
+00:14:23,760 --> 00:14:27,450
+be multiple users who all want to communicate with each other.
+
+206
+00:14:27,450 --> 00:14:32,310
+Now the first event we're going to have is a new message event and this is going to get emitted by the
+
+207
+00:14:32,310 --> 00:14:35,100
+server and listened to on the client.
+
+208
+00:14:35,220 --> 00:14:40,080
+When a new message comes in the server is going to send it to everyone connected to the chat room so
+
+209
+00:14:40,080 --> 00:14:44,190
+they can display it to the screen and a user can go ahead and respond to it.
+
+210
+00:14:44,220 --> 00:14:46,710
+The new message event is going to require some data.
+
+211
+00:14:46,800 --> 00:14:51,750
+We're going to need to know who the message was from a string of someone's name like a string.
+
+212
+00:14:51,750 --> 00:14:57,870
+Andrew the text of the message is something like Hey can you meet up at 6:00 and they created at timestep
+
+213
+00:14:58,080 --> 00:15:03,260
+all of this data is going to get rendered inside of our chat application in the browser.
+
+214
+00:15:03,270 --> 00:15:05,260
+We'll be doing that for real in a little bit.
+
+215
+00:15:05,340 --> 00:15:07,830
+But for now we're just going to print it to the council.
+
+216
+00:15:07,860 --> 00:15:10,590
+So this is the first event I want you to create.
+
+217
+00:15:10,650 --> 00:15:14,800
+You're going to make this new message event you're going to omit it from the server.
+
+218
+00:15:14,850 --> 00:15:20,130
+For now you can simply admit it when a user connects and you're going to listen to it on the client.
+
+219
+00:15:20,130 --> 00:15:24,780
+And for now on the client you can just print with Cancel that log a little message when you get the
+
+220
+00:15:24,780 --> 00:15:25,470
+data.
+
+221
+00:15:25,470 --> 00:15:31,260
+You can say got new message printing the object that got passed with this data.
+
+222
+00:15:31,260 --> 00:15:35,010
+Next up the second event we're going to work with this create message.
+
+223
+00:15:35,010 --> 00:15:37,730
+This is going to come from the client to the server.
+
+224
+00:15:37,740 --> 00:15:42,570
+So if I'm user one I'm going to fire a create message event from my browser.
+
+225
+00:15:42,570 --> 00:15:46,830
+This is going to go to the server and the server is going to fire New Message Events to everyone else
+
+226
+00:15:47,040 --> 00:15:51,990
+so they can see my message which means the create message event is gonna get emitted from the client
+
+227
+00:15:52,170 --> 00:15:55,740
+and the server is going to be the one who's listening for the event.
+
+228
+00:15:55,740 --> 00:15:58,120
+Now this event is also going to require some data.
+
+229
+00:15:58,170 --> 00:16:02,560
+We're going to need to know who the message was from and also the text what did they want to say.
+
+230
+00:16:02,580 --> 00:16:04,660
+We need both of these pieces of information.
+
+231
+00:16:04,680 --> 00:16:06,430
+Now notice a discrepancy here.
+
+232
+00:16:06,570 --> 00:16:12,060
+We're sending the from text and created app properties to the client but we're not asking for a created
+
+233
+00:16:12,060 --> 00:16:14,790
+at property from the client when they create a message.
+
+234
+00:16:14,880 --> 00:16:18,930
+This created that property it's actually going to get created on the server.
+
+235
+00:16:18,930 --> 00:16:24,230
+This is going to prevent the user from being able to spoof the time the message was created at There's
+
+236
+00:16:24,240 --> 00:16:27,130
+certain properties we're going to trust the user to provide us.
+
+237
+00:16:27,180 --> 00:16:32,400
+There's others that we will not trust them to provide us in one of those is going to be created at now
+
+238
+00:16:32,430 --> 00:16:34,430
+for create message to do this challenge.
+
+239
+00:16:34,430 --> 00:16:38,890
+All you have to do is set up an event listener on the server that waits for this to fire.
+
+240
+00:16:38,970 --> 00:16:45,690
+And once again you can simply print a message like create message and then and you can provide to counsel
+
+241
+00:16:45,690 --> 00:16:46,520
+dialog.
+
+242
+00:16:46,620 --> 00:16:50,270
+The data that got passed along printing it to the terminal.
+
+243
+00:16:50,280 --> 00:16:52,790
+Now once you have that listener in place you're going to want to admit it.
+
+244
+00:16:52,860 --> 00:16:58,170
+You can admit it when the user first connects and you can also fire a couple socket emit calls from
+
+245
+00:16:58,170 --> 00:17:03,480
+the chrome developer tools making sure that all of the messages show up in the terminal takes some time
+
+246
+00:17:03,480 --> 00:17:05,970
+to knock that one out it's going to take a little bit of time.
+
+247
+00:17:05,970 --> 00:17:11,880
+You can also remove all of the previous event listeners and event emitters that we created for our e-mail
+
+248
+00:17:11,880 --> 00:17:12,390
+events.
+
+249
+00:17:12,420 --> 00:17:13,770
+We're not going to actually need those.
+
+250
+00:17:13,770 --> 00:17:16,040
+Those were just for example purposes.
+
+251
+00:17:16,230 --> 00:17:21,180
+Now this is the set up video in the next video I'll show you how to solve this challenge since this
+
+252
+00:17:21,180 --> 00:17:22,430
+one's getting a little long.
+
+253
+00:17:22,530 --> 00:17:24,710
+And I want to keep these under 20 minutes.
+
+254
+00:17:24,720 --> 00:17:26,370
+Take some time to knock this out.
+
+255
+00:17:26,370 --> 00:17:27,120
+Test it.
+
+256
+00:17:27,120 --> 00:17:31,800
+Make sure everything works as expected and when you're done move on to the next video we're I'll show
+
+257
+00:17:31,800 --> 00:17:33,360
+you how to get this done.
+

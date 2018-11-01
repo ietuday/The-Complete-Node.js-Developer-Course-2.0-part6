@@ -1,0 +1,636 @@
+﻿1
+00:00:00,300 --> 00:00:05,700
+In the last video we wired up that people list making sure that as new users come and go the list gets
+
+2
+00:00:05,730 --> 00:00:06,520
+updated.
+
+3
+00:00:06,600 --> 00:00:11,700
+In this video we're going to make sure that our text and location messages only get sent to users in
+
+4
+00:00:11,700 --> 00:00:12,650
+the same room.
+
+5
+00:00:12,660 --> 00:00:14,870
+Currently it gets sent to everybody.
+
+6
+00:00:14,940 --> 00:00:17,710
+We can prove that by opening up a new connection.
+
+7
+00:00:17,790 --> 00:00:23,460
+I'm going to use my name and we're going to join a different room from EHLO TR The Office fans works
+
+8
+00:00:23,760 --> 00:00:27,780
+when I join the room you can see that the people lists are indeed correct.
+
+9
+00:00:27,780 --> 00:00:32,310
+A user in one room does not update the people list for a user in another room.
+
+10
+00:00:32,310 --> 00:00:36,300
+The difference though is that the text messages do not follow those rules.
+
+11
+00:00:36,330 --> 00:00:39,410
+Neither do the location based messages.
+
+12
+00:00:39,420 --> 00:00:42,960
+Here we have a text message any location message as well.
+
+13
+00:00:42,960 --> 00:00:48,930
+If I go over to the chat app for the other room we get both of those and this is a problem.
+
+14
+00:00:48,990 --> 00:00:50,930
+We also have the name problem.
+
+15
+00:00:50,940 --> 00:00:56,180
+Currently user displays for the text message and admin displays for the location message.
+
+16
+00:00:56,280 --> 00:01:01,770
+We want to make sure to use the actual user's name whether it's Jan in this case or whether it's Andrew
+
+17
+00:01:02,400 --> 00:01:05,860
+in order to get that done we are going to need to make some changes to both server.
+
+18
+00:01:05,870 --> 00:01:12,510
+J.S. Right here we have our event listeners for create message and create location message and we're
+
+19
+00:01:12,510 --> 00:01:15,890
+also going to be making some updates over inside of chat.
+
+20
+00:01:15,990 --> 00:01:18,300
+Yes and this is actually where we're going to start.
+
+21
+00:01:18,300 --> 00:01:24,450
+Currently the name user the incorrect name we saw over inside of the browser that comes from right here.
+
+22
+00:01:24,540 --> 00:01:28,410
+The client originally sent the name of this is no longer going to be the case.
+
+23
+00:01:28,410 --> 00:01:30,630
+The name is stored by the server.
+
+24
+00:01:30,630 --> 00:01:34,650
+So we're going to remove this as a required property from create message.
+
+25
+00:01:34,650 --> 00:01:37,550
+We're just going to be sending the text across.
+
+26
+00:01:37,830 --> 00:01:41,660
+Now with this in place we can modify the event listener over inside of server.
+
+27
+00:01:41,670 --> 00:01:48,520
+J.S. inside of server ask create message takes those two properties and it stuffs them right here into
+
+28
+00:01:48,520 --> 00:01:52,400
+to generate message instead we're going to find the user using.
+
+29
+00:01:52,420 --> 00:01:54,030
+Users not get user.
+
+30
+00:01:54,090 --> 00:01:56,960
+And we're going to do something with it right here.
+
+31
+00:01:57,000 --> 00:02:01,860
+We can go ahead and delete our council dialog statement for create message and we're going to make a
+
+32
+00:02:01,860 --> 00:02:07,620
+variable user setting an equal to users dot get user.
+
+33
+00:02:07,650 --> 00:02:14,700
+This is the method we created over here get user which takes the idea we can pass in the ID socket dot
+
+34
+00:02:14,730 --> 00:02:18,510
+ID and now we can do something with that user.
+
+35
+00:02:18,510 --> 00:02:23,850
+We only want to do something if a user actually exists which means that we're going to check if the
+
+36
+00:02:23,850 --> 00:02:26,300
+user exists using this statement.
+
+37
+00:02:26,370 --> 00:02:32,400
+And we're also going to make sure that the text that got passed along was a real string using after
+
+38
+00:02:32,400 --> 00:02:39,720
+and is real string and will be passing in message dot text.
+
+39
+00:02:39,720 --> 00:02:44,940
+This means if someone tries to send across an empty message or just a bunch of spaces it's not going
+
+40
+00:02:44,940 --> 00:02:47,200
+to get sent to everybody else.
+
+41
+00:02:47,280 --> 00:02:52,290
+Now inside of here all we're going to do is actually emit the message we know it's valid so we do want
+
+42
+00:02:52,290 --> 00:02:53,280
+to emit something.
+
+43
+00:02:53,280 --> 00:02:57,230
+We're going to take this line cut it out and paste it right here.
+
+44
+00:02:57,270 --> 00:03:03,930
+Now currently this line it emits to everybody not just the room the user is connected to.
+
+45
+00:03:03,930 --> 00:03:08,880
+And we also use message from we really want to use the name property on user.
+
+46
+00:03:08,880 --> 00:03:13,620
+Your challenge right now is going to be to make those two changes and this event just to the room the
+
+47
+00:03:13,620 --> 00:03:20,220
+user is connected to and make sure to provide their name right here as opposed to message dot from when
+
+48
+00:03:20,220 --> 00:03:25,380
+you're done you can refresh your browser tabs send some text messages around and you should see the
+
+49
+00:03:25,380 --> 00:03:30,600
+user's name as opposed to what you currently see which is the static text user.
+
+50
+00:03:30,660 --> 00:03:31,530
+Knock that out.
+
+51
+00:03:31,530 --> 00:03:37,130
+Pause the video and when you're done click play.
+
+52
+00:03:37,140 --> 00:03:37,710
+All right.
+
+53
+00:03:37,710 --> 00:03:41,190
+Getting this done requires some modifications to this line.
+
+54
+00:03:41,190 --> 00:03:48,000
+First up we want to get to just a specific room and we know we can tack on a to call right here to get
+
+55
+00:03:48,000 --> 00:03:48,760
+that done.
+
+56
+00:03:48,810 --> 00:03:54,990
+Passing in the room name we have access to that on the user object user dot road.
+
+57
+00:03:55,200 --> 00:04:00,690
+Now that we're admitting to just the individual room we also do want to change the name we use instead
+
+58
+00:04:00,690 --> 00:04:02,180
+of message from.
+
+59
+00:04:02,310 --> 00:04:06,600
+We're going to access the name on the user object user name and there we go.
+
+60
+00:04:06,600 --> 00:04:10,690
+Now we have a much better system for sending those text messages.
+
+61
+00:04:10,710 --> 00:04:16,590
+I'm going to refresh my first tab and my second tab and we're going to send some text messages around.
+
+62
+00:04:16,680 --> 00:04:18,320
+I'm going to send the number one right here.
+
+63
+00:04:18,330 --> 00:04:23,370
+And we do get Andrew and we do see the number one and over inside of our other tab the message is nowhere
+
+64
+00:04:23,370 --> 00:04:27,980
+to be found because we're just admitting it to users in the office fans.
+
+65
+00:04:28,040 --> 00:04:30,510
+But I try to send a message from this first tab.
+
+66
+00:04:30,510 --> 00:04:32,710
+We're going to see it here with the name Jan..
+
+67
+00:04:32,880 --> 00:04:34,650
+And the second tab also looks good.
+
+68
+00:04:34,650 --> 00:04:37,580
+We're not seeing that message from Jan..
+
+69
+00:04:37,620 --> 00:04:40,350
+Now I can go ahead and join a room again.
+
+70
+00:04:40,350 --> 00:04:41,520
+I'm going to use the name Mike.
+
+71
+00:04:41,550 --> 00:04:45,100
+And we're going to join the office fans one more time.
+
+72
+00:04:45,150 --> 00:04:51,180
+When I joined the room I do see and you and Mike both connected and if I send a message like should
+
+73
+00:04:51,180 --> 00:04:51,720
+work.
+
+74
+00:04:51,840 --> 00:04:52,770
+I see it here.
+
+75
+00:04:52,860 --> 00:04:58,030
+And I also see it in the tab of the other user connected to the office fans.
+
+76
+00:04:58,080 --> 00:05:02,340
+And once again it's not visible to someone else connected to a different room.
+
+77
+00:05:02,340 --> 00:05:06,150
+That is all we need to do to get our messages sending correctly.
+
+78
+00:05:06,180 --> 00:05:11,650
+And the last thing to do is to wire that up for create location message.
+
+79
+00:05:11,690 --> 00:05:16,620
+Now as we just saw we were also able to fix the validation issue if I tried to hit enter right now.
+
+80
+00:05:16,620 --> 00:05:17,520
+Nothing happens.
+
+81
+00:05:17,520 --> 00:05:19,190
+I don't get moved out of the box.
+
+82
+00:05:19,200 --> 00:05:22,390
+The focus doesn't change and no message is sent.
+
+83
+00:05:22,410 --> 00:05:27,280
+Right now I am smashing the enter key and nothing's happening which is great.
+
+84
+00:05:27,420 --> 00:05:32,840
+Over inside of Adam your challenge is going to be to fix create location message.
+
+85
+00:05:32,880 --> 00:05:35,690
+You're going to want to find the user just like we do above.
+
+86
+00:05:35,850 --> 00:05:43,110
+If there is a user you're going to want to admit this to just people in the same room instead of providing
+
+87
+00:05:43,110 --> 00:05:44,290
+admin as the name.
+
+88
+00:05:44,310 --> 00:05:47,940
+You're also going to want to use the user's real name.
+
+89
+00:05:47,940 --> 00:05:52,110
+Once you're done you can go ahead and test this out by refreshing those tabs and trying to send the
+
+90
+00:05:52,110 --> 00:05:53,140
+location around.
+
+91
+00:05:53,280 --> 00:05:58,470
+Make sure it still gets sent to users in the same room and make sure it does not get sent to users in
+
+92
+00:05:58,530 --> 00:05:59,500
+other rooms.
+
+93
+00:05:59,520 --> 00:06:00,310
+Pause the video.
+
+94
+00:06:00,330 --> 00:06:06,760
+Knock that out test it and when you're done go ahead and click play to do this one.
+
+95
+00:06:06,760 --> 00:06:12,360
+I am going to start by fetching the user since we are going to need to use the information on that object.
+
+96
+00:06:12,460 --> 00:06:14,690
+We're going to make a variable user calling.
+
+97
+00:06:14,700 --> 00:06:20,690
+Users don't get user and we're going to pass in that socket ID socket ID.
+
+98
+00:06:20,770 --> 00:06:23,430
+This is identical to the line that we used above.
+
+99
+00:06:23,710 --> 00:06:26,780
+Now we only want to emit a message if we do find a users.
+
+100
+00:06:26,800 --> 00:06:29,590
+I'm going to check if the user object exists.
+
+101
+00:06:29,590 --> 00:06:36,390
+If it does we can take this line cut it out and copy it right here if it does exist we are going to
+
+102
+00:06:36,400 --> 00:06:39,230
+emit new location message.
+
+103
+00:06:39,240 --> 00:06:44,730
+Now we do still need to emit it to just a specific room by adding on a call to two and passing in the
+
+104
+00:06:44,730 --> 00:06:48,120
+room name user room stores that information.
+
+105
+00:06:48,150 --> 00:06:54,110
+And last but not least we do want to update the name instead of sending the static admin name.
+
+106
+00:06:54,120 --> 00:06:57,930
+We're going to use the user's real name user dot name.
+
+107
+00:06:58,080 --> 00:07:04,020
+With this in place create location message is now wired up to be private and to send across the correct
+
+108
+00:07:04,170 --> 00:07:06,270
+information over inside of chrome.
+
+109
+00:07:06,300 --> 00:07:11,010
+I'm going to go through my tabs one at a time giving them a refresh and on the third tab I am going
+
+110
+00:07:11,010 --> 00:07:12,610
+to be sending the location.
+
+111
+00:07:12,690 --> 00:07:15,490
+This is going to take just a couple of seconds to actually fetch it.
+
+112
+00:07:15,570 --> 00:07:17,730
+And I see it right here with the name showing up.
+
+113
+00:07:17,730 --> 00:07:18,350
+Correct.
+
+114
+00:07:18,360 --> 00:07:23,220
+We have Mike and we have a link to view the location inside of Google Maps.
+
+115
+00:07:23,220 --> 00:07:28,350
+Now if I go to the second tab the user who is also connected to the office fans I see the exact same
+
+116
+00:07:28,350 --> 00:07:33,540
+location message and then I go to the first one you can see that John does not have access to that message
+
+117
+00:07:33,570 --> 00:07:35,140
+because she's in a different room.
+
+118
+00:07:35,190 --> 00:07:37,830
+She can only share her location with anybody in her room.
+
+119
+00:07:37,890 --> 00:07:39,260
+That happens to be nobody.
+
+120
+00:07:39,300 --> 00:07:45,720
+This message is not going to show up anywhere because no one else is connected to EHLO t r with that
+
+121
+00:07:45,720 --> 00:07:47,280
+in place we are now done.
+
+122
+00:07:47,400 --> 00:07:49,410
+Our messages are private.
+
+123
+00:07:49,440 --> 00:07:52,930
+They're only going to be visible to folks in the same room.
+
+124
+00:07:52,980 --> 00:07:55,980
+Let's go ahead and wrap this one up by committing our changes.
+
+125
+00:07:55,980 --> 00:07:58,620
+I'm going to shut down the no man server.
+
+126
+00:07:58,860 --> 00:08:03,990
+Use clear and we can run get status to see what kind of changes we have here we just have two files
+
+127
+00:08:04,110 --> 00:08:10,140
+they're modified which means we can use to get commit with the flag whether it's separate or the same.
+
+128
+00:08:10,140 --> 00:08:19,310
+They have identical feature sets and then we provide our message string send messages to only people
+
+129
+00:08:19,820 --> 00:08:22,830
+in same room.
+
+130
+00:08:22,880 --> 00:08:23,590
+Awesome.
+
+131
+00:08:23,840 --> 00:08:28,800
+With this in place we can go ahead and use get push to push this up to get hard.
+
+132
+00:08:28,910 --> 00:08:35,330
+And I'm also going to go ahead and deployed to Heroku using get push Heroku master once it's deployed
+
+133
+00:08:35,330 --> 00:08:40,070
+on Heroku we can take just a quick moment to make sure all of those features we just added are still
+
+134
+00:08:40,070 --> 00:08:41,600
+working as expected.
+
+135
+00:08:41,600 --> 00:08:46,910
+I expect they will still work but it's definitely worth checking out because the environments are little
+
+136
+00:08:46,910 --> 00:08:49,360
+different and there's always a chance something can go wrong.
+
+137
+00:08:49,610 --> 00:08:54,250
+Now something does go wrong as a reminder you can always use Heroku lags.
+
+138
+00:08:54,260 --> 00:08:56,770
+This is going to show you the logs on the server.
+
+139
+00:08:56,810 --> 00:09:02,150
+It's usually kind of cryptic but when an error occurs you're going to see a really big block.
+
+140
+00:09:02,210 --> 00:09:08,650
+It's usually pretty easy to spot and it usually contains useful information as to what went wrong.
+
+141
+00:09:08,660 --> 00:09:14,750
+It looks like our app deployed successfully so I can use Heroku open to open it up inside of my browser.
+
+142
+00:09:14,750 --> 00:09:20,180
+And once it's open we can actually visit some chat rooms I'm going to close down my local host tab and
+
+143
+00:09:20,180 --> 00:09:29,070
+I'm going to join as Andrew the room Philadelphia once I'm in the room I am going to send a message
+
+144
+00:09:29,250 --> 00:09:32,120
+and then I'm going to add a second user to the room.
+
+145
+00:09:32,130 --> 00:09:35,620
+Local host 3000 excuse me not local host.
+
+146
+00:09:35,730 --> 00:09:39,010
+We want to visit this Web site our Heroku app.
+
+147
+00:09:39,420 --> 00:09:45,240
+I'm going to visit that will join the room as victim and we can join the exact same room Philadelphia
+
+148
+00:09:45,480 --> 00:09:46,170
+when I join.
+
+149
+00:09:46,180 --> 00:09:49,800
+I see the people list updates for both and sending messages.
+
+150
+00:09:49,800 --> 00:09:51,270
+Does it still work.
+
+151
+00:09:51,270 --> 00:09:54,360
+Messages from tab to do appear in Tab 1.
+
+152
+00:09:54,360 --> 00:09:56,190
+This is great.
+
+153
+00:09:56,190 --> 00:10:02,160
+All this is possible because we wired up server J ass keeping track of users over time.
+
+154
+00:10:02,160 --> 00:10:07,380
+When they first join we add them to the list when they send messages we make sure to use their information
+
+155
+00:10:07,410 --> 00:10:10,300
+and when they leave we remove them from the list.
+
+156
+00:10:10,440 --> 00:10:15,420
+This ensures that the people list is always up to date and that messages are only getting sent to others
+
+157
+00:10:15,450 --> 00:10:16,610
+in the same room.
+
+158
+00:10:16,740 --> 00:10:17,730
+That's it for this one.
+
+159
+00:10:17,730 --> 00:10:19,480
+I will see you next time.
+

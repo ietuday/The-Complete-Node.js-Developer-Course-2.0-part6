@@ -1,0 +1,1020 @@
+﻿1
+00:00:00,480 --> 00:00:06,090
+Before you can add sockets to your web application you need a web application to add them to and that
+
+2
+00:00:06,090 --> 00:00:08,460
+is exactly what we're going to do in this video.
+
+3
+00:00:08,490 --> 00:00:12,630
+We're going to make a basic express app we're going to get it up on get hub and we're going to deploy
+
+4
+00:00:12,630 --> 00:00:15,860
+it to Heroku so we can view it live in the browser.
+
+5
+00:00:16,080 --> 00:00:19,010
+Now the first step to that process is going to be to make a directory.
+
+6
+00:00:19,200 --> 00:00:23,130
+We're going to do a few things together to get us all going in the right direction and they'll be a
+
+7
+00:00:23,130 --> 00:00:28,510
+few challenges scattered throughout this one when we're covering something we've already done before.
+
+8
+00:00:28,560 --> 00:00:34,440
+The first step in the process from the desktop is going to be to run and Diyar to make a new directory
+
+9
+00:00:34,440 --> 00:00:35,580
+for this project.
+
+10
+00:00:35,760 --> 00:00:39,760
+I'm going to call mine node hyphen chat hyphen app.
+
+11
+00:00:39,940 --> 00:00:45,260
+Then we can use C-D to navigate into that directory and we can run a few commands.
+
+12
+00:00:45,330 --> 00:00:50,700
+First up and PM in it as with all of our projects in this course we are going to be taking advantage
+
+13
+00:00:50,760 --> 00:00:51,770
+of and PM.
+
+14
+00:00:51,870 --> 00:00:57,810
+So we're going to run this command and use enter to use the default value for every option.
+
+15
+00:00:57,810 --> 00:00:59,800
+When we're done we can type yes.
+
+16
+00:00:59,910 --> 00:01:01,630
+And now we have the package.
+
+17
+00:01:01,650 --> 00:01:03,080
+Jason File.
+
+18
+00:01:03,150 --> 00:01:09,350
+Before we move into Adam We're also going to run get in it to initialize a new get repository.
+
+19
+00:01:09,370 --> 00:01:14,010
+We're going to be putting this project under version control using get and we're also going to be using
+
+20
+00:01:14,280 --> 00:01:21,240
+to push to get hub and to Heroku with this in place I can use clear to clear the terminal output and
+
+21
+00:01:21,240 --> 00:01:27,850
+we can move into atom and we can start by opening up the folder and setting up our basic app structure.
+
+22
+00:01:28,760 --> 00:01:34,250
+I'm going to open up the folder which we just created on the desktop called node chat app and then here
+
+23
+00:01:34,250 --> 00:01:37,090
+we're going to get started by making a couple directories.
+
+24
+00:01:37,120 --> 00:01:41,930
+Now unlike the other apps in this course the chat app is going to have a front end which means we're
+
+25
+00:01:41,930 --> 00:01:43,520
+going to be writing some DML.
+
+26
+00:01:43,520 --> 00:01:47,960
+We're going to be adding some styles and we're going to be writing some javascript code that runs in
+
+27
+00:01:47,960 --> 00:01:50,630
+the browser as opposed to running on the server.
+
+28
+00:01:50,780 --> 00:01:53,630
+For this to work we're going to have two folders.
+
+29
+00:01:53,630 --> 00:01:59,360
+One is going to be called server which is going to store all of our node JSE code and the other one
+
+30
+00:01:59,360 --> 00:02:00,590
+is going to be called public.
+
+31
+00:02:00,590 --> 00:02:06,860
+This is going to store our styles our HVM l files and our client side javascript.
+
+32
+00:02:06,860 --> 00:02:11,780
+Now inside of server just like we did for the to do API we're going to have a server.
+
+33
+00:02:11,810 --> 00:02:15,780
+J.S. file and this is going to be the root of our node application.
+
+34
+00:02:15,830 --> 00:02:21,470
+This file is going to do stuff like create a new Express app configure the public directory to the static
+
+35
+00:02:21,500 --> 00:02:28,700
+folder express serves up and finally it'll call app Listen to start up the server inside of public what
+
+36
+00:02:28,700 --> 00:02:36,440
+we're going to do for this video is create just one file index dot HVM index dot h team is going to
+
+37
+00:02:36,440 --> 00:02:40,050
+be the markup page we serve when someone visits the app.
+
+38
+00:02:40,070 --> 00:02:44,240
+And for now we're going to make a really simple one that just prints a message to the screen so we can
+
+39
+00:02:44,240 --> 00:02:50,780
+confirm it's properly getting served up in the next video we'll worry about integrating socket I O on
+
+40
+00:02:50,840 --> 00:02:51,890
+the client.
+
+41
+00:02:51,890 --> 00:02:56,720
+For now though we're going to provide a doc type so the browser knows which version of aged female We
+
+42
+00:02:56,720 --> 00:02:57,580
+want to use.
+
+43
+00:02:57,680 --> 00:03:02,360
+We're telling it to use HVM which refers to HCM L5.
+
+44
+00:03:02,360 --> 00:03:05,750
+Next up we're going to open and close our HTL mouth tag.
+
+45
+00:03:05,750 --> 00:03:11,270
+This is going to let us provide the head and body tag which is exactly what we're going to need to do
+
+46
+00:03:11,270 --> 00:03:13,490
+to get things working.
+
+47
+00:03:13,520 --> 00:03:15,950
+First up is head inside of head.
+
+48
+00:03:15,950 --> 00:03:18,780
+We can provide various configuration tags.
+
+49
+00:03:18,860 --> 00:03:24,530
+We're going to use just one for now Mehta So we can tell the browser which Chaar set we want to use
+
+50
+00:03:24,980 --> 00:03:31,040
+on the metal tag we're going to provide the char set attribute setting an equal to inside of quotes
+
+51
+00:03:31,100 --> 00:03:33,680
+UTF 8.
+
+52
+00:03:33,680 --> 00:03:39,070
+Next up we're going to provide the body tag inside of HVM all this contains the H-E mail.
+
+53
+00:03:39,080 --> 00:03:41,190
+We want to actually render to the screen.
+
+54
+00:03:41,300 --> 00:03:46,340
+And what we're going to do for this one is render a p tag paragraph and we're going to have some simple
+
+55
+00:03:46,340 --> 00:03:49,940
+text like welcome to the chat app.
+
+56
+00:03:49,940 --> 00:03:52,390
+This is all that's going to show up for the moment.
+
+57
+00:03:52,490 --> 00:03:54,650
+I'm going to go ahead and close the paragraph tag.
+
+58
+00:03:54,660 --> 00:03:59,040
+Now we can move outside of the TNL file going back into the server file.
+
+59
+00:03:59,120 --> 00:04:03,070
+We want to set up this server to serve the public directory.
+
+60
+00:04:03,260 --> 00:04:09,140
+Now unlike the original express application we created a server dodgiest file is not in the root of
+
+61
+00:04:09,140 --> 00:04:13,500
+the project which means we have to go up a directory from server to node.
+
+62
+00:04:13,520 --> 00:04:16,560
+Chat App and then we have to go into public.
+
+63
+00:04:16,580 --> 00:04:21,080
+This is going to make it a little hard to set up the Express middleware but we're going to do is take
+
+64
+00:04:21,080 --> 00:04:26,720
+a look at a built in node module that makes it really easy to convert paths.
+
+65
+00:04:26,800 --> 00:04:31,790
+Now in order to show you what I'm talking about let's go ahead and use two cons. dot log calls.
+
+66
+00:04:31,910 --> 00:04:35,150
+The first council call is going to show us how we used to do it.
+
+67
+00:04:35,210 --> 00:04:39,980
+And the second one is going to show us the better way to do it inside of the first one we're going to
+
+68
+00:04:39,980 --> 00:04:45,920
+do is provide the same path we provided for our very first express app.
+
+69
+00:04:45,920 --> 00:04:51,410
+We use underscore underscore Der. name to reference the current directory which in this case is the
+
+70
+00:04:51,410 --> 00:04:52,530
+server directory.
+
+71
+00:04:52,550 --> 00:04:59,690
+Because the files inside of the server folder then we can cannonade forward slash public.
+
+72
+00:04:59,750 --> 00:05:04,820
+Now in this case we do not have a public folder in the server folder the public folder and the server
+
+73
+00:05:04,820 --> 00:05:10,190
+folder at the exact same level which means we need to use dot dot to call up a directory and then we
+
+74
+00:05:10,190 --> 00:05:11,510
+need to go into public.
+
+75
+00:05:11,510 --> 00:05:16,250
+This is the old way to do things and if we run this in the terminal we can see why it looks a little
+
+76
+00:05:16,250 --> 00:05:16,890
+weird.
+
+77
+00:05:17,200 --> 00:05:21,960
+I'm going to use gnomon to run server forwards slash server japes.
+
+78
+00:05:22,040 --> 00:05:28,250
+And what we get is this path we go into users and through desktop the project folder which is expected.
+
+79
+00:05:28,430 --> 00:05:32,060
+Then we go into server out of server and into public.
+
+80
+00:05:32,060 --> 00:05:33,840
+This is absolutely unnecessary.
+
+81
+00:05:33,920 --> 00:05:41,150
+But we'd like to do is just go from the project folder right into public keeping a clean cross OS compatible
+
+82
+00:05:41,240 --> 00:05:43,360
+path in order to do that.
+
+83
+00:05:43,400 --> 00:05:47,770
+We're going to use a module that comes with node called Path.
+
+84
+00:05:47,810 --> 00:05:52,610
+As always I want to show you where the documentation lives because path has plenty of methods that we
+
+85
+00:05:52,610 --> 00:05:54,020
+won't be using here.
+
+86
+00:05:54,410 --> 00:05:54,830
+Node.
+
+87
+00:05:54,850 --> 00:05:55,320
+Jay Yes.
+
+88
+00:05:55,350 --> 00:05:57,600
+Dot org is where we can find the docs.
+
+89
+00:05:57,740 --> 00:06:02,350
+We're going to go to that docs page and then we're going to go to the API reference page.
+
+90
+00:06:02,360 --> 00:06:07,940
+This is a list of all the modules we have available to us where using the path module and inside of
+
+91
+00:06:07,940 --> 00:06:13,430
+path the method we're going to be using is join which you can see right here if you click it you can
+
+92
+00:06:13,430 --> 00:06:19,640
+go to a little example of how joyn works join it takes your partial path and it joins them together
+
+93
+00:06:19,940 --> 00:06:24,030
+which means the example below results in the following path.
+
+94
+00:06:24,050 --> 00:06:26,340
+We start with foo which you see right here.
+
+95
+00:06:26,390 --> 00:06:33,230
+We then go into bar which also shows up we go into Baz forward slash SDF which does indeed show up.
+
+96
+00:06:33,380 --> 00:06:35,250
+The next part is the interesting part.
+
+97
+00:06:35,330 --> 00:06:37,860
+We go into this queue structure.
+
+98
+00:06:38,000 --> 00:06:44,920
+Then we go out using dot dot and you can see the result path doesn't show us going into and out of like
+
+99
+00:06:44,990 --> 00:06:45,850
+our path does.
+
+100
+00:06:45,850 --> 00:06:52,610
+Over inside of the terminal instead it resolves that into the final path where the queue you x directory
+
+101
+00:06:52,610 --> 00:06:54,000
+is nowhere in sight.
+
+102
+00:06:54,020 --> 00:06:59,180
+We're going to use this exact same method to clean up our path over inside an atom.
+
+103
+00:06:59,240 --> 00:07:04,720
+We can load in the path module by creating a constant called Path and requiring it.
+
+104
+00:07:04,730 --> 00:07:07,670
+Remember this one does not need to be installed.
+
+105
+00:07:07,670 --> 00:07:09,560
+It has a built in module.
+
+106
+00:07:09,620 --> 00:07:12,680
+You have access to it without using any PM.
+
+107
+00:07:12,680 --> 00:07:19,710
+Next up we're going to make a variable called public path I'm going to make that a constant variable
+
+108
+00:07:19,710 --> 00:07:25,590
+since we're not going to be making any changes to it and we're going to call path dot join.
+
+109
+00:07:25,590 --> 00:07:28,530
+We'll pass them arguments into pathed join in a moment.
+
+110
+00:07:28,530 --> 00:07:35,520
+Before we do though I'm going to console dialog public path now inside of Patkar join what we want to
+
+111
+00:07:35,520 --> 00:07:39,500
+do is take these two paths but pass them in a separate arguments.
+
+112
+00:07:39,540 --> 00:07:43,840
+We do still want to start in the D'oh name and directory the server folder.
+
+113
+00:07:44,010 --> 00:07:49,650
+Then as the second argument we're going to specify the relative path inside of quotes we're going to
+
+114
+00:07:49,650 --> 00:07:55,090
+go out a directory using dot dot then we're going to use forward slash to go into the public folder.
+
+115
+00:07:55,110 --> 00:07:59,430
+I'm going to save the server file and we should now be able to go back to the terminal and see our new
+
+116
+00:07:59,430 --> 00:08:03,990
+path and here it is instead of going into server and then going out like we do above.
+
+117
+00:08:03,990 --> 00:08:07,410
+We go right into the public directory which is ideal.
+
+118
+00:08:07,440 --> 00:08:14,070
+This is the path we want to provide to the Express static middleware now that we have this public path
+
+119
+00:08:14,130 --> 00:08:18,220
+variable in place it's time for your first of two challenges.
+
+120
+00:08:18,310 --> 00:08:24,320
+This challenge is going to be for you to set up Express locally before we get into the challenge details
+
+121
+00:08:24,330 --> 00:08:29,670
+we are going to install it together using NPM I the module name is express and we're going to use the
+
+122
+00:08:29,670 --> 00:08:35,920
+most recent version at four point fourteen point zero with the Save flag.
+
+123
+00:08:36,150 --> 00:08:40,960
+I'm going to run the installer then we can go ahead and actually use it inside of server.
+
+124
+00:08:40,990 --> 00:08:41,480
+Yes.
+
+125
+00:08:41,580 --> 00:08:46,230
+In packaged out Jason we now have it sitting right here with this in place.
+
+126
+00:08:46,230 --> 00:08:47,660
+Here is your challenge.
+
+127
+00:08:47,700 --> 00:08:52,580
+You're going to create a brand new Express application and you're also going to configure the Express
+
+128
+00:08:52,590 --> 00:08:56,720
+static middleware like we've done previously to serve up the public folder.
+
+129
+00:08:56,760 --> 00:09:01,740
+Finally you're going to call app to listen on port 3000 you're going to provide one of those little
+
+130
+00:09:01,740 --> 00:09:07,290
+callback functions to print a message to the terminal like server is up on port three thousand.
+
+131
+00:09:07,470 --> 00:09:12,450
+Once you have the server created you're going to start it up inside of the terminal and head to localhost
+
+132
+00:09:12,570 --> 00:09:14,780
+3000 in side of the browser.
+
+133
+00:09:14,940 --> 00:09:19,970
+If I go there right now we're going to get an error because there is no server running on that port.
+
+134
+00:09:19,980 --> 00:09:25,200
+You should be able to refresh this page and see the little message we typed in the paragraph tag over
+
+135
+00:09:25,200 --> 00:09:27,980
+inside of index dot HVM.
+
+136
+00:09:28,260 --> 00:09:29,990
+So take a moment to knock that out.
+
+137
+00:09:30,000 --> 00:09:34,250
+You can use anything we've done previously in the course we have done all of this before.
+
+138
+00:09:34,260 --> 00:09:38,060
+You can also use Google or any other resources if you get stuck.
+
+139
+00:09:38,220 --> 00:09:46,020
+Take a moment to fill out server test it and when you're done click play.
+
+140
+00:09:46,020 --> 00:09:46,530
+All right.
+
+141
+00:09:46,530 --> 00:09:49,460
+Hopefully you were able to get that done without too much trouble.
+
+142
+00:09:49,470 --> 00:09:55,440
+The first thing I'm going to do is load in express by creating a constant called Express and requiring
+
+143
+00:09:55,500 --> 00:09:57,680
+the library we just installed.
+
+144
+00:09:57,690 --> 00:10:03,450
+Next up you needed to make an app variable where we can configure our express application.
+
+145
+00:10:03,450 --> 00:10:08,220
+I'm going to make a variable called app and said equal to a call to express.
+
+146
+00:10:08,220 --> 00:10:10,980
+Remember we don't configure express by passing in arguments.
+
+147
+00:10:10,980 --> 00:10:17,250
+Instead we can figure express by calling methods on app to create routes add middleware or start up
+
+148
+00:10:17,260 --> 00:10:18,270
+the server.
+
+149
+00:10:18,270 --> 00:10:23,850
+First up we're going to be calling app use to configure our express static middleware.
+
+150
+00:10:23,880 --> 00:10:26,170
+This is going to serve up that public folder.
+
+151
+00:10:26,370 --> 00:10:31,230
+What you needed to do was call Express dot static passing in the path.
+
+152
+00:10:31,320 --> 00:10:36,650
+We created a public path variable which stores exactly the path we need.
+
+153
+00:10:36,660 --> 00:10:39,560
+The last thing to do is call app dot.
+
+154
+00:10:39,690 --> 00:10:44,510
+Listen this is going to start up the server on port three thousand and we're going to provide a callback
+
+155
+00:10:44,520 --> 00:10:47,830
+function as a second argument to print a little message to the terminal.
+
+156
+00:10:47,910 --> 00:10:57,620
+Once the server is up I'm going to use console dot Lague to print server is up on port three thousand.
+
+157
+00:10:57,810 --> 00:11:03,570
+With this in place we can now start up the server over inside the terminal and make sure our index team
+
+158
+00:11:03,650 --> 00:11:06,140
+l file shows up in the browser.
+
+159
+00:11:06,240 --> 00:11:12,000
+I'm going to go ahead and use clear to clear the terminal output then I'll use gnomon to run the server
+
+160
+00:11:12,480 --> 00:11:14,340
+server forward slash server.
+
+161
+00:11:14,350 --> 00:11:19,380
+Jay ass here we get our little message server is up on port three thousand and over in the browser.
+
+162
+00:11:19,380 --> 00:11:22,260
+If I give things are refreshed we get our markup.
+
+163
+00:11:22,260 --> 00:11:24,560
+Welcome to the chat app.
+
+164
+00:11:24,590 --> 00:11:26,400
+This is fantastic.
+
+165
+00:11:26,400 --> 00:11:33,180
+We now have a basic server set up which means in the next video we can actually add socket I O on both
+
+166
+00:11:33,240 --> 00:11:35,390
+the client and the back end.
+
+167
+00:11:35,700 --> 00:11:41,630
+Now before we go we are going to do just one more challenge getting things on get hub and Heroku while
+
+168
+00:11:41,730 --> 00:11:47,250
+we are going to do first inside of atom is set up a few things we do need to set up a get ignore file
+
+169
+00:11:47,610 --> 00:11:48,370
+right here.
+
+170
+00:11:48,480 --> 00:11:52,800
+We're going to provide that in the route of the project inside of get ignore.
+
+171
+00:11:52,800 --> 00:11:57,370
+Once again the only thing we'll be ignoring is the node modules directory.
+
+172
+00:11:57,390 --> 00:12:02,880
+We do not want to commit any of this code to our repo because it can be generated using NPM install
+
+173
+00:12:03,030 --> 00:12:04,790
+and it's subject to change.
+
+174
+00:12:04,800 --> 00:12:08,340
+It's a real pain to manage that sort of thing and is not recommended.
+
+175
+00:12:08,400 --> 00:12:09,500
+You commit it.
+
+176
+00:12:09,630 --> 00:12:13,800
+The next thing we're going to do is configure a few things for her Roku.
+
+177
+00:12:13,800 --> 00:12:17,240
+First up if you remember we have to use that process.
+
+178
+00:12:17,280 --> 00:12:19,940
+Ian vidette port environment variable.
+
+179
+00:12:20,000 --> 00:12:25,030
+I'm going to create a constant port right here sending an equal to process.
+
+180
+00:12:25,110 --> 00:12:31,230
+Ian V dot uppercase port or 3000 which we'll use locally.
+
+181
+00:12:31,230 --> 00:12:36,540
+Now we can provide port here and we can provide it in the message down below by changing our regular
+
+182
+00:12:36,540 --> 00:12:44,840
+string over to a template string server is up on an island ject the port variable value.
+
+183
+00:12:44,880 --> 00:12:49,140
+Now that we have that in place the next thing we need to change in order to get our app set up for Heroku
+
+184
+00:12:49,410 --> 00:12:52,220
+that part of our challenge is to update the package.
+
+185
+00:12:52,230 --> 00:12:59,760
+Scott Jason file adding a start script and specifying the version of node we want to use under scripts.
+
+186
+00:12:59,760 --> 00:13:05,000
+I'm going to add a start script telling Heroku how to start the application in order to start the app.
+
+187
+00:13:05,010 --> 00:13:06,690
+You have to run the node command.
+
+188
+00:13:06,930 --> 00:13:11,070
+You're going to go into the server directory on the file to started up is server.
+
+189
+00:13:11,110 --> 00:13:12,110
+Jay Yes.
+
+190
+00:13:12,300 --> 00:13:15,250
+We're also going to specify engines which we've done before.
+
+191
+00:13:15,450 --> 00:13:20,280
+Engines as you know lets you tell Heroku which version of node to use.
+
+192
+00:13:20,280 --> 00:13:25,200
+This is going to be important as we are taking advantage of some features only available in the latest
+
+193
+00:13:25,200 --> 00:13:27,300
+versions of node right here.
+
+194
+00:13:27,390 --> 00:13:32,880
+I'm going to provide the exact same key value pair I used previously setting node equal to six point
+
+195
+00:13:32,880 --> 00:13:34,230
+to point two.
+
+196
+00:13:34,270 --> 00:13:39,690
+If you're using a different version of node you can provide that here instead of the version I have
+
+197
+00:13:40,100 --> 00:13:43,280
+now that we have this in place you are ready for your challenge.
+
+198
+00:13:43,350 --> 00:13:48,630
+Your challenge is going to be to make a commit with all of the current uncommitted files you're going
+
+199
+00:13:48,630 --> 00:13:54,340
+to then go in to get how and create a good hub repository and you're going to push your local code up.
+
+200
+00:13:54,420 --> 00:13:59,370
+Make sure the code actually gets on get how you can do that by refreshing the get have repo page and
+
+201
+00:13:59,370 --> 00:14:03,420
+you should see your directory structure right there on the repo.
+
+202
+00:14:03,420 --> 00:14:08,910
+The next thing you need to do is create a Heroku application and deploy to it once your application
+
+203
+00:14:08,910 --> 00:14:09,630
+is deployed.
+
+204
+00:14:09,630 --> 00:14:14,970
+You should be able to visit the app you are at on the browser and you should see the exact same message
+
+205
+00:14:15,120 --> 00:14:16,620
+as the one we have here.
+
+206
+00:14:16,620 --> 00:14:21,300
+Welcome to the chat app should print but instead of being on localhost three thousand you should be
+
+207
+00:14:21,360 --> 00:14:23,960
+on the actual Heroku app.
+
+208
+00:14:24,150 --> 00:14:28,920
+Now we already made all the changes necessary inside of the project we configured the port variable
+
+209
+00:14:28,920 --> 00:14:30,960
+and we set up our scripts and engines.
+
+210
+00:14:31,020 --> 00:14:33,280
+So you don't have to make any more code changes.
+
+211
+00:14:33,360 --> 00:14:38,160
+You just need to work your wizardry in the browser and in the terminal to get this done.
+
+212
+00:14:38,280 --> 00:14:43,100
+Take a moment to knock that out add the get hub repo deployed to Heroku test it.
+
+213
+00:14:43,110 --> 00:14:47,620
+And when you're done click play all right.
+
+214
+00:14:47,620 --> 00:14:50,020
+Hopefully you didn't have too much trouble getting that done.
+
+215
+00:14:50,050 --> 00:14:54,940
+The first step while the one I'm going to take first anyways is to make a new get hub repository we
+
+216
+00:14:54,940 --> 00:14:57,230
+need a place to push up our code.
+
+217
+00:14:57,340 --> 00:15:03,400
+I'm going head over to get dotcom click that big green new repository button and we can make a new one.
+
+218
+00:15:03,460 --> 00:15:08,680
+I'm going to call my repository node course to chat app.
+
+219
+00:15:08,710 --> 00:15:12,430
+I am going to leave this public and I am going to actually create it.
+
+220
+00:15:12,610 --> 00:15:15,550
+Now that we're here we have a list of commands we can use.
+
+221
+00:15:15,610 --> 00:15:21,340
+We have an existing repository we want to push it so we can copy these lines over in the terminal before
+
+222
+00:15:21,340 --> 00:15:22,740
+we can actually push anything.
+
+223
+00:15:22,760 --> 00:15:25,420
+We do need to make a commit.
+
+224
+00:15:25,420 --> 00:15:32,060
+I'm going to shut down gnomon and run get status right here you see we have our expected files we have
+
+225
+00:15:32,060 --> 00:15:37,430
+the publican's server folder we have good ignore and package Scott Jason Noad underscore modules is
+
+226
+00:15:37,430 --> 00:15:38,650
+nowhere in sight.
+
+227
+00:15:38,720 --> 00:15:43,950
+Then you needed to use it get at it to add to these untracked files to the next commit.
+
+228
+00:15:44,210 --> 00:15:47,180
+If you run get status again you can see everything does look good.
+
+229
+00:15:47,270 --> 00:15:50,910
+We have four changes to be committed for new files.
+
+230
+00:15:50,960 --> 00:15:57,330
+I'm going to run get commit with the the flag to specify a message the flag is not required to send
+
+231
+00:15:57,330 --> 00:16:01,290
+some of the files are already added right here in it.
+
+232
+00:16:01,320 --> 00:16:03,420
+It is going to get the job done.
+
+233
+00:16:03,800 --> 00:16:08,060
+Once you have that commit in place you can actually push it up to get Hubei running the two lines they
+
+234
+00:16:08,060 --> 00:16:09,040
+gave you.
+
+235
+00:16:09,100 --> 00:16:14,570
+I'm going to run both of those and it's now up on get Haab we can confirm that by refreshing the page
+
+236
+00:16:14,810 --> 00:16:20,210
+and instead of seeing the instructions we see the files we created the next and last thing to do was
+
+237
+00:16:20,210 --> 00:16:22,010
+get the app on Heroku.
+
+238
+00:16:22,070 --> 00:16:25,270
+You don't actually have to go to the Heroku web app to get that done.
+
+239
+00:16:25,280 --> 00:16:33,950
+We can run Heroku create right here we can go ahead and create the application then we can use get push
+
+240
+00:16:35,140 --> 00:16:38,070
+Heroku master to deploy the app.
+
+241
+00:16:38,310 --> 00:16:42,990
+I'm going to go ahead and run that this is going to take my local code push it up to Heroku Heroku is
+
+242
+00:16:42,990 --> 00:16:45,330
+going to see that new code was pushed.
+
+243
+00:16:45,330 --> 00:16:48,370
+It's then going to go ahead and deploy it once it's up.
+
+244
+00:16:48,420 --> 00:16:53,670
+We can use the Heroku open command to open up the app you are in the browser or you can always grab
+
+245
+00:16:53,670 --> 00:16:55,260
+the you are all right here.
+
+246
+00:16:55,440 --> 00:16:58,920
+I'm going to copy that you are Al from up above head into the browser.
+
+247
+00:16:58,920 --> 00:17:05,370
+Paste it and right here we should see our app and we do welcome to the chat application shows up to
+
+248
+00:17:05,370 --> 00:17:06,020
+the screen.
+
+249
+00:17:06,120 --> 00:17:08,500
+And with this in place we are done.
+
+250
+00:17:08,730 --> 00:17:12,670
+We have a basic express server we have a backend and a front end.
+
+251
+00:17:12,690 --> 00:17:18,840
+It's up on get hub and it's up on Heroku we are ready to move on to the next video where we are actually
+
+252
+00:17:18,900 --> 00:17:21,430
+going to start integrating a socket I O.
+
+253
+00:17:21,600 --> 00:17:23,100
+I'm super excited to get to it.
+
+254
+00:17:23,100 --> 00:17:24,080
+So stay tuned.
+
+255
+00:17:24,090 --> 00:17:25,840
+I will see you next time.
+

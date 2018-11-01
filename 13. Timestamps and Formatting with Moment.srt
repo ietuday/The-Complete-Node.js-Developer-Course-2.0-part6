@@ -1,0 +1,1056 @@
+﻿1
+00:00:00,800 --> 00:00:03,770
+Throughout the course we have used time stamps quite a bit.
+
+2
+00:00:03,770 --> 00:00:08,750
+We've generated them in the to do app and we also have them generated for all of our messages in the
+
+3
+00:00:08,750 --> 00:00:14,150
+chat app but we've never gone as far as formatting them to something human readable that's going to
+
+4
+00:00:14,150 --> 00:00:15,610
+be the topic in this video.
+
+5
+00:00:15,620 --> 00:00:18,460
+And in the next one we'll put that into action.
+
+6
+00:00:18,620 --> 00:00:24,380
+By the end of the next video we'll have a formatted message area with the name time stamp and message
+
+7
+00:00:24,560 --> 00:00:27,770
+and we'll have some better styles for it as well.
+
+8
+00:00:27,770 --> 00:00:31,910
+Now in this one it's going to be all about time and time stamp are not going to make any changes to
+
+9
+00:00:31,910 --> 00:00:33,110
+the front end of our app.
+
+10
+00:00:33,200 --> 00:00:37,310
+We're simply going to learn how time works inside of Node.
+
+11
+00:00:37,580 --> 00:00:42,450
+Now to explore this we're going to create a new playground file over inside of Adam.
+
+12
+00:00:42,470 --> 00:00:45,590
+We're going to make a playground folder to store this file.
+
+13
+00:00:47,260 --> 00:00:52,610
+And inside of the playground directory we can make a new file calling it time.
+
+14
+00:00:52,730 --> 00:00:53,550
+J.S..
+
+15
+00:00:53,710 --> 00:00:58,120
+And then here we'll play around with time and we'll take what we learn here into the front end of the
+
+16
+00:00:58,120 --> 00:00:59,770
+application in the next video.
+
+17
+00:00:59,770 --> 00:01:04,960
+Now we are no strangers to time stands we know they're nothing more than just integers whether positive
+
+18
+00:01:04,960 --> 00:01:05,770
+or negative.
+
+19
+00:01:05,860 --> 00:01:09,750
+Something like 781 is a perfectly valid time stamp.
+
+20
+00:01:09,850 --> 00:01:14,980
+So is something like minus a couple of billion or whatever this number happens to be all valid even
+
+21
+00:01:15,080 --> 00:01:18,100
+0 is a perfectly valid timestamp.
+
+22
+00:01:18,100 --> 00:01:22,600
+Now all of these numbers they're all relative to a certain moment in history referred to as the Unix
+
+23
+00:01:22,660 --> 00:01:30,120
+APIC which is January 1st 1970 at midnight 0 hours 0 minutes and 0 seconds.
+
+24
+00:01:30,210 --> 00:01:34,720
+M This is stored in UTC which means it's time zone independent.
+
+25
+00:01:34,760 --> 00:01:38,420
+Now I timestamps 0 actually represents this moment in history perfectly.
+
+26
+00:01:38,560 --> 00:01:44,020
+And positive numbers like 1000 head into the future while negative numbers like minus a thousand head
+
+27
+00:01:44,020 --> 00:01:46,250
+into the past minus 1 0 0 0 0 0.
+
+28
+00:01:46,300 --> 00:01:54,360
+As a time stamp would represent December thirty first 1969 at eleven fifty nine and fifty nine seconds.
+
+29
+00:01:54,370 --> 00:01:57,910
+We've gone one second into the past from here.
+
+30
+00:01:58,270 --> 00:02:02,120
+Now these timestamps inside of javascript they're stored in milliseconds.
+
+31
+00:02:02,230 --> 00:02:07,000
+The unix epic inside of a regular UNIX timestamps they're actually stored in seconds.
+
+32
+00:02:07,120 --> 00:02:13,510
+So we are using javascript in this course we will always be using milliseconds as our time stamp values
+
+33
+00:02:13,750 --> 00:02:20,030
+which means that a time stamp like this one thousand represents one second into January 1st.
+
+34
+00:02:20,050 --> 00:02:27,670
+Since there's 1000 milliseconds in a second a value like 10000 would be ten seconds into this day and
+
+35
+00:02:27,670 --> 00:02:30,080
+so on and so forth.
+
+36
+00:02:30,080 --> 00:02:34,980
+Now the problem for us was never getting the time stamp getting the time stamp was really easy.
+
+37
+00:02:34,990 --> 00:02:39,780
+All we had to do was call new date calling get time method.
+
+38
+00:02:39,850 --> 00:02:44,170
+Things are going to get a lot harder though and you want to format a human readable value like the one
+
+39
+00:02:44,170 --> 00:02:45,080
+we have above.
+
+40
+00:02:45,250 --> 00:02:49,630
+We're going to want to print something to the screen inside of our web app that's not just the time
+
+41
+00:02:49,630 --> 00:02:54,940
+stamp we're gonna want to print something like maybe 5 minutes ago letting a user know the message was
+
+42
+00:02:54,940 --> 00:03:00,370
+sent five minutes ago or maybe you want to print the actual date with the month day hour minute and
+
+43
+00:03:00,400 --> 00:03:04,180
+am or pm value regardless of what you want to print.
+
+44
+00:03:04,210 --> 00:03:09,700
+We are going to need to talk a bit about formatting and this is where the default date object falls
+
+45
+00:03:09,700 --> 00:03:10,440
+short.
+
+46
+00:03:10,450 --> 00:03:16,270
+Yes there are methods that allow you to get the specific values out of a date like the year the month
+
+47
+00:03:16,510 --> 00:03:17,860
+or the day of month.
+
+48
+00:03:17,860 --> 00:03:24,100
+But they are very limited and it is a huge burden to customize something like what we have above to
+
+49
+00:03:24,100 --> 00:03:29,530
+talk about exactly the problem let's go ahead and pull up the documentation for date by googling MDMA
+
+50
+00:03:29,610 --> 00:03:30,170
+date.
+
+51
+00:03:30,220 --> 00:03:35,710
+This is going to bring us to the Mozilla developer network documentation page for date which is a really
+
+52
+00:03:35,710 --> 00:03:41,400
+great set of documentation Double-O we have access to all of the methods available.
+
+53
+00:03:41,410 --> 00:03:46,450
+These are all methods kind of like get time that return something specific about the date.
+
+54
+00:03:46,450 --> 00:03:52,080
+For example we have a get date method that returns the day of the month a value from 1 to 31.
+
+55
+00:03:52,090 --> 00:03:57,030
+We have something like Get minutes which returns the current minutes for the time stamp.
+
+56
+00:03:57,160 --> 00:04:00,250
+All of these exist inside of date.
+
+57
+00:04:00,250 --> 00:04:03,900
+Now the problem is that these are really on flexible.
+
+58
+00:04:03,970 --> 00:04:10,960
+For example inside of Adam we have this little date right here it's a shorthand version for January.
+
+59
+00:04:10,990 --> 00:04:16,700
+Now we can get the actual month to show you how we'll create a variable called Date.
+
+60
+00:04:16,750 --> 00:04:21,460
+We'll go ahead and create a new date and then we're going to go ahead and call a method on an unused
+
+61
+00:04:21,460 --> 00:04:29,260
+council that like to print the value to the screen and we're going to call date dot get month get month
+
+62
+00:04:29,440 --> 00:04:36,940
+as defined over inside of the documentation is going to return a zero based month value from 0 to 11
+
+63
+00:04:37,180 --> 00:04:41,790
+where 0 is January and 11 is December over inside of the terminal.
+
+64
+00:04:41,790 --> 00:04:47,020
+I'm going to kick off our app using gnomon since we're going to be restarting it quite a bit.
+
+65
+00:04:47,260 --> 00:04:52,260
+Gnomon it's in the playground folder not the server folder and the file itself is called time.
+
+66
+00:04:52,380 --> 00:04:52,980
+Yes.
+
+67
+00:04:53,110 --> 00:04:56,100
+Once it's up and running we see we get it back which is expected.
+
+68
+00:04:56,110 --> 00:05:02,250
+It's currently September 22nd 2016 and a zero indexed value for September would be 8.
+
+69
+00:05:02,320 --> 00:05:05,210
+Even though you commonly think of it as 9.
+
+70
+00:05:05,320 --> 00:05:06,280
+Now this is fine.
+
+71
+00:05:06,280 --> 00:05:12,220
+We have the number 8 but getting an actual string Jan or January is going to be much more difficult.
+
+72
+00:05:12,220 --> 00:05:16,780
+There is no built in way to get this value which means if you do want to get that value you're going
+
+73
+00:05:16,780 --> 00:05:23,060
+to have to create an array maybe you call the array months and you store all of the values like this
+
+74
+00:05:23,450 --> 00:05:28,130
+this is going to be fine and it might not seem like that big of a deal for a month but things get just
+
+75
+00:05:28,130 --> 00:05:32,310
+as confusing for the day of that month like the first we have here.
+
+76
+00:05:32,360 --> 00:05:38,210
+All we can really get back is the number one actually formatting it to first second or third is going
+
+77
+00:05:38,210 --> 00:05:39,620
+to be much more difficult.
+
+78
+00:05:39,620 --> 00:05:44,000
+There just are not a good set of methods for formatting your date.
+
+79
+00:05:44,000 --> 00:05:50,030
+Things get even more complex when you want to have a relative time string something like three minutes
+
+80
+00:05:50,030 --> 00:05:50,690
+ago.
+
+81
+00:05:50,750 --> 00:05:54,510
+It would be nice to print that inside of the web app along side of the message.
+
+82
+00:05:54,590 --> 00:05:58,740
+Printing the actual month the day and the year is not particularly useful.
+
+83
+00:05:58,790 --> 00:06:04,010
+It will be quick if we could say hey this message was sent three hours ago three minutes ago or 3 years
+
+84
+00:06:04,010 --> 00:06:07,170
+ago like a lot of chat applications do.
+
+85
+00:06:07,340 --> 00:06:11,390
+Now when you get into a formatting like this your first instinct is usually to create some utility methods
+
+86
+00:06:11,390 --> 00:06:16,010
+that help with formatting a date but there is no need to do that because what we're going to look at
+
+87
+00:06:16,010 --> 00:06:22,700
+in this video is a fantastic time library called Moment moment is pretty much the only library of its
+
+88
+00:06:22,700 --> 00:06:23,290
+kind.
+
+89
+00:06:23,360 --> 00:06:28,990
+It is universally accepted as the go to library for working with time in javascript.
+
+90
+00:06:29,000 --> 00:06:33,230
+I've never worked on a node or Front-End project that didn't have Moment used.
+
+91
+00:06:33,230 --> 00:06:37,450
+It is truly essential when you're working with dates in any capacity.
+
+92
+00:06:37,490 --> 00:06:41,900
+Now in order to show off why moment is so great we are going to first install it over inside of the
+
+93
+00:06:41,900 --> 00:06:42,370
+terminal.
+
+94
+00:06:42,470 --> 00:06:44,770
+Then we're going to play around with all of its capabilities.
+
+95
+00:06:44,780 --> 00:06:47,060
+It has a lot right here.
+
+96
+00:06:47,090 --> 00:06:48,940
+We can install it by running NPM.
+
+97
+00:06:48,960 --> 00:06:57,310
+I am going to go ahead and use the current version moment at Version 2 point fifteen point one.
+
+98
+00:06:57,410 --> 00:07:02,390
+And I will also use the save flag to add it as a dependency a dependency that we're going to need on
+
+99
+00:07:02,390 --> 00:07:04,370
+Heroku as well as locally.
+
+100
+00:07:04,550 --> 00:07:09,830
+Now once it's installed I can use clear to clear the terminal output and we can go ahead and restart
+
+101
+00:07:09,920 --> 00:07:13,010
+node Mohn over inside of the playground.
+
+102
+00:07:13,010 --> 00:07:18,710
+It's time to require moment and take a look at exactly what it can do for us to kick things off.
+
+103
+00:07:18,710 --> 00:07:22,580
+Let's go ahead and try to fix the problem we tried to solve with date.
+
+104
+00:07:22,580 --> 00:07:26,910
+We want to print the shorthand version of a month like Jan FEBE and so on.
+
+105
+00:07:26,990 --> 00:07:31,650
+The first step is going to be to comment this out in load in Moment up above requiring it.
+
+106
+00:07:31,860 --> 00:07:37,250
+I'm going to make a variable called Moment and require it by requiring the moment library then and down
+
+107
+00:07:37,250 --> 00:07:40,620
+below will kick things off by making a new moment.
+
+108
+00:07:40,760 --> 00:07:45,380
+Now just like we create a new date to get a specific date object we're going to do the same thing with
+
+109
+00:07:45,380 --> 00:07:46,100
+moment.
+
+110
+00:07:46,130 --> 00:07:49,910
+I'm going to call this variable date and we're going to set it equal to a call to moment.
+
+111
+00:07:50,030 --> 00:07:53,090
+The function we loaded in above without any arguments.
+
+112
+00:07:53,210 --> 00:07:58,110
+This creates a new moment object that represents the current point in time.
+
+113
+00:07:58,130 --> 00:08:03,920
+From here we can go ahead and try to format things using its really useful format method.
+
+114
+00:08:04,010 --> 00:08:07,320
+The format method is one of the main reasons I just love moment.
+
+115
+00:08:07,320 --> 00:08:11,840
+It makes it dead simple to print whatever you want as a string.
+
+116
+00:08:11,840 --> 00:08:15,890
+Now in this case we have access to our date and we're going to go ahead and call that method I just
+
+117
+00:08:15,890 --> 00:08:20,270
+talked about format before we get into what we pass to format.
+
+118
+00:08:20,270 --> 00:08:22,440
+Let's go ahead and run it just like this.
+
+119
+00:08:22,520 --> 00:08:27,490
+When we do that over inside of the terminal node mine is going to go ahead and restart itself.
+
+120
+00:08:27,710 --> 00:08:33,550
+And right here we have our formatted date we have the year the month the day and other values.
+
+121
+00:08:33,620 --> 00:08:37,520
+It's not still really user friendly but it is a step in the right direction.
+
+122
+00:08:37,520 --> 00:08:42,500
+The real power of the format method comes when you pass a string inside of it.
+
+123
+00:08:42,500 --> 00:08:47,960
+Now what we pass inside of here is patterns which means that we have access to a specific set of values
+
+124
+00:08:47,960 --> 00:08:51,000
+we can use to output certain things.
+
+125
+00:08:51,080 --> 00:08:54,410
+We're going to explore all of the patterns available to you in just a second.
+
+126
+00:08:54,410 --> 00:08:56,660
+For now let's go ahead and just use one.
+
+127
+00:08:56,720 --> 00:09:02,360
+It's the triple upper case and the pattern when moment sees this pattern inside a format.
+
+128
+00:09:02,450 --> 00:09:06,710
+It's going to go ahead and grab the shorthand version of the month which means that I save this file
+
+129
+00:09:06,860 --> 00:09:08,540
+restarting it over inside of the terminal.
+
+130
+00:09:08,540 --> 00:09:16,160
+Once again we should see the shorthand version for the current month September which would be S E P.
+
+131
+00:09:16,160 --> 00:09:17,750
+Right here we have Sep.
+
+132
+00:09:17,750 --> 00:09:19,980
+Just as expected and we were able to do that.
+
+133
+00:09:20,030 --> 00:09:27,340
+Super simply by using format now format returns a string that has just the things you specify.
+
+134
+00:09:27,410 --> 00:09:30,480
+Here we only specified that we want the shorthand version of the month.
+
+135
+00:09:30,500 --> 00:09:33,590
+So all we got back was the shorthand version of the month.
+
+136
+00:09:33,620 --> 00:09:39,200
+We could also add on another pattern for YS which prints out the full year in the current case it would
+
+137
+00:09:39,200 --> 00:09:42,030
+print out 2016 in numbers.
+
+138
+00:09:42,050 --> 00:09:46,510
+I'm going to go ahead and save time again and right here we get Sep 2016.
+
+139
+00:09:46,760 --> 00:09:52,490
+Now moment as a fantastic set of documentation so you can use whatever patterns you like over inside
+
+140
+00:09:52,490 --> 00:09:55,980
+of the browser we can pull it up by going to moment.
+
+141
+00:09:56,200 --> 00:10:01,600
+J.S. dotcom the documentation for a moment is fantastic.
+
+142
+00:10:01,600 --> 00:10:06,790
+It's available on the docs page and to get started in order to figure out how to use format we're going
+
+143
+00:10:06,790 --> 00:10:08,880
+to go to this display section.
+
+144
+00:10:08,980 --> 00:10:11,320
+The first item in display is format.
+
+145
+00:10:11,320 --> 00:10:16,060
+There's a few examples about how to use format but the really useful information is what we have down
+
+146
+00:10:16,060 --> 00:10:16,840
+below.
+
+147
+00:10:16,840 --> 00:10:22,600
+Here we have all of the tokens that we can put inside of the string to format our day as we like.
+
+148
+00:10:22,600 --> 00:10:27,970
+Up above you can see you can use as many of these tokens as you like to create a really complex date
+
+149
+00:10:28,240 --> 00:10:29,020
+outputs.
+
+150
+00:10:29,020 --> 00:10:34,000
+Now we already explored two we explored triple and which is defined right here under the month Hetter.
+
+151
+00:10:34,120 --> 00:10:40,540
+As you can see there are five different ways to represent the month the 4 y pattern which we used for
+
+152
+00:10:40,540 --> 00:10:42,410
+a year is defined down below.
+
+153
+00:10:42,430 --> 00:10:44,190
+There's three ways to use year.
+
+154
+00:10:44,200 --> 00:10:50,920
+We just explored one of them and there are sections for everything Year day of week day of month AM
+
+155
+00:10:50,920 --> 00:10:52,740
+PM hour minute second.
+
+156
+00:10:52,810 --> 00:10:58,390
+All of those are defined right here and all of them can be put inside a format just like we did for
+
+157
+00:10:58,390 --> 00:11:00,250
+the current values.
+
+158
+00:11:00,280 --> 00:11:04,540
+Now in order to explore this just a little more let's head back into Adam and take advantage of some
+
+159
+00:11:04,540 --> 00:11:09,430
+of these what we're going to try to do is print what we have right here the shorthand month in the year
+
+160
+00:11:09,430 --> 00:11:10,430
+which we already have.
+
+161
+00:11:10,510 --> 00:11:17,830
+But now we need the day of the month formatted like first second third as opposed to 1 to 3 in order
+
+162
+00:11:17,830 --> 00:11:18,410
+to do that.
+
+163
+00:11:18,460 --> 00:11:23,470
+What I would do if I had not used a moment before is I would look in the docs for the day of month section
+
+164
+00:11:23,470 --> 00:11:26,530
+which happens to be sitting right here and I look at the available options.
+
+165
+00:11:26,530 --> 00:11:29,950
+I have the db pattern which prints 1 through 31.
+
+166
+00:11:29,980 --> 00:11:33,450
+I also have D.O. and that print is what we want first second third.
+
+167
+00:11:33,460 --> 00:11:39,700
+So on and so forth and we also have double uppercase D which prints the number with a 0 in front of
+
+168
+00:11:39,700 --> 00:11:42,760
+it for the values less than 10.
+
+169
+00:11:42,760 --> 00:11:47,260
+Now in this case we want to use this pattern so all we have to do is type it over inside a format I
+
+170
+00:11:47,270 --> 00:11:51,710
+can open up the terminal and add him so we can see it refresh in the background and we're going to type
+
+171
+00:11:51,730 --> 00:11:54,800
+d o right here saving the file whenever he starts.
+
+172
+00:11:54,820 --> 00:11:59,890
+What do we get we get September 22nd 2016 which is indeed correct.
+
+173
+00:11:59,890 --> 00:12:02,390
+Now we can also add other characters in here like a comma.
+
+174
+00:12:02,590 --> 00:12:05,730
+A comma is not part of the patterns that format expects.
+
+175
+00:12:05,740 --> 00:12:10,840
+So it's simply going to pass it through which means right here the comma get shown just as we typed
+
+176
+00:12:10,840 --> 00:12:16,000
+it in September 22nd comma twenty six team using format.
+
+177
+00:12:16,030 --> 00:12:21,310
+In this way we have a lot of flexibility as to how we want to print the date.
+
+178
+00:12:21,370 --> 00:12:23,400
+Now format is just one of many methods.
+
+179
+00:12:23,410 --> 00:12:28,330
+There are a ton of methods on moment for doing just about anything although I find I use pretty much
+
+180
+00:12:28,330 --> 00:12:30,460
+the same sex and most of my projects.
+
+181
+00:12:30,460 --> 00:12:35,110
+There really isn't a lot of need for most of them although they do exist because they are useful in
+
+182
+00:12:35,110 --> 00:12:36,640
+certain situations.
+
+183
+00:12:36,760 --> 00:12:39,610
+To take a quick peek at some other things a moment can do.
+
+184
+00:12:39,730 --> 00:12:43,250
+Let's head back into the docs and go to the Manipulate section.
+
+185
+00:12:43,280 --> 00:12:47,230
+The first two methods defined under manipulate are add and subtract.
+
+186
+00:12:47,230 --> 00:12:51,060
+This lets you easily add and subtract time as you can see here.
+
+187
+00:12:51,160 --> 00:12:57,550
+We can call add adding 7 days and we can call subtract subtracting 7 months down below.
+
+188
+00:12:57,580 --> 00:13:02,120
+You can get a quick idea about what you can add and subtract years courters months weeks.
+
+189
+00:13:02,170 --> 00:13:05,740
+Pretty much any unit of time can be added or subtracted.
+
+190
+00:13:05,740 --> 00:13:08,990
+Now to take a look at what exactly that does to the time stamp.
+
+191
+00:13:09,010 --> 00:13:12,500
+We can go ahead and add and subtract some values right here.
+
+192
+00:13:12,640 --> 00:13:17,410
+I'm going to call it date dot ad and we're going to go ahead and add a year by putting one in as the
+
+193
+00:13:17,410 --> 00:13:19,950
+value and year in as the unit.
+
+194
+00:13:20,110 --> 00:13:22,960
+Now it doesn't matter if you use the single or plural version.
+
+195
+00:13:22,960 --> 00:13:24,370
+Both are going to work the same.
+
+196
+00:13:24,370 --> 00:13:27,300
+Here you can see we get 20:17 in the terminal.
+
+197
+00:13:27,340 --> 00:13:31,250
+If I change it to your singular I also get that same value.
+
+198
+00:13:31,440 --> 00:13:33,010
+You can add as many years as you like.
+
+199
+00:13:33,010 --> 00:13:37,030
+I'm going to go ahead and out one hundred years and now we're at 21 16.
+
+200
+00:13:37,030 --> 00:13:41,940
+Same thing is true with subtract we can chain on the call or we can add it as a separate statement.
+
+201
+00:13:42,840 --> 00:13:49,380
+I'm going to subtract 9 months just like this.
+
+202
+00:13:49,550 --> 00:13:54,740
+And we are currently in September and when we subtract 9 months we go back to December.
+
+203
+00:13:54,740 --> 00:14:02,120
+Now you notice we went from 21 16 to 21 15 because subtracting those nine months required us to change
+
+204
+00:14:02,240 --> 00:14:02,990
+years.
+
+205
+00:14:02,990 --> 00:14:06,690
+Moment is really great at handling just about anything you throw at it.
+
+206
+00:14:06,800 --> 00:14:11,150
+Now your challenge for this video is going to be to play around with for a little more.
+
+207
+00:14:11,150 --> 00:14:15,890
+I'm going to give you the output I would like and you will need to figure out which patterns to use
+
+208
+00:14:16,100 --> 00:14:19,910
+over inside of the documentation to get that output.
+
+209
+00:14:19,910 --> 00:14:25,110
+Now the current time as I'm filming this is ten thirty five on my iPhone it looks like this.
+
+210
+00:14:25,130 --> 00:14:28,120
+Ten thirty five and it is in the am.
+
+211
+00:14:28,130 --> 00:14:31,280
+So I have a lower case i am sitting right here.
+
+212
+00:14:31,310 --> 00:14:34,250
+Your goal is to print a format like this.
+
+213
+00:14:34,250 --> 00:14:41,010
+Now obviously if it's 12 or 15 when you run the code you're going to see 12 15 as opposed to 10 35.
+
+214
+00:14:41,030 --> 00:14:45,080
+It's just the format that matters the actual values aren't that important.
+
+215
+00:14:45,170 --> 00:14:49,880
+Now as you'll see when you try to print hours and minutes you're going have a lot of options for both
+
+216
+00:14:49,880 --> 00:14:50,200
+of them.
+
+217
+00:14:50,210 --> 00:14:55,350
+You're going to have a padded version like 0 1 or an unpadded version like one.
+
+218
+00:14:55,550 --> 00:15:01,190
+I want you to use the padded version for minutes and the unpadded version for hours which would be six
+
+219
+00:15:01,310 --> 00:15:06,360
+like this and 0 1 if you padded the hour it looks kind of weird.
+
+220
+00:15:06,380 --> 00:15:09,830
+And if you don't pad the minute it looks just terrible.
+
+221
+00:15:09,830 --> 00:15:14,100
+So we would want to print something like this if it happened to be 6 0 1 a.
+
+222
+00:15:14,140 --> 00:15:19,870
+M now for our You're also going to have the option to do either 1 to 12 or 1 to 24.
+
+223
+00:15:19,880 --> 00:15:25,130
+I usually use the 12 hour clock so I'm going to do that using am right here before I set you free.
+
+224
+00:15:25,130 --> 00:15:27,470
+I am going to comment out the code above.
+
+225
+00:15:27,530 --> 00:15:30,890
+I would like you to write everything from scratch just below.
+
+226
+00:15:31,010 --> 00:15:36,580
+So take some time create a new moment date and call format printing the value to the screen.
+
+227
+00:15:36,710 --> 00:15:39,610
+You should see something formatted like this.
+
+228
+00:15:39,620 --> 00:15:40,160
+Test it out.
+
+229
+00:15:40,160 --> 00:15:46,950
+And when you're done go ahead and click play hopefully you are able to find all of the necessary patterns
+
+230
+00:15:46,950 --> 00:15:48,720
+to print this to the screen.
+
+231
+00:15:48,720 --> 00:15:54,900
+To kick things off I am going to make a new date by calling moment with no arguments and we're also
+
+232
+00:15:54,900 --> 00:16:00,180
+going to go ahead and call format inside of console dialogue so we can print that format add value to
+
+233
+00:16:00,180 --> 00:16:00,770
+the screen.
+
+234
+00:16:00,870 --> 00:16:05,290
+Date dot format inside of here we're going to provide our pattern.
+
+235
+00:16:05,370 --> 00:16:10,800
+We're going to start with the unpadded hour and deep Hadad minute we can grab both of those patterns
+
+236
+00:16:10,800 --> 00:16:14,580
+by heading over to the doc's going back to display and taking a peek.
+
+237
+00:16:14,730 --> 00:16:19,350
+If we scroll down below the first one and we're going to run into an hour right here and we have quite
+
+238
+00:16:19,350 --> 00:16:20,600
+a few options.
+
+239
+00:16:20,640 --> 00:16:23,690
+We have 24 hour options we have 1 through 12.
+
+240
+00:16:23,760 --> 00:16:30,000
+What we want is lowercase H which is 1 through 12 unpadded the padded version which is two lowercase
+
+241
+00:16:30,000 --> 00:16:34,680
+aitches exists right below that is not what we want for this one right here.
+
+242
+00:16:34,680 --> 00:16:36,660
+We're going to take things off by adding an h.
+
+243
+00:16:36,690 --> 00:16:38,500
+I'm also going to save the file.
+
+244
+00:16:38,520 --> 00:16:42,720
+Check it out in the terminal and right here we have 10 which looks great.
+
+245
+00:16:42,720 --> 00:16:44,430
+Next up is that padded minute.
+
+246
+00:16:44,520 --> 00:16:49,020
+We're going to go ahead and find that pattern just below for a minute we have a lot fewer options either
+
+247
+00:16:49,020 --> 00:16:53,170
+padded or unpadded we want to use to lower case ends.
+
+248
+00:16:53,190 --> 00:16:55,840
+Now before I add those two m's I am going to add a colon.
+
+249
+00:16:55,860 --> 00:17:00,830
+This is going to get passed through in plain text meaning it's not going to get changed.
+
+250
+00:17:00,990 --> 00:17:04,870
+Right here we're going to add our two lowercase M's we can then save time.
+
+251
+00:17:04,930 --> 00:17:10,770
+Yes and make sure the correct thing prints in the terminal and does 10:38 shows up right here.
+
+252
+00:17:10,770 --> 00:17:16,590
+Next up is going to be grabbing that lowercase am and pm value we can find that pattern over inside
+
+253
+00:17:16,590 --> 00:17:18,950
+of Google Chrome just above our.
+
+254
+00:17:19,020 --> 00:17:25,960
+Here we can either use uppercase a for uppercase am and pm or lowercase a for the lower case version.
+
+255
+00:17:26,040 --> 00:17:27,840
+I'm going to go ahead and use a lower case.
+
+256
+00:17:27,900 --> 00:17:33,630
+After a space to use that lowercase version I can save the file and over inside of the terminal I do
+
+257
+00:17:33,630 --> 00:17:36,920
+indeed have 10 39 printing to the screen.
+
+258
+00:17:36,990 --> 00:17:38,220
+We have the AM after it.
+
+259
+00:17:38,210 --> 00:17:39,960
+Everything looks great.
+
+260
+00:17:40,200 --> 00:17:44,940
+If you completed the challenge successfully you should be seeing something just like this.
+
+261
+00:17:45,930 --> 00:17:50,430
+That is it for this video in the next one we're going to actually integrate moment into our server and
+
+262
+00:17:50,430 --> 00:17:53,660
+our client rather than just having it in a playground File.
+
+263
+00:17:53,670 --> 00:17:54,280
+Stay tuned.
+
+264
+00:17:54,320 --> 00:17:55,680
+We'll see you then.
+
